@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/login.css') }}"">
+        <title>Log In</title>
+    </head>
+    <body>
+        <div class="grid-container">
+            <div class="left-column">
+                <div class="intro">
+                    <div class="intro-title">
+                        <span>Niner Miner</span>
+                    </div>
+                    <div class="intro-text">
+                        <span>A Marketplace Webapp made<br> <em>by</em> UNCC students<br> <em>for</em> UNCC students.</span>
+                    </div>
+                    <div class="about">
+                        <a href="/about">Learn more about the app here</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="login">
+                    <div class="login-title">
+                        <span>Log In</span>
+                    </div>
+                    <form action="/" method="post">
+                        <input type="text" id="email" name="email" placeholder="UNCC Email"><br>
+                        <input type="password" id="password" name="password" placeholder="Password"><br>
+                        <input type="submit" class="login-button" value="Log In">
+                    </form>
+                    <div class="forgot-password">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <div class="signup">
+                        <a href="/signup">Click Here to Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
