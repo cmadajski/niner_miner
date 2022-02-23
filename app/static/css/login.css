@@ -1,0 +1,103 @@
+/* whole document properties */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Norwester;
+    color: white;
+}
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+/* left column formatting */
+.left-column {
+    display: block;
+    grid-row: 1;
+    grid-column: 1;
+    background-color: #005035;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.intro {
+    text-align: center;
+}
+
+.intro-title {
+    font-size: 80px;
+    font-weight: 700;
+    font-style: italic;
+    margin-top: 200px;
+}
+.intro-text {
+    font-size: 40px;
+    margin: 50px 0;
+}
+.about a {
+    text-decoration: none;
+    color: #A49665;
+    font-size: 40px;
+    font-style: italic;
+}
+
+/*  */
+
+.right-column {
+    display: block;
+    grid-row: 1;
+    grid-column: 2;
+    height: 100vh;
+    margin: 0;
+}
+.login {
+    margin-top: 200px;
+    margin-left: 80px;
+    margin-right: 80px;
+    padding: 10px;
+    background-color: #005035;
+    border-radius: 10px;
+    text-align: center;
+}
+.login-title {
+    font-size: 50px;
+    margin: 10px;
+}
+.login form input {
+    width: 80%;
+    font-size: 30px;
+    margin: 20px 0;
+    border-radius: 10px;
+    padding: 5px;
+}
+.login-button {
+    background-color: #A49665;
+    margin-bottom: 0;
+}
+.forgot-password a {
+    display: block;
+    margin: 0px auto;
+    width: 40%;
+    text-decoration: none;
+    font-size: 30px;
+    color: #A49665;
+}
+.signup a {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    background-color: #A49665;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+}
