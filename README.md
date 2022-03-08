@@ -14,12 +14,14 @@ The contributing members for this project are:
 - Hinal Makadiya
 - Dane Medlin
 - Drew Moore
-- [Christian Madajski](https://www.linkedin.com/in/cmadajsk/)
+- [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![Time in Project](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc)
 
 The technologies being used are:
 - Python/Flask (Backend + Logic)
 - SQLAlchemy (Database)
 - HTML/CSS/JS (Frontend)
+- Google Maps (Mapping)
+- PayPal (Purchases)
 
 ## Installing Dependencies
 In order to get the back end working we need to get a virtual environment running, so we can install the 
@@ -36,7 +38,7 @@ a file named "requirements.txt" that can be used to automatically install all ne
 The easiest way to do this is to first CD into the directory that contains requirements.txt.
 Then use the below command to install the requirements:
 
-```python3 -m pip install -r /path/to/requirements.txt```
+```pip install -r /path/to/requirements.txt```
 
 For additional troubleshooting, refer to [this page](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
 
