@@ -20,6 +20,8 @@ The technologies being used are:
 - Python/Flask (Backend + Logic)
 - SQLAlchemy (Database)
 - HTML/CSS/JS (Frontend)
+- Google Maps (Mapping)
+- PayPal (Purchases)
 
 ## Installing Dependencies
 In order to get the back end working we need to get a virtual environment running, so we can install the 
@@ -36,7 +38,7 @@ a file named "requirements.txt" that can be used to automatically install all ne
 The easiest way to do this is to first CD into the directory that contains requirements.txt.
 Then use the below command to install the requirements:
 
-```python3 -m pip install -r /path/to/requirements.txt```
+```pip install -r /path/to/requirements.txt```
 
 For additional troubleshooting, refer to [this page](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
 
