@@ -12,9 +12,9 @@ def index():
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return "SIGN UP GOES HERE"
+    return render_template('signup.html')
 
 @app.route('/validate')
 def validate():

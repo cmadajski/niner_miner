@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/signup.css">
+        <title>Sign Up</title>
+    </head>
+    <body>
+        <div class="left-column">
+            <div class="title">
+                <span>Join Niner Miner</span>
+            </div>
+            <div class="reminder">
+                <span>Reminders</span>
+            </div>
+            <div class="reminder-text">
+                <ul>
+                    <li>Only UNCC students can use this service</li>
+                    <li>You must sign up with a valid UNCC email</li>
+                    <li>Password must have 8 or more characters</li>
+                </ul>
+            </div>
+            <div class="login">
+                <a href="/">Return to Login</a>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="signup">
+                <div class="signup-title">
+                    <span>New Student Info</span>
+                </div>
+                <div class="signup-form">
+                    <form action="/signup">
+                        <input type="text" placeholder="Full Name" autofocus>
+                        <input type="text" placeholder="UNCC ID#">
+                        <input type="text" placeholder="Phone #">
+                        <br><br>
+                        <input type="text" placeholder="UNCC Email">
+                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Repeat Password">
+                        <input type="submit" class="submit-signup">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
