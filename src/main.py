@@ -67,3 +67,6 @@ def account_delete():
 @app.route('/change_password')
 def change_password():
     return 'CHANGE PASSWORD HERE'
+
+if __name__ == '__main__':
+    app.run()

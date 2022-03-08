@@ -43,9 +43,13 @@ Then use the below command to install the requirements:
 For additional troubleshooting, refer to [this page](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
 
 ## Running the Code
-This app uses the Flask framework as a backend, so you must start a local development
-server to get the app up and working. The way the app is currently set up, just navigate
-to the niner_miner directory and run the command ```python run.py``` to start the server.
+Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
+the development server and allow access to the app.
+
 An IP Address should be visible in the console, and you can either ctl+click the address
 or copy and paste the address into a web browser to view the app. You can also manually
 enter this address into your webbrowser if needed: ```http://127.0.0.1:5000/```
+
+## Work in Progress
+At this time in development, the application still has most of its functions non-operational.
+We are hoping to have most functions working as intended by the last week of April.
