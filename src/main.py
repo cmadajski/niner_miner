@@ -1,11 +1,16 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 
 app = Flask(__name__)
 
 # index route is used for log in related functions
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'GET':
+        return render_template('index.html')
+    elif request.method == 'POST':
+        return 'USING POST'
+    else:
+        return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
 @app.route('/signup')
 def signup():

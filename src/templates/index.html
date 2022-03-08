@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/css/index.css">
-    <title>Log In</title>
-</head>
-<body>
-    <div class="grid-container">
-        <div class="intro">
-            <div class="intro-text">
-                <h1>Niner Miner</h1>
-                <p>A Marketplace Application made <em>by</em> UNCC students <em>for</em> UNCC students.</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/index.css">
+        <title>Log In</title>
+    </head>
+    <body>
+        <div class="left-column">
+            <div class="title">
+                <span>Niner Miner</span>
+            </div>
+            <div class="tagline">
+                <span>Buying and selling stuff,<br>exclusively for UNCC students.</span>
+            </div>
+            <div class="about">
+                <a href="/about">Click Here to Learn More</a>
             </div>
         </div>
-        <div class="login">
-            <div class="login-title">
-                <h2>Log In to Begin Buying and Selling</h1>
+        <div class="right-column">
+            <div class="login">
+                <div class="login-title">
+                    <span>Log In</span>
+                </div>
+                <div class="login-form">
+                    <form action="/">
+                        <input type="text" placeholder="UNCC Email" autofocus><br>
+                        <input type="password" placeholder="Password"><br>
+                        <input type="submit" class="form-submit">
+                    </form>
+                </div>
+                <div class="forgot-password">
+                    <a href="/forgot_password">Forgot Password?</a>
+                </div>
+                <div class="signup">
+                    <a href="/signup">Become a Member</a>
+                </div>
             </div>
-            <form>
-                <input type="text" id="email" name="email" placeholder="email" pattern="" autofocus><br>
-                <input type="password" id="password" name="password" placeholder="password" minlength="8"><br>
-                <input type="submit" id="submit" value="Log In">
-            </form>
         </div>
-        <div class="signup">
-            <h2>Not a Member Yet?</h2>
-            <button class="signup-button">Click Here to Sign Up</button>
-        </div>
-    </div>
-</body>
+    </body>
 </html>
