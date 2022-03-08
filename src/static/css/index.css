@@ -18,7 +18,7 @@ body {
    text-align: center;
 }
 .title {
-   font-size: 80px;
+   font-size: 100px;
    font-weight: 700;
    font-style: italic;
    letter-spacing: 2px;
@@ -55,7 +55,7 @@ body {
    border-radius: 10px;
    text-align: center;
    padding: 20px;
-   margin: 0 auto;
+   margin: auto auto;
 }
 .login-title {
    font-size: 50px;
@@ -64,6 +64,10 @@ body {
 .login-form form input {
    margin: 10px 0;
    font-size: 32px;
+}
+.login-form form input:focus {
+   background-color: rgb(53, 147, 255);
+   color: white;
 }
 .form-submit {
    color: black;
@@ -88,4 +92,25 @@ body {
    width: 300px;
    margin: 10px auto;
    text-decoration: none;
+}
+
+/* styling for small/mobile screens */
+
+@media only screen and (max-width: 1180px) {
+   .left-column {
+      display: block;
+      width: 98vw;
+      height: auto;
+      padding: 20px 0;
+   }
+   .title {
+      margin-top: 0;
+      font-size: 70px;
+   }
+   .right-column {
+      display: block;
+      width: 98vw;
+      height: auto;
+      margin: 20px 0;
+   }
 }
