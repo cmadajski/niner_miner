@@ -40,6 +40,11 @@ body {
    width: 300px;
    margin: 0 auto;
    text-decoration: none;
+   transition: 250ms;
+}
+.about a:hover {
+   background-color: black;
+   color: #A49665;
 }
 
 /* right column */
@@ -61,12 +66,15 @@ body {
    font-size: 50px;
    font-weight: 700;
 }
-.login-form form input {
+.textbox {
    margin: 10px 0;
    font-size: 32px;
+   font-family: Norwester;
+   transition: 400ms;
+   width: 80%;
 }
-.login-form form input:focus {
-   background-color: rgb(53, 147, 255);
+.textbox:focus {
+   background-color: hsl(160, 100%, 78%);
    color: white;
 }
 .form-submit {
@@ -74,14 +82,29 @@ body {
    background-color: #A49665;
    border-radius: 10px;
    padding: 10px;
+   margin: 10px auto;
    font-family: Norwester;
+   font-size: 32px;
+   transition: 250ms;
+   width: 80%;
+}
+.form-submit:hover, .form-submit:focus {
+   background-color: black;
+   color: #A49665;
+   cursor: pointer;
 }
 .forgot-password a {
    color: #A49665;
-   font-size: 28px;
+   display: block;
+   font-size: 18px;
    text-decoration: none;
-   margin: 10px 0;
+   margin: 20px 0;
+   transition: 250ms;
 }
+.forgot-password a:hover, a:focus {
+   color: black;
+}
+
 .signup a {
    display: block;
    background-color: #A49665;
@@ -89,9 +112,14 @@ body {
    border-radius: 10px;
    padding: 20px;
    font-size: 24px;
-   width: 300px;
-   margin: 10px auto;
+   width: 80%;
+   margin: 20px auto;
    text-decoration: none;
+   transition: 250ms;
+}
+.signup a:hover, a:focus {
+   background-color: black;
+   color: #A49665;
 }
 
 /* styling for small/mobile screens */
