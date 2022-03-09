@@ -75,7 +75,6 @@ body {
 }
 .textbox:focus {
    background-color: hsl(160, 100%, 78%);
-   color: white;
 }
 .form-submit {
    color: black;
@@ -98,7 +97,8 @@ body {
    display: block;
    font-size: 18px;
    text-decoration: none;
-   margin: 20px 0;
+   margin: 20px auto;
+   width: 80%;
    transition: 250ms;
 }
 .forgot-password a:hover, a:focus {
@@ -110,7 +110,7 @@ body {
    background-color: #A49665;
    color: black;
    border-radius: 10px;
-   padding: 20px;
+   padding: 20px 0;
    font-size: 24px;
    width: 80%;
    margin: 20px auto;
