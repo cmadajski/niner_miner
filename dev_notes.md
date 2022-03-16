@@ -2,11 +2,17 @@
 This document provides a brief overview of the technical aspects of
 the Niner Miner Webapp.
 ## Basic File Structure
-The application currently uses a very simplified file structure. All code
-for the application can be found in the "src" directory. Routes, app logic, and flask application creation are all found in the "main.py" file.
-The templates directory holds all the html files. The static directory
-holds all the styling information, including:
-- CSS
-- images
-- fonts
-- videos
+This diagram shows the basic directory structure for the application.
+```mermaid
+flowchart TD
+A[repo] --> B[src]
+A --> C[README]
+A --> D[Dev Notes]
+A -- > E[requirements.txt]
+B --> F[main.py]
+B --> G[static]
+B --> H[templates]
+G --> I[CSS]
+G --> J[Fonts]
+G --> K[Images]
+```
