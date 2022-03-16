@@ -4,7 +4,7 @@ the Niner Miner Webapp.
 ## Basic File Structure
 This diagram shows the basic directory structure for the application.
 ```mermaid
-flowchart TD
+graph TD
 A[repo] --> B[src]
 A --> C[README]
 A --> D[Dev Notes]
