@@ -1,5 +1,8 @@
+import email
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+from random import randint
+import smtplib, ssl
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -75,6 +78,40 @@ def signup():
             new_user = User(name=user_info['name'], id=user_info['id'], phone=user_info['phone'], email=user_info['email'], password=user_info['password'])
             db.session.add(new_user)
             db.session.commit()
+
+            # generate random 6 digit code
+            validation_code = ''
+            for i in range(6):
+                num = randint(0, 9)
+                validation_code += str(num)
+            
+            # send email with validation code
+            port = 465
+            smtp_server = 'smtp.gmail.com'
+            sender_email = 'ninerminer.alerts@gmail.com'
+            receiver_email = user_info['email']
+            email_content = f"""\
+            SUBJECT: Your Validation Code for Niner Miner
+
+            Hi there {user_info['name']},\n
+            Here's the six-digit validation code for validating your new Niner Miner account.
+
+            CODE:\t{validation_code}
+
+            Visit 127.0.0.1:5000/validate to enter in your code.
+
+            Have fun buying an selling!
+            The Niner Miner Team
+            """
+            # read password from text file
+            file = open('../password.txt', 'r')
+            gmail_password = file.read()
+            # create secure SSL context
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                server.login(sender_email, gmail_password)
+                server.sendmail(sender_email, receiver_email, email_content)
+
             return redirect(url_for('validate'))
 
 
