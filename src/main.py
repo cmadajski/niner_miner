@@ -17,6 +17,7 @@ class User(db.Model):
     phone = db.Column(db.String(10))
     email = db.Column(db.String(40), unique=True, nullable=False)
     password = db.Column(db.String(24), nullable=False)
+    validation_code = db.Column(db.String(6), default=None)
     validated = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
@@ -60,6 +61,8 @@ def signup():
         if 'uncc.edu' not in user_info['email']:
             errors['email'] = True
             errors['email_str'] = 'Not a UNCC email address!'
+        # does the email already exist in the database?
+        # ADD CODE HERE
 
         # check if password is valid
         # is password at least 8 characters long?
@@ -74,16 +77,16 @@ def signup():
         if errors['email'] or errors['password']:
             return render_template('signup.html', errors=errors)
         else:
-            # add new user data to database
-            new_user = User(name=user_info['name'], id=user_info['id'], phone=user_info['phone'], email=user_info['email'], password=user_info['password'])
-            db.session.add(new_user)
-            db.session.commit()
-
             # generate random 6 digit code
             validation_code = ''
             for i in range(6):
                 num = randint(0, 9)
                 validation_code += str(num)
+            
+            # add new user data to database
+            new_user = User(name=user_info['name'], id=user_info['id'], phone=user_info['phone'], email=user_info['email'], password=user_info['password'], validation_code=validation_code)
+            db.session.add(new_user)
+            db.session.commit()
             
             # send email with validation code
             port = 465
@@ -117,7 +120,10 @@ def signup():
 
 @app.route('/validate')
 def validate():
-    return 'CODE TO VALIDATE NEW ACCOUNT'
+    if request.method == 'GET':
+        return render_template('validate.html')
+    elif request.method == 'POST':
+        return 'NO LOGIC FOR POST REQUESTS YET'
 
 @app.route('/about')
 def about():
