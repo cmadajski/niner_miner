@@ -89,7 +89,7 @@ body {
     width: 80%;
     border-radius: 10px;
     padding: 4px;
-    font-family: Norwester;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .signup-form form input:focus {
     background-color: hsl(160, 100%, 78%);
@@ -112,6 +112,9 @@ body {
     margin: 10px auto;
     width: 80%;
     border-radius: 10px;
+}
+.error span {
+    display: block;
 }
 
  /* styling for small/mobile displays */

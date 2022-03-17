@@ -32,41 +32,49 @@ def index():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method == 'GET':
-        return render_template('signup.html', emailError=False, passwordError=False, emailMessage='', passwordMessage='')
-    elif request.method == 'POST':
-        emailError = False
-        emailMessage = ''
-        passwordError = False
-        passwordMessage = ''
-        # save form data into local variables
-        email = request.form['email']
-        password = request.form['password']
-        password_repeat = request.form['passwordRepeat']
-        name = request.form['name']
-        id = request.form['id']
-        phone = request.form['phone']
+    # data for input validation
+    errors = dict()
+    errors['email'] = False
+    errors['password'] = False
+    errors['email_str'] = ''
+    errors['password_str'] = list()
 
+    if request.method == 'GET':
+        return render_template('signup.html', errors=errors)
+    elif request.method == 'POST':
+        
+        # save form data into a dict for convenience
+        user_info = dict()
+        user_info['name'] = request.form['name']
+        user_info['id'] = request.form['id']
+        user_info['phone'] = request.form['phone']
+        user_info['email'] = request.form['email']
+        user_info['password'] = request.form['password']
+        user_info['password_repeat'] = request.form['passwordRepeat']
+        
         # check if email is valid
         # does email include a UNCC address?
-        if 'uncc.edu' not in email:
-            emailError = True
-            emailMessage += 'Not a UNCC email address!'
+        if 'uncc.edu' not in user_info['email']:
+            errors['email'] = True
+            errors['email_str'] = 'Not a UNCC email address!'
 
         # check if password is valid
         # is password at least 8 characters long?
-        if len(password) < 8:
-            passwordError = True
-            passwordMessage += 'Password not 8+ characters long!'
-        if password != password_repeat:
-            passwordError = True
-            # add newline if previous message exists
-            if len(passwordMessage) > 0:
-                passwordMessage += '<br>'
-            passwordMessage += 'Passwords do not match!'
-        if emailError or passwordError:
-            return render_template('signup.html', emailError=emailError, passwordError=passwordError, emailMessage=emailMessage, passwordMessage=passwordMessage)
+        if len(user_info['password']) < 8:
+            errors['password'] = True
+            errors['password_str'].append('Password not 8+ characters long!')
+        # do both passwords equal each other?
+        if user_info['password'] != user_info['password_repeat']:
+            errors['password'] = True
+            errors['password_str'].append('Passwords do not match!')
+        # 
+        if errors['email'] or errors['password']:
+            return render_template('signup.html', errors=errors)
         else:
+            # add new user data to database
+            new_user = User(name=user_info['name'], id=user_info['id'], phone=user_info['phone'], email=user_info['email'], password=user_info['password'])
+            db.session.add(new_user)
+            db.session.commit()
             return redirect(url_for('validate'))
 
 

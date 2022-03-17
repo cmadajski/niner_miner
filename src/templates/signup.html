@@ -36,15 +36,17 @@
                         <input type="text" name="id" placeholder="UNCC ID#">
                         <input type="text" name="phone" placeholder="Phone #">
                         <br>
-                        {% if emailError %}
+                        {% if errors['email'] %}
                         <div class="error">
-                            <span>{{ emailMessage }}</span>
+                            <span>{{ errors['email_str'] }}</span>
                         </div>
                         {% endif %}
                         <input type="text" name="email" placeholder="UNCC Email">
-                        {% if passwordError %}
+                        {% if errors['password'] %}
                         <div class="error">
-                            <span>{{ passwordMessage }}</span>
+                            {% for message in errors['password_str'] %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
                         </div>
                         {% endif %}
                         <input type="password" name="password" placeholder="Password">
