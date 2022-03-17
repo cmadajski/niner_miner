@@ -31,14 +31,24 @@
                     <span>New Student Info</span>
                 </div>
                 <div class="signup-form">
-                    <form action="/signup">
+                    <form action="/signup" method="post">
                         <input type="text" name="name" placeholder="Full Name" autofocus>
                         <input type="text" name="id" placeholder="UNCC ID#">
                         <input type="text" name="phone" placeholder="Phone #">
                         <br>
+                        {% if emailError %}
+                        <div class="error">
+                            <span>{{ emailMessage }}</span>
+                        </div>
+                        {% endif %}
                         <input type="text" name="email" placeholder="UNCC Email">
+                        {% if passwordError %}
+                        <div class="error">
+                            <span>{{ passwordMessage }}</span>
+                        </div>
+                        {% endif %}
                         <input type="password" name="password" placeholder="Password">
-                        <input type="password" name="repeatPassword" placeholder="Repeat Password">
+                        <input type="password" name="passwordRepeat" placeholder="Repeat Password">
                         <input type="submit" class="submit-signup">
                     </form>
                 </div>

@@ -1,6 +1,24 @@
 from flask import Flask, render_template, url_for, redirect, request
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SECRET_KEY'] = 'most secret key'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# database models
+class User(db.Model):
+    name = db.Column(db.String(50), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
+    phone = db.Column(db.String(10))
+    email = db.Column(db.String(40), unique=True, nullable=False)
+    password = db.Column(db.String(24), nullable=False)
+    validated = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return f'{self.name}({self.id})>> {self.email}'
+
 
 # index route is used for log in related functions
 @app.route('/', methods=['GET', 'POST'])
@@ -14,7 +32,43 @@ def index():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    if request.method == 'GET':
+        return render_template('signup.html', emailError=False, passwordError=False, emailMessage='', passwordMessage='')
+    elif request.method == 'POST':
+        emailError = False
+        emailMessage = ''
+        passwordError = False
+        passwordMessage = ''
+        # save form data into local variables
+        email = request.form['email']
+        password = request.form['password']
+        password_repeat = request.form['passwordRepeat']
+        name = request.form['name']
+        id = request.form['id']
+        phone = request.form['phone']
+
+        # check if email is valid
+        # does email include a UNCC address?
+        if 'uncc.edu' not in email:
+            emailError = True
+            emailMessage += 'Not a UNCC email address!'
+
+        # check if password is valid
+        # is password at least 8 characters long?
+        if len(password) < 8:
+            passwordError = True
+            passwordMessage += 'Password not 8+ characters long!'
+        if password != password_repeat:
+            passwordError = True
+            # add newline if previous message exists
+            if len(passwordMessage) > 0:
+                passwordMessage += '<br>'
+            passwordMessage += 'Passwords do not match!'
+        if emailError or passwordError:
+            return render_template('signup.html', emailError=emailError, passwordError=passwordError, emailMessage=emailMessage, passwordMessage=passwordMessage)
+        else:
+            return redirect(url_for('validate'))
+
 
 @app.route('/validate')
 def validate():
