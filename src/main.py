@@ -109,9 +109,8 @@ def signup():
             Have fun buying an selling!
             The Niner Miner Team
             """
-            # read password from text file
-            file = open('../password.txt', 'r')
-            gmail_password = file.read()
+            
+            gmail_password = 'Ninerminer1234!'
             # create secure SSL context
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -210,8 +209,7 @@ def resend_validation():
             The Niner Miner Team
             """
             # read password from text file (for security)
-            file = open('../password.txt', 'r')
-            gmail_password = file.read()
+            gmail_password = 'Ninerminer1234!'
             # create secure SSL context
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
