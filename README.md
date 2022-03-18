@@ -23,24 +23,13 @@ The technologies being used are:
 - Google Maps (Mapping)
 - PayPal (Purchases)
 
-## Installing Dependencies
-In order to get the back end working we need to get a virtual environment running, so we can install the 
-necessary dependencies. Assuming you are using Git Bash on Windows, we can use the command 
-```python -m venv env``` to create a python 
-virtual environment in your current directory.
-Additional information on virtual environments can be found 
-[here](https://docs.python.org/3/library/venv.html). Then you can activate the venv by typing:
-- Git Bash on Windows: ```source env/Scripts/activate```
-- Bash on Linux: ```source env/bin/activate```
+## App Installation
+For your convenience, we made a single script that creates a virtual environment, installs dependencies, 
+and creates the database automatically. In the niner_miner directory, open the ```install``` directory. 
+- if you are using Git Bash for Windows, use the command ```./app_install_windows_gitbash.sh```
+- if you are using Mac(zsh) or Linux(bash, dash, etc), use the command ```./app_install_mac_linux.sh```
 
-Once the venv is activated, then we can install the necessary dependencies. This repo includes
-a file named "requirements.txt" that can be used to automatically install all necessary libraries.
-The easiest way to do this is to first CD into the directory that contains requirements.txt.
-Then use the below command to install the requirements:
-
-```pip install -r /path/to/requirements.txt```
-
-For additional troubleshooting, refer to [this page](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
+If you see any errors (shown as red text), then send us an email and we will work on fixing the problem.
 
 ## Running the Code
 Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
@@ -49,6 +38,13 @@ the development server and allow access to the app.
 An IP Address should be visible in the console, and you can either ctl+click the address
 or copy and paste the address into a web browser to view the app. You can also manually
 enter this address into your webbrowser if needed: ```http://127.0.0.1:5000/```
+
+## Resetting the Database
+While we are in the process of building and testing the application, it is sometimes necessary to delete and 
+rebuild the database to remove existing data and start from scratch. To simplify this process, a script in the
+```src``` directory named reset_db.py automates the process of resetting the database. 
+
+To reset the command the command ```python reset_db.py```
 
 ## Work in Progress
 At this time in development, the application still has most of its functions non-operational.
