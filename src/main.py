@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, request
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import l
 from random import randint
 import smtplib, ssl, copy
 
