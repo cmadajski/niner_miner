@@ -214,7 +214,7 @@ def resend_validation():
                 server.login(sender_email, gmail_password)
                 # send email to user
                 server.sendmail(sender_email, receiver_email, email_content)
-            return redirect(url_for('index'))
+            return redirect(url_for('validation'))
 
 @app.route('/about')
 def about():
