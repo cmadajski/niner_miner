@@ -43,7 +43,7 @@ def signup():
     errors['password_str'] = list()
 
     if request.method == 'GET':
-        return render_template('signup.html', errors=errors)
+        return render_template('signup.html', errors=errors, info=None)
     elif request.method == 'POST':
         
         # save form data into a dict for convenience
@@ -75,9 +75,10 @@ def signup():
         if user_info['password'] != user_info['password_repeat']:
             errors['password'] = True
             errors['password_str'].append('Passwords do not match!')
-        # 
+        # if errors exist, show them to user
         if errors['email'] or errors['password']:
-            return render_template('signup.html', errors=errors)
+            return render_template('signup.html', errors=errors, info=user_info)
+        # if no errors exist, then add user to database and email verification code
         else:
             # generate random 6 digit code
             validation_code = ''

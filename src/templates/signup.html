@@ -32,16 +32,32 @@
                 </div>
                 <div class="signup-form">
                     <form action="/signup" method="post">
+                        {% if info['name'] != None %}
+                        <input type="text" name="name" placeholder="Full Name" value="{{ info['name'] }}" autofocus>
+                        {% else %}
                         <input type="text" name="name" placeholder="Full Name" autofocus>
+                        {% endif %}
+                        {% if info['id'] != None %}
+                        <input type="text" name="id" placeholder="UNCC ID#" value="{{ info['id'] }}">
+                        {% else %}
                         <input type="text" name="id" placeholder="UNCC ID#">
+                        {% endif %}
+                        {% if info['phone'] != None %}
+                        <input type="text" name="phone" placeholder="Phone #" value="{{ info['phone'] }}">
+                        {% else %}
                         <input type="text" name="phone" placeholder="Phone #">
+                        {% endif %}
                         <br>
                         {% if errors['email'] %}
                         <div class="error">
                             <span>{{ errors['email_str'] }}</span>
                         </div>
                         {% endif %}
+                        {% if info['email'] != None %}
+                        <input type="text" name="email" placeholder="UNCC Email" value="{{ info['email'] }}">
+                        {% else %}
                         <input type="text" name="email" placeholder="UNCC Email">
+                        {% endif %}
                         {% if errors['password'] %}
                         <div class="error">
                             {% for message in errors['password_str'] %}
