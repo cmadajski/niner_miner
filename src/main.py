@@ -176,9 +176,44 @@ def resend_validation():
             if requested_user.is_validated == True:
                 errors['email'] = True
                 errors['email_str'] = f'Account with email {given_email} is already validated!'
+        # if errors are found, show errors to user
         if errors['email']:
             return render_template('resend_validation.html', errors=errors)
+        # if no errors are found, resend the verification code
         else:
+            # generate new 6-digit verification code
+            validation_code = ''
+            for i in range(6):
+                num = randint(0, 9)
+                validation_code += str(num)
+            # add code for sending new email here
+            port = 465
+            smtp_server = 'smtp.gmail.com'
+            sender_email = 'ninerminer.alerts@gmail.com'
+            receiver_email = requested_user.email
+            email_content = f"""\
+            SUBJECT: Your Validation Code for Niner Miner
+
+            Hi there {requested_user.name},\n
+            Here's the six-digit validation code for validating your new Niner Miner account.
+
+            CODE:\t{validation_code}
+
+            Visit 127.0.0.1:5000/validate to enter in your code.
+
+            Have fun buying an selling!
+            The Niner Miner Team
+            """
+            # read password from text file (for security)
+            file = open('../password.txt', 'r')
+            gmail_password = file.read()
+            # create secure SSL context
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                # login to server
+                server.login(sender_email, gmail_password)
+                # send email to user
+                server.sendmail(sender_email, receiver_email, email_content)
             return redirect(url_for('index'))
 
 @app.route('/about')
