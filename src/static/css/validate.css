@@ -1,0 +1,76 @@
+/* whole document */
+
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+body {
+    font-family: Norwester;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+}
+
+/* left column */
+.left-column {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 48vw;
+    background-color: #005035;
+    text-align: center;
+}
+.title {
+    font-size: 90px;
+    font-weight: 900;
+    font-style: italic;
+    margin-top: 300px;
+    display: block;
+}
+.description {
+    font-size: 40px;
+    color: #A49665;
+    margin-top: 50px;
+}
+.description span {
+    display: block;
+}
+
+/* right column */
+.right-column {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 48vw;
+}
+.right-column form {
+    width: 500px;
+    margin: 30vh auto;
+    padding: 20px;
+    background-color: #005035;
+    border-radius: 10px;
+    
+}
+.right-column form input {
+    display: block;
+    margin: 20px auto;
+    font-size: 32px;
+    width: 80%;
+    border-radius: 10px;
+    padding: 4px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+.error {
+    background-color: rgb(218, 3, 3);
+    color: black;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+.error span {
+    display: block;
+}

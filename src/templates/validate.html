@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/validate.css">
+        <title>Validate Account</title>
+    </head>
+    <body>
+        <div class="left-column">
+            <div class="title">
+                <span>Validate Your Account</span>
+            </div>
+            <div class="description">
+                <span>Check your UNCC Email for the validation code</span>
+                <span>Need link for return to Login</span>
+                <span>Need link for resend validation code</span>
+                
+            </div>
+        </div>
+        <div class="right-column">
+            <form action="/validate" method="post">
+                {% if errors['email'] %}
+                <div class="error">
+                    <span>{{ errors['email_str'] }}</span>
+                </div>
+                {% endif %}
+                <input type="text" name="email" placeholder="UNCC Email" autofocus>
+                {% if errors['code'] %}
+                <div class="error">
+                    <span>{{ errors['code_str'] }}</span>
+                </div>
+                {% endif %}
+                <input type="text" name="code" placeholder="6-Digit Code">
+                <input type="submit" class="submit-button" value="Validate Account">
+            </form>
+        </div>
+    </body>
+</html>

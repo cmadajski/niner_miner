@@ -1,4 +1,3 @@
-import email
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from random import randint
@@ -18,7 +17,7 @@ class User(db.Model):
     email = db.Column(db.String(40), unique=True, nullable=False)
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
-    validated = db.Column(db.Boolean, default=False)
+    is_validated = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f'{self.name}({self.id})>> {self.email}'
@@ -118,12 +117,45 @@ def signup():
             return redirect(url_for('validate'))
 
 
-@app.route('/validate')
+@app.route('/validate', methods=['GET', 'POST'])
 def validate():
+    # data for input validation
+    errors = dict()
+    errors['email'] = False
+    errors['code'] = False
+    errors['email_str'] = ''
+    errors['code_str'] = ''
+
     if request.method == 'GET':
-        return render_template('validate.html')
+        return render_template('validate.html', errors=errors)
     elif request.method == 'POST':
-        return 'NO LOGIC FOR POST REQUESTS YET'
+        given_email = request.form['email']
+        given_code = request.form['code']
+
+        # is email already in the system?
+        requested_user = User.query.filter_by(email=given_email).first()
+        if requested_user == None:
+            errors['email'] = True
+            errors['email_str'] = 'No account associated with given email address'
+        # is account already validated?
+        else:
+            if requested_user.is_validated == True:
+                errors['email'] = True
+                errors['email_str'] = f'Account with email {given_email} is already validated!'
+            
+            # is the code valid for the requested user?
+            if given_code != requested_user.validation_code:
+                errors['code'] = True
+                errors['code_str'] = 'Code not valid, try again or resend another code.'
+
+        if errors['email'] or errors['code']:
+            return render_template('validate.html', errors=errors)
+        else:
+            return redirect(url_for('index'))
+
+@app.route('/resend_validation', methods=['GET', 'POST'])
+def resend_validation():
+    return 'RESEND VALIDATION PAGE GOES HERE'
 
 @app.route('/about')
 def about():
