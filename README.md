@@ -29,7 +29,7 @@ and creates the database automatically. In the niner_miner directory, open the `
 - if you are using Git Bash for Windows, use the command ```./app_install_windows_gitbash.sh```
 - if you are using Mac(zsh) or Linux(bash, dash, etc), use the command ```./app_install_mac_linux.sh```
 
-If you see any errors (shown as red text), then send us an email and we will work on fixing the problem.
+If you see any errors, then send us an email and we will work on fixing the problem.
 
 ## Running the Code
 Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
@@ -42,7 +42,7 @@ enter this address into your webbrowser if needed: ```http://127.0.0.1:5000/```
 ## Resetting the Database
 While we are in the process of building and testing the application, it is sometimes necessary to delete and 
 rebuild the database to remove existing data and start from scratch. To simplify this process, a script in the
-```src``` directory named reset_db.py automates the process of resetting the database. 
+```src/``` directory named reset_db.py automates the process of resetting the database. 
 
 To reset the command the command ```python reset_db.py```
 

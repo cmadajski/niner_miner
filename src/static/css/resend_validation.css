@@ -29,19 +29,31 @@ body {
     margin-top: 300px;
     display: block;
 }
-.back-to-login a {
-    display: block;
-    background-color: #A49665;
+.nav {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nav a {
+    display: inline;
+    font-size: 32px;
     color: black;
-    border-radius: 10px;
-    padding: 20px 0;
-    font-size: 24px;
-    width: 200px;
-    margin: 20px auto;
+    background-color: #A49665;
     text-decoration: none;
+    padding: 10px;
+    margin: 0;
+    width: fit-content;
     transition: 250ms;
 }
-.back-to-login a:hover, a:focus {
+.nav-left {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.nav-right {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.nav a:hover, a:focus {
     background-color: black;
     color: #A49665;
     cursor: pointer;

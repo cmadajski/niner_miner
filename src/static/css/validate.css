@@ -37,6 +37,35 @@ body {
 .description span {
     display: block;
 }
+.nav {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nav a {
+    display: inline;
+    font-size: 32px;
+    color: black;
+    background-color: #A49665;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0;
+    width: fit-content;
+    transition: 250ms;
+}
+.nav-left {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.nav-right {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.nav a:hover, a:focus {
+    background-color: black;
+    color: #A49665;
+    cursor: pointer;
+}
 
 /* right column */
 .right-column {

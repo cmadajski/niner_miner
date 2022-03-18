@@ -42,20 +42,31 @@ body {
     font-size: 24px;
     width: fit-content;
 }
-.login a {
-    display: block;
+.nav {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nav a {
+    display: inline;
     font-size: 32px;
     color: black;
     background-color: #A49665;
     text-decoration: none;
-    border-radius: 10px;
     padding: 10px;
-    margin: 0 auto;
-    margin-top: 40px;
+    margin: 0;
     width: fit-content;
     transition: 250ms;
 }
-.login a:hover {
+.nav-left {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.nav-right {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.nav a:hover {
     background-color: black;
     color: #A49665;
 }
