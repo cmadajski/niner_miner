@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from random import randint
-import smtplib, ssl
+import smtplib, ssl, copy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -151,11 +151,35 @@ def validate():
         if errors['email'] or errors['code']:
             return render_template('validate.html', errors=errors)
         else:
+            # change account validation status to true
+            requested_user.is_validated = True
+            db.session.commit()
             return redirect(url_for('index'))
 
 @app.route('/resend_validation', methods=['GET', 'POST'])
 def resend_validation():
-    return 'RESEND VALIDATION PAGE GOES HERE'
+    errors = dict()
+    errors['email'] = False
+    errors['email_str'] = ''
+    if request.method == 'GET':
+        return render_template('resend_validation.html', errors=errors)
+    elif request.method == 'POST':
+        given_email = request.form['email']
+
+        # is email already in the system?
+        requested_user = User.query.filter_by(email=given_email).first()
+        if requested_user == None:
+            errors['email'] = True
+            errors['email_str'] = 'No account associated with given email address'
+        # is account already validated?
+        else:
+            if requested_user.is_validated == True:
+                errors['email'] = True
+                errors['email_str'] = f'Account with email {given_email} is already validated!'
+        if errors['email']:
+            return render_template('resend_validation.html', errors=errors)
+        else:
+            return redirect(url_for('index'))
 
 @app.route('/about')
 def about():
