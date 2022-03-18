@@ -61,7 +61,10 @@ def signup():
             errors['email'] = True
             errors['email_str'] = 'Not a UNCC email address!'
         # does the email already exist in the database?
-        # ADD CODE HERE
+        requested_user = User.query.filter_by(email=user_info['email']).first()
+        if requested_user != None:
+            errors['email'] = True
+            errors['email_str'] = 'Email address is already associated with an account!'
 
         # check if password is valid
         # is password at least 8 characters long?
@@ -98,7 +101,7 @@ def signup():
             Hi there {user_info['name']},\n
             Here's the six-digit validation code for validating your new Niner Miner account.
 
-            CODE:\t{validation_code}
+            CODE: {validation_code}
 
             Visit 127.0.0.1:5000/validate to enter in your code.
 
@@ -137,6 +140,7 @@ def validate():
         if requested_user == None:
             errors['email'] = True
             errors['email_str'] = 'No account associated with given email address'
+        
         # is account already validated?
         else:
             if requested_user.is_validated == True:
