@@ -190,6 +190,9 @@ def resend_validation():
             for i in range(6):
                 num = randint(0, 9)
                 validation_code += str(num)
+            # assign user with new code
+            requested_user.validation_code = validation_code
+            db.session.commit()
             # add code for sending new email here
             port = 465
             smtp_server = 'smtp.gmail.com'
@@ -217,7 +220,7 @@ def resend_validation():
                 server.login(sender_email, gmail_password)
                 # send email to user
                 server.sendmail(sender_email, receiver_email, email_content)
-            return redirect(url_for('validation'))
+            return redirect(url_for('validate'))
 
 @app.route('/about')
 def about():
