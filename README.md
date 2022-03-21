@@ -29,7 +29,9 @@ and creates the database automatically. In the niner_miner directory, open the `
 - if you are using Git Bash for Windows, use the command ```./app_install_windows_gitbash.sh```
 - if you are using Mac(zsh) or Linux(bash, dash, etc), use the command ```./app_install_mac_linux.sh```
 
-If you see any errors, then send us an email and we will work on fixing the problem.
+If you see any errors, then send us an email and we will work on fixing the problem. Otherwise, if you want 
+to take the initiative yourself, just open the script file and use the commands one-by-one to set up the 
+application yourself.
 
 ## Running the Code
 Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
