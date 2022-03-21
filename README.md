@@ -31,8 +31,8 @@ and creates the database automatically. In the niner_miner directory, open the `
 
 Due to some issue with the script (which I cannot figure out an answer to), once you run the above script 
 you must manually activate the virtual environment by navigating to the ```niner_miner``` directory and 
-using the command ```source env/Scripts/activate``` to start the virtual environment. Hopefully we can find 
-a solution to this in the near future.
+using the command ```source env/Scripts/activate``` on Windows machines or ```source env/bin/activate``` on Mac/Linux to 
+start the virtual environment. Hopefully we can find a solution to this in the near future.
 
 ## Running the Code
 Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
