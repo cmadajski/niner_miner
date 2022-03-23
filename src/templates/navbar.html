@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/navbar.css">
-    <title>{% block title}</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     <header>
@@ -14,7 +14,7 @@
                 <a href="#">Niner Miner</a>
             </div>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
+                <li><a href="{{ url_for('product_feed') }}">Home</a></li>
                 <li><a href="#">Post</a></li>
                 <li><a href="#">Messages</a></li>
                 <li><a href="#">My List</a></li>
@@ -22,5 +22,9 @@
             </ul>
         </nav>
     </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 </body>
 </html>
