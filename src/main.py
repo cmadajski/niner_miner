@@ -232,7 +232,7 @@ def forgot_password():
 
 @app.route('/product_feed')
 def product_feed():
-    return 'SHOW LIST OF ALL PRODUCTS FOR SALE HERE'
+    return render_template('product_feed.html')
 
 @app.route('/product_detail')
 def product_detail():
