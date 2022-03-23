@@ -20,11 +20,17 @@
                 <li><a href="{{ url_for('my_items') }}">My Items</a></li>
                 <li><a href="{{ url_for('account') }}">Account</a></li>
             </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </nav>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
+    <script src="../static/javascript/navbar.js"></script>
 </body>
 </html>
