@@ -1,3 +1,4 @@
+import re
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from random import randint
@@ -252,7 +253,7 @@ def post():
 
 @app.route('/my_items')
 def my_items():
-    return 'SHOW LIST OF ALL CURRENT USERS ITEMS'
+    return render_template('my_items.html')
 
 @app.route('/account')
 def account():
