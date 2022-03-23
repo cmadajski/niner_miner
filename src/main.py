@@ -248,7 +248,7 @@ def messages():
 
 @app.route('/post')
 def post():
-    return 'POST A NEW ITEM FOR SALE'
+    return render_template('post.html')
 
 @app.route('/my_items')
 def my_items():
