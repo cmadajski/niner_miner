@@ -244,7 +244,7 @@ def product_search():
 
 @app.route('/messages')
 def messages():
-    return 'MESSAGES GO HERE'
+    return render_template('messages.html')
 
 @app.route('/post')
 def post():
