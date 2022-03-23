@@ -257,7 +257,7 @@ def my_items():
 
 @app.route('/account')
 def account():
-    return 'ACCOUNT MAIN PAGE'
+    return render_template('account.html')
 
 @app.route('/account_edit')
 def account_edit():
