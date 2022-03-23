@@ -1,0 +1,57 @@
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #005035;
+}
+
+.logo a {
+    font-family: Norwester;
+    font-size: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    
+    color: white;
+}
+
+.logo a:visited {
+    color:white;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    font-family: Lato;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
