@@ -3,8 +3,6 @@ body {
     padding: 0;
     font-family: Norwester;
     color: green;
-    display: flex;
-    flex-wrap: wrap;
 }
 @font-face {
     font-family: Norwester;
