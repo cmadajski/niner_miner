@@ -28,10 +28,13 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(40), unique=True, nullable=False)
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
-    is_validated = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Boolean(), default=False)
 
     def __repr__(self):
         return f'{self.name}({self.id})>> {self.email}'
+    
+    def is_active(self):
+        return self.active
 
 
 # index route is used for log in related functions
@@ -52,11 +55,12 @@ def index():
         # does email exist in the database?
         requested_user = User.query.filter_by(email=login_attempt['email']).first()
         if requested_user != None:
+            # is the requested user activated?
+            if requested_user.is_active() == False:
+                errors['email'] = True
+                errors['email_str'] = 'Account has not been validated yet!'
             # is password valid for the requested user?
-            if requested_user.password == login_attempt['password']:
-                login_user(requested_user)
-                return redirect('/product_feed')
-            else:
+            if requested_user.password != login_attempt['password']:
                 errors['password'] = True
                 errors['password_str'] = 'Password not valid for given email!'
         else:
@@ -64,6 +68,9 @@ def index():
             errors['email_str'] = 'Account does not exist for the given email!'
         if errors['email'] or errors['password']:
             return render_template('index.html', errors=errors, info=login_attempt)
+        else:
+            login_user(requested_user)
+            return redirect('/product_feed')
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
@@ -177,7 +184,7 @@ def validate():
         
         # is account already validated?
         else:
-            if requested_user.is_validated == True:
+            if requested_user.is_active() == True:
                 errors['email'] = True
                 errors['email_str'] = f'Account with email {given_email} is already validated!'
             
@@ -190,7 +197,7 @@ def validate():
             return render_template('validate.html', errors=errors)
         else:
             # change account validation status to true
-            requested_user.is_validated = True
+            requested_user.active = True
             db.session.commit()
             return redirect(url_for('index'))
 
@@ -211,7 +218,7 @@ def resend_validation():
             errors['email_str'] = 'No account associated with given email address'
         # is account already validated?
         else:
-            if requested_user.is_validated == True:
+            if requested_user.is_active == True:
                 errors['email'] = True
                 errors['email_str'] = f'Account with email {given_email} is already validated!'
         # if errors are found, show errors to user
