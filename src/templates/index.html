@@ -25,7 +25,21 @@
                 </div>
                 <div class="login-form">
                     <form action ="/" method="post">
+                        {% if errors['email'] %}
+                        <div class="error">
+                            <span>{{ errors['email_str'] }}</span>
+                        </div>
+                        {% endif %}
+                        {% if info != None %}
+                        <input class="textbox" name="email" type="text" placeholder="UNCC Email" value="{{ user_info['email'] }}" autofocus><br>
+                        {% else %}
                         <input class="textbox" name="email" type="text" placeholder="UNCC Email" autofocus><br>
+                        {% endif %}
+                        {% if errors['password'] %}
+                        <div class="error">
+                            <span>{{ errors['password_str'] }}</span>
+                        </div>
+                        {% endif %}
                         <input class="textbox" name="password" type="password" placeholder="Password"><br>
                         <input class="form-submit" type="submit" value="Log In">
                     </form>

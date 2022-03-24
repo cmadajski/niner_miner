@@ -1,6 +1,7 @@
 import re
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
 import smtplib, ssl, copy
 
@@ -10,8 +11,17 @@ app.config['SECRET_KEY'] = 'most secret key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# flask login stuff
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'index'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).first()
+
 # database models
-class User(db.Model):
+class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
     phone = db.Column(db.String(10))
@@ -27,10 +37,33 @@ class User(db.Model):
 # index route is used for log in related functions
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    errors = dict()
+    errors['email'] = False
+    errors['password'] = False
+    errors['email_str'] = ''
+    errors['password_str'] = ''
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('index.html', errors=errors, user_info=None)
     elif request.method == 'POST':
-        return 'USING POST'
+        login_attempt = dict()
+        login_attempt['email'] = request.form['email']
+        login_attempt['password'] = request.form['password']
+        
+        # does email exist in the database?
+        requested_user = User.query.filter_by(email=login_attempt['email']).first()
+        if requested_user != None:
+            # is password valid for the requested user?
+            if requested_user.password == login_attempt['password']:
+                login_user(requested_user)
+                return redirect('/product_feed')
+            else:
+                errors['password'] = True
+                errors['password_str'] = 'Password not valid for given email!'
+        else:
+            errors['email'] = True
+            errors['email_str'] = 'Account does not exist for the given email!'
+        if errors['email'] or errors['password']:
+            return render_template('index.html', errors=errors, user_info=login_attempt)
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
@@ -228,10 +261,12 @@ def about():
     return "ABOUT GOES HERE"
 
 @app.route('/forgot_password')
+@login_required
 def forgot_password():
     return "FORGOT PASSWORD GOES HERE"
 
 @app.route('/product_feed')
+@login_required
 def product_feed():
     return render_template('product_feed.html')
 
@@ -270,6 +305,12 @@ def account_delete():
 @app.route('/change_password')
 def change_password():
     return 'CHANGE PASSWORD HERE'
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run()
