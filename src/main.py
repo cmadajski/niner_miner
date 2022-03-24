@@ -1,6 +1,7 @@
 import re
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
 import smtplib, ssl, copy
 
@@ -10,27 +11,66 @@ app.config['SECRET_KEY'] = 'most secret key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# flask login stuff
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'index'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).first()
+
 # database models
-class User(db.Model):
+class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
     phone = db.Column(db.String(10))
     email = db.Column(db.String(40), unique=True, nullable=False)
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
-    is_validated = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Boolean(), default=False)
 
     def __repr__(self):
         return f'{self.name}({self.id})>> {self.email}'
+    
+    def is_active(self):
+        return self.active
 
 
 # index route is used for log in related functions
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    errors = dict()
+    errors['email'] = False
+    errors['password'] = False
+    errors['email_str'] = ''
+    errors['password_str'] = ''
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('index.html', errors=errors, info=None)
     elif request.method == 'POST':
-        return 'USING POST'
+        login_attempt = dict()
+        login_attempt['email'] = request.form['email']
+        login_attempt['password'] = request.form['password']
+        
+        # does email exist in the database?
+        requested_user = User.query.filter_by(email=login_attempt['email']).first()
+        if requested_user != None:
+            # is the requested user activated?
+            if requested_user.is_active() == False:
+                errors['email'] = True
+                errors['email_str'] = 'Account has not been validated yet!'
+            # is password valid for the requested user?
+            if requested_user.password != login_attempt['password']:
+                errors['password'] = True
+                errors['password_str'] = 'Password not valid for given email!'
+        else:
+            errors['email'] = True
+            errors['email_str'] = 'Account does not exist for the given email!'
+        if errors['email'] or errors['password']:
+            return render_template('index.html', errors=errors, info=login_attempt)
+        else:
+            login_user(requested_user)
+            return redirect('/product_feed')
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
@@ -144,7 +184,7 @@ def validate():
         
         # is account already validated?
         else:
-            if requested_user.is_validated == True:
+            if requested_user.is_active() == True:
                 errors['email'] = True
                 errors['email_str'] = f'Account with email {given_email} is already validated!'
             
@@ -157,7 +197,7 @@ def validate():
             return render_template('validate.html', errors=errors)
         else:
             # change account validation status to true
-            requested_user.is_validated = True
+            requested_user.active = True
             db.session.commit()
             return redirect(url_for('index'))
 
@@ -178,7 +218,7 @@ def resend_validation():
             errors['email_str'] = 'No account associated with given email address'
         # is account already validated?
         else:
-            if requested_user.is_validated == True:
+            if requested_user.is_active == True:
                 errors['email'] = True
                 errors['email_str'] = f'Account with email {given_email} is already validated!'
         # if errors are found, show errors to user
@@ -228,48 +268,65 @@ def about():
     return "ABOUT GOES HERE"
 
 @app.route('/forgot_password')
+@login_required
 def forgot_password():
     return "FORGOT PASSWORD GOES HERE"
 
 @app.route('/product_feed')
+@login_required
 def product_feed():
     return render_template('product_feed.html')
 
 @app.route('/product_detail')
+@login_required
 def product_detail():
     return 'SHOW DETAILED INFO FOR A SINGLE ITEM'
 
 @app.route('/product_search')
+@login_required
 def product_search():
     return 'SHOW ITEM FEED BASED ON USER SEARCH CRITERIA'
 
 @app.route('/messages')
+@login_required
 def messages():
     return render_template('messages.html')
 
 @app.route('/post')
+@login_required
 def post():
     return render_template('post.html')
 
 @app.route('/my_items')
+@login_required
 def my_items():
     return render_template('my_items.html')
 
 @app.route('/account')
+@login_required
 def account():
     return render_template('account.html')
 
 @app.route('/account_edit')
+@login_required
 def account_edit():
     return 'EDIT ACCOUNT'
 
 @app.route('/account_delete')
+@login_required
 def account_delete():
     return 'DELETE ACCOUNT'
 
 @app.route('/change_password')
+@login_required
 def change_password():
     return 'CHANGE PASSWORD HERE'
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)

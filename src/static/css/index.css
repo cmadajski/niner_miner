@@ -61,6 +61,7 @@ body {
    text-align: center;
    padding: 20px;
    margin: auto auto;
+   transition: 400ms;
 }
 .login-title {
    font-size: 50px;
@@ -120,6 +121,17 @@ body {
 .signup a:hover, a:focus {
    background-color: black;
    color: #A49665;
+}
+.error {
+   background-color: rgb(218, 3, 3);
+   color: black;
+   padding: 10px;
+   margin: 10px auto;
+   width: 80%;
+   border-radius: 10px;
+}
+.error span {
+   display: block;
 }
 
 /* styling for small/mobile screens */
