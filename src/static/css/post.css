@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Norwester;
+    color: green;
+    display: flex;
+    flex-wrap: wrap;
+}
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+
+/* using for testing purposes */
+
+.right-column {
+    
+    width: 48vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.post {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 200px;
+    padding: 20px;
+    background-color: #005035;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.post-title {
+    font-size: 40px;
+    color: #A49665;
+}
+.post-form form input {
+    display: block;
+    margin: 10px auto;
+    font-size: 32px;
+    width: 80%;
+    border-radius: 10px;
+    padding: 4px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.post-form form input:focus {
+    background-color: hsl(160, 100%, 78%);
+}
+.submit-post {
+    color: black;
+    background-color: #A49665;
+    font-size: 24px;
+    transition: 250ms;
+}

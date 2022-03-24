@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/navbar.css">
+    <link rel="stylesheet" href="{% block links %}{% endblock %}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -21,11 +22,17 @@
                 <li><a href="{{ url_for('account') }}">Account</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </nav>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
+    <script src="../static/javascript/navbar.js"></script>
 </body>
 </html>

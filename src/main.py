@@ -1,4 +1,4 @@
-import re
+from unicodedata import category
 from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -34,6 +34,34 @@ class User(db.Model, UserMixin):
     
     def is_active(self):
         return self.active
+
+#have not added user logic yet to this
+class Items(db.Model):
+    item_id = db.Column("item_id", db.Integer, primary_key=True)
+    title = db.Column("title", db.String(200))
+#    image = db.Column("image", db.Blob)
+    price = db.Column("price", db.Numeric, nullable=False)
+    fixed = db.Column("fixed", db.Text)
+    category = db.Column("category", db.Text)
+    condition = db.Column("condition", db.Text)
+    extradetails = db.Column("extradetails", db.Text)
+    description = db.Column("description", db.String(1000))
+    location = db.Column("location", db.Text)
+
+    def __init__(self, title, price, fixed, category, condition, extradetails, description, location):
+        self.title = title
+        self.price = price
+        self.fixed = fixed
+        self.category = category
+        self.condition = condition
+        self.extradetails = extradetails
+        self.description = description
+        self.location = location
+
+class sellItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
 
 
 # index route is used for log in related functions
@@ -273,8 +301,10 @@ def forgot_password():
 @app.route('/product_feed')
 @login_required
 def product_feed():
-    return render_template('product_feed.html')
+    all_items = db.session.query(Items).all()
 
+    return render_template('product_feed.html', items=all_items)
+  
 @app.route('/product_detail')
 @login_required
 def product_detail():
@@ -290,10 +320,32 @@ def product_search():
 def messages():
     return render_template('messages.html')
 
-@app.route('/post')
+@app.route('/post', methods=['GET', 'POST'])
 @login_required
 def post():
-    return render_template('post.html')
+    if request.method == 'GET':
+        return render_template('post.html', info=None)
+    elif request.method == 'POST':
+        # save form data into a dict for convenience
+        item_info = dict()
+        item_info['title'] = request.form['title']
+        item_info['price'] = request.form['price']
+        if 'submit_button' in request.form:
+            item_info['fixed'] = request.form['fixed']
+        if 'submit_button' in request.form:
+            item_info['category'] = request.form['category']
+        if 'submit_button' in request.form:
+            item_info['condition'] = request.form['condition']
+        item_info['extradetails'] = request.form['extradetails']
+        item_info['description'] = request.form['description']
+        if 'submit_button' in request.form:
+            item_info['location'] = request.form['location']
+
+        new_item = Items(title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'], category=item_info['category'], condition=item_info['condition'], extradetails=item_info['extradetails'], description=item_info['description'] , location=item_info['location'])
+        db.session.add(new_item)
+        db.session.commit()
+
+        return redirect(url_for('product_feed'))
 
 @app.route('/my_items')
 @login_required
@@ -327,4 +379,4 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
