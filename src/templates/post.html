@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/post.css">
+        <title>Post An Item</title>
+    </head>
+    <body>
+        <div class="right-column">
+            <div class="post">
+                <div class="post-title">
+                    <span>Post An Item</span>
+                </div>
+                <div class="post-form">
+                    <form action="/post" method="post">
+                        <h2>1. Add Title</h2>
+                        {% if info['title'] != None %}
+                        <input type="text" name="title" placeholder="Listing Title" value="{{ info['title'] }}" autofocus>
+                        {% else %}
+                        <input type="text" name="title" placeholder="Listing Title" autofocus>
+                        {% endif %}
+                        <h2>2. Select Item Images</h2>
+                        <h3>This functionality will be added in later</h3>
+                        <h2>3. Price</h2>
+                        {% if info['price'] != None %}
+                        <input type="number" name="price" placeholder="Enter Price in USD" value="{{ info['price'] }}">
+                        {% else %}
+                        <input type="number" name="price" placeholder="Enter Price in USD">
+                        {% endif %}
+                        <br>
+                        <h3>Fixed Price</h3>
+                        <input type="radio" id="fixedp" name="fixed" value="Fixed Price">
+                        <label for="fixedp">Fixed Price</label><br>
+                        <input type="radio" id="negotiate" name="fixed" value="Willing to Negotiate">
+                        <label for="negotiate">Willing to Negotiate</label><br>
+                        <br>
+                        <h2>4. Select Details</h2>
+                        <h3>Category</h3>
+                        <input type="radio" id="electronics" name="category" value="Electronics">
+                        <label for="electronics">Electronics</label><br>
+                        <input type="radio" id="FandS" name="category" value="Furniture & Storage">
+                        <label for="FandS">Furniture & Storage</label><br>
+                        <input type="radio" id="clothes" name="category" value="Clothes & Accessories">
+                        <label for="clothes">Clothes & Accessories</label><br>
+                        <input type="radio" id="other" name="category" value="Other">
+                        <label for="other">Other</label><br>
+                        <br>
+                        <h3>Condition</h3>
+                        <input type="radio" id="new" name="condition" value="New">
+                        <label for="new">New</label><br>
+                        <input type="radio" id="used" name="condition" value="Lightly Used">
+                        <label for="used">Lightly Used</label><br>
+                        <input type="radio" id="hused" name="condition" value="Heavily Used">
+                        <label for="hused">Heavily Used</label><br>
+                        <input type="radio" id="other" name="condition" value="Other">
+                        <label for="other">Other</label><br>
+                        <br>
+                        <h3>Product/Model No. (optional)</h3>
+                        {% if info['extradetails'] != None %}
+                        <input type="text" name="extradetails" placeholder="Type here" value="{{ info['extradetails'] }}">
+                        {% else %}
+                        <input type="text" name="extradetails" placeholder="Type here">
+                        {% endif %}
+                        <h3>Description</h3>
+                        {% if info['description'] != None %}
+                        <input type="text" name="description" placeholder="Type here" value="{{ info['description'] }}">
+                        {% else %}
+                        <input type="text" name="description" placeholder="Type here">
+                        {% endif %}
+                        <br>
+                        <h2>5. Delivery Location</h2>
+                        <h3>I prefer meeting at: </h3>
+                        <input type="radio" id="studentunion" name="location" value="Student Union">
+                        <label for="studentunion">Student Union</label><br>
+                        <input type="radio" id="SoVi" name="location" value="SoVi Lounge">
+                        <label for="SoVi">SoVi Lounge</label><br>
+                        <input type="radio" id="atkins" name="location" value="Atkins Library">
+                        <label for="atkins">Atkins Library</label><br>
+                        <input type="radio" id="other" name="location" value="Other">
+                        <label for="other">Other</label><br>
+                        <h3>Campus Map</h3>
+                        <h3>The map will be implemented in later sprints.</h3>
+                        <input type="submit" name="submit_button" class="submit-post">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

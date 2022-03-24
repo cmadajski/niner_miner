@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Norwester;
+    color: black;
+    display: flex;
+    flex-wrap: wrap;
+}
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/product_feed.css">
+        <title>Post An Item</title>
+    </head>
+    <body>
+        <h1>Product Feed</h1>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Fixed price?</th>
+                <th>Condition</th>
+                <th>Description</th>
+                <th>Location</th>
+            </tr>
+
+        {% for item in items %}
+        <tr>
+        <td>{{ item.title }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.fixed }}</td>
+        <td>{{ item.condition }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.location }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </body>
+</html>
