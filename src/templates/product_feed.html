@@ -1,8 +1,10 @@
 {% extends "navbar.html" %}
+{% block links %}../static/css/product_feed.css{% endblock %}
 {% block title %}Product Feed{% endblock %}
 {% block content %}
     <h1>Product Feed</h1>
     <h2>Welcome to Niner Miner, {{ current_user.name }}!</h2>
+    <!--
     <table>
         <tr>
             <th>Title</th>
@@ -24,4 +26,16 @@
     </tr>
     {% endfor %}
     </table>
+    -->
+    <div class="feed">
+        {% for item in items %}
+        <div class="each-item">
+            <img src="../static/empty.jpg" alt="img">
+            <div class="title-price">
+                <p>{{ item.title }}</p>
+                <p>${{ item.price }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}
