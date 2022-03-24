@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/css/product_feed.css">
-        <title>Post An Item</title>
-    </head>
+{% extends "navbar.html" %}
+{% block title %}Product Feed{% endblock %}
+{% block content %}
     <body>
         <h1>Product Feed</h1>
+        <h2>Welcome to Niner Miner, {{ current_user.name }}!</h2>
         <table>
             <tr>
                 <th>Title</th>
@@ -30,4 +26,4 @@
         {% endfor %}
         </table>
     </body>
-</html>
+{% endblock %}

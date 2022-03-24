@@ -1,0 +1,111 @@
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #005035;
+}
+
+.logo a {
+    font-family: Norwester;
+    font-size: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    
+    color: white;
+}
+
+.logo a:visited {
+    color:white;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    font-family: Lato;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Hamburger Menu*/
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+}
+
+@media(max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger.active .bar:nth-child(2){
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1){
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3){
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-links {
+        position: fixed;
+        left: -100%;
+        top: 8vh;
+        gap: 0;
+        flex-direction: column;
+        background-color: #005035;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .nav-links li {
+        margin: 16px 0;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+}
