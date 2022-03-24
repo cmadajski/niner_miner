@@ -43,7 +43,7 @@ def index():
     errors['email_str'] = ''
     errors['password_str'] = ''
     if request.method == 'GET':
-        return render_template('index.html', errors=errors, user_info=None)
+        return render_template('index.html', errors=errors, info=None)
     elif request.method == 'POST':
         login_attempt = dict()
         login_attempt['email'] = request.form['email']
@@ -63,7 +63,7 @@ def index():
             errors['email'] = True
             errors['email_str'] = 'Account does not exist for the given email!'
         if errors['email'] or errors['password']:
-            return render_template('index.html', errors=errors, user_info=login_attempt)
+            return render_template('index.html', errors=errors, info=login_attempt)
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
@@ -271,38 +271,47 @@ def product_feed():
     return render_template('product_feed.html')
 
 @app.route('/product_detail')
+@login_required
 def product_detail():
     return 'SHOW DETAILED INFO FOR A SINGLE ITEM'
 
 @app.route('/product_search')
+@login_required
 def product_search():
     return 'SHOW ITEM FEED BASED ON USER SEARCH CRITERIA'
 
 @app.route('/messages')
+@login_required
 def messages():
     return render_template('messages.html')
 
 @app.route('/post')
+@login_required
 def post():
     return render_template('post.html')
 
 @app.route('/my_items')
+@login_required
 def my_items():
     return render_template('my_items.html')
 
 @app.route('/account')
+@login_required
 def account():
     return render_template('account.html')
 
 @app.route('/account_edit')
+@login_required
 def account_edit():
     return 'EDIT ACCOUNT'
 
 @app.route('/account_delete')
+@login_required
 def account_delete():
     return 'DELETE ACCOUNT'
 
 @app.route('/change_password')
+@login_required
 def change_password():
     return 'CHANGE PASSWORD HERE'
 
