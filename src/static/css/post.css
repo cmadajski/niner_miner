@@ -4,20 +4,13 @@ body {
     font-family: Norwester;
     color: green;
 }
+
 @font-face {
     font-family: Norwester;
     src: url(../fonts/norwester.otf);
 }
 
 /* using for testing purposes */
-
-.right-column {
-    
-    width: 48vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-}
 .post {
     width: 500px;
     margin: 0 auto;
