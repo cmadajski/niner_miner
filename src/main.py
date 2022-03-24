@@ -294,7 +294,6 @@ def about():
     return "ABOUT GOES HERE"
 
 @app.route('/forgot_password')
-@login_required
 def forgot_password():
     return "FORGOT PASSWORD GOES HERE"
 
