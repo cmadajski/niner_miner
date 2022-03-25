@@ -60,6 +60,30 @@ rebuild the database to remove existing data and start from scratch. To simplify
 
 To reset the command the command ```python reset_db.py```
 
-## Work in Progress
-At this time in development, the application still has most of its functions non-operational.
-We are hoping to have most functions working as intended by the last week of April.
+## Basic Application Flow
+The landing page for the appliation is the login page. Ideally, a person should not be able to access any of the app features without first logging in. This way, we can limit app usage to only valid UNCC students.
+
+If you do not have an account on Niner Miner, then you can click the "Become a Member" link to navigate to the sign up page.
+
+All fields on the sign up page require input in order to submit. Here are some of the submission rules:
+- UNCC ID must be unique to all users currently in the database
+- Email address must contain the string '@uncc.edu'
+- Email address must not be associated with another Niner Miner account
+- Password must be 8 or more characters
+- Both Password fields must match exactly
+
+Once sign up submission is successful, you will be redirected to the validation page and an email will be sent to the provided email address that contains a six digit code. The code must be provided, along with your email, on the validation page in order to activate your account. An account must be activated before a user can acccess Niner Miner services.
+
+If you encounter an error during the validation process, you can use the "resend email" link to send another email with a new validation code.
+
+Once validation is successful, you will be redirected to the login page. Use your email and password to log in to the Niner Miner service.
+
+The above features are the only 100% completed features for Sprint 2.
+
+--------------------------------------------------------------------------------------------------------------------
+
+We do have other systems implemented, but they are only partially functional and do not meet the criteria necessary for "definition of done".
+
+On the post page, you can add new items that you would like to sell. The interface needs to be overhauled to improve clarity and better use available screen space. Also, there is an issue where the price can only accept integer values. There is also supposed to be a Google Map showing meeting locations, but that has been moved to Sprint 4.
+
+Any new items added for sale will be shown on the product feed page. All images are placeholders and there is no search or sort functionality yet.
