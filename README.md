@@ -24,6 +24,20 @@ The technologies being used are:
 - PayPal (Purchases)
 
 ## App Installation
+
+Before running any scripts, make sure to check if you have Python installed on your machine. If you aren't sure, 
+{download the latest version of Python](https://www.python.org/downloads/) and install it on your system.
+
+If you are running Windows on your machine, it is also necessary to have Git Bash for Windows installed. 
+If you don't have it already, please [download the latest version](https://git-scm.com/downloads) and install it on your system.
+
+The easiest way to clone the repository is to use the HTTPS method. When inside of your preferred shell 
+(Git Bash, Bash, zsh, ect), use the command ```git clone https://github.com/cmadajski/niner_miner.git``` 
+and the files will be downloaded to your local system.
+
+For more advanced users, SSH is an even better way to interact with GitHub repos. For detailed instructions 
+on using SSH with GitHub, [check out this webpage.](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+
 For your convenience, we made a single script that creates a virtual environment, installs dependencies, 
 and creates the database automatically. In the niner_miner directory, open the ```install``` directory. 
 - if you are using Git Bash for Windows, use the command ```./app_install_windows_gitbash.sh```
