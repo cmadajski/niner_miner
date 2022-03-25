@@ -33,7 +33,7 @@
             <img src="../static/empty.jpg" alt="img">
             <div class="title-price">
                 <p>{{ item.title }}</p>
-                <p>${{ item.price }}</p>
+                <p>${{'%0.2f'|format(item.price|float)}}</p>
             </div>
         </div>
         {% endfor %}
