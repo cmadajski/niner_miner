@@ -24,7 +24,6 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
-    phone = db.Column(db.String(10))
     email = db.Column(db.String(40), unique=True, nullable=False)
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
@@ -119,7 +118,6 @@ def signup():
         user_info = dict()
         user_info['name'] = request.form['name']
         user_info['id'] = request.form['id']
-        user_info['phone'] = request.form['phone']
         user_info['email'] = request.form['email']
         user_info['password'] = request.form['password']
         user_info['password_repeat'] = request.form['passwordRepeat']
@@ -156,7 +154,7 @@ def signup():
                 validation_code += str(num)
             
             # add new user data to database
-            new_user = User(name=user_info['name'], id=user_info['id'], phone=user_info['phone'], email=user_info['email'], password=user_info['password'], validation_code=validation_code)
+            new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'], password=user_info['password'], validation_code=validation_code)
             db.session.add(new_user)
             db.session.commit()
             
@@ -296,7 +294,6 @@ def about():
     return "ABOUT GOES HERE"
 
 @app.route('/forgot_password')
-@login_required
 def forgot_password():
     return "FORGOT PASSWORD GOES HERE"
 

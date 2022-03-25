@@ -71,6 +71,22 @@ nav {
     transition: all 0.3s ease-in-out;
     background-color: white;
 }
+.current-user {
+    border: 2px solid black;
+    background-color: white;
+    font-size: 18px;
+    font-family: Norwester;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+.current-user span {
+    display: block;
+}
+.current-user a {
+    text-decoration: none;
+    color: #A49665;
+}
 
 @media(max-width: 768px) {
     .hamburger {
