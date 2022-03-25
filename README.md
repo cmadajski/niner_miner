@@ -43,10 +43,7 @@ and creates the database automatically. In the niner_miner directory, open the `
 - if you are using Git Bash for Windows, use the command ```./app_install_windows_gitbash.sh```
 - if you are using Mac(zsh) or Linux(bash, dash, etc), use the command ```./app_install_mac_linux.sh```
 
-Due to some issue with the script (which I cannot figure out an answer to), once you run the above script 
-you must manually activate the virtual environment by navigating to the ```niner_miner``` directory and 
-using the command ```source env/Scripts/activate``` on Windows machines or ```source env/bin/activate``` on Mac/Linux to 
-start the virtual environment. Hopefully we can find a solution to this in the near future.
+Once you run the above script you must manually activate the virtual environment by navigating to the ```niner_miner``` directory and using the command ```source env/Scripts/activate``` on Windows machines or ```source env/bin/activate``` on Mac/Linux to start the virtual environment.
 
 ## Running the Code
 Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
@@ -59,7 +56,7 @@ enter this address into your webbrowser if needed: ```http://127.0.0.1:5000/```
 ## Resetting the Database
 While we are in the process of building and testing the application, it is sometimes necessary to delete and 
 rebuild the database to remove existing data and start from scratch. To simplify this process, a script in the
-```src/``` directory named reset_db.py automates the process of resetting the database. 
+```src/``` directory named reset_db.py automates the process of resetting the database. This should only be necessary if any models change or new models are added.
 
 To reset the command the command ```python reset_db.py```
 
