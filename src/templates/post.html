@@ -18,7 +18,7 @@
                 <h3>This functionality will be added in later</h3>
                 <h2>3. Price</h2>
                 {% if info['price'] != None %}
-                <input type="number" name="price" placeholder="Enter Price in USD" value="{{ info['price'] }}">
+                <input type="number" min="0.01" step="0.01" name="price" placeholder="Enter Price in USD" value="{{ info['price'] }}">
                 {% else %}
                 <input type="number" name="price" placeholder="Enter Price in USD">
                 {% endif %}
