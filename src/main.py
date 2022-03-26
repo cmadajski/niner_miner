@@ -293,9 +293,54 @@ def resend_validation():
 def about():
     return "ABOUT GOES HERE"
 
-@app.route('/forgot_password')
+@app.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
-    return "FORGOT PASSWORD GOES HERE"
+    errors = dict()
+    errors['email'] = False
+    errors['email_str'] = ''
+    errors['id'] = False
+    errors['id_str'] = ''
+    errors['password'] = False
+    errors['password_str'] = list()
+    user_info = dict()
+    if request.method == "GET":
+        return render_template('forgot_password.html', errors=errors, user_info=None)
+    elif request.method == "POST":
+        user_info['email'] = request.form['email']
+        user_info['id'] = (int)(request.form['id'])
+        user_info['password'] = request.form['password']
+        user_info['password_repeat'] = request.form['passwordRepeat']
+
+        # does email exist in the database?
+        requested_user = User.query.filter_by(email=user_info['email']).first()
+        if requested_user == None:
+            errors['email'] = True
+            errors['email_str'] = 'No accounts exist for given email'
+        else:
+            # is id valid for the requested user?
+            if requested_user.id != user_info['id']:
+                errors['id'] = True
+                errors['id_str'] = 'ID# not valid for given email!'
+        
+        # check if password is valid
+        # is password at least 8 characters long?
+        if len(user_info['password']) < 8:
+            errors['password'] = True
+            errors['password_str'].append('Password not 8+ characters long!')
+        # do both passwords equal each other?
+        if user_info['password'] != user_info['password_repeat']:
+            errors['password'] = True
+            errors['password_str'].append('Passwords do not match!')
+
+        if errors['email'] or errors['id'] or errors['password']:
+            return render_template('forgot_password.html', errors=errors, user_info=user_info)
+        else:
+            # update password for desired user
+            requested_user.password = user_info['password']
+            db.session.commit()
+            return redirect(url_for('index'))
+    else:
+        return "HTTP REQUEST ERROR, CHECK BACKEND LOGIC"
 
 @app.route('/product_feed')
 @login_required
