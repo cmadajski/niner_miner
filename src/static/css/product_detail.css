@@ -1,0 +1,218 @@
+body {
+    font-family: Lato;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Regular.ttf);
+}
+
+:root {
+  --main-radius: 10px;
+  --main-padding:10px;
+}
+
+.container {
+  display: grid;
+  height: auto;
+  grid-template-columns: 1fr 1.3fr 0.7fr;
+  grid-template-rows: 1.5fr 1.2fr 0.8fr;
+  grid-template-areas:
+    "content1 item_detail contact"
+    "footer footer footer";
+  grid-gap: 0.2rem;
+  font-weight: 800;
+  font-size: 12px;
+  color: #46505;
+  padding :  var(--main-padding);
+}
+main {
+  grid-area: main;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+}
+
+#content1 {
+  grid-area: content1;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+}
+
+.item_detail {
+  grid-area: item_detail;
+  padding: var(--main-padding);
+}
+
+.item_detail .title {
+    margin-bottom: 5px;
+    color: #2B313C;
+}
+.item_detail .subtitle {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    color: #46505E;
+}
+
+.item_detail .description {
+    margin: 10px 10px 0 0;
+    color: #46505E;
+    font-weight:300;
+}
+
+.item_detail .price {
+    margin: 10px 15px 0 0;
+    font-size: 1.2rem;
+    color: #2B313C;
+}
+.button{
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.item_detail .btnbuy{
+width: 40%;
+  background-color: #004F34; /* Green */
+  padding: 12px 36px;
+  margin: 10px 10px 0 0;
+  font-size: 18px;
+}
+
+.contact {
+  grid-area: contact;
+  text-align: center;
+  padding: var(--main-padding);
+}
+
+.contact img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.contact .details{
+  color: #8290A6;
+  font-weight: 300;
+  margin: 5px 5px 0 0;
+}
+
+.contact .btncontact{
+  width: 100%;
+  background-color: #A49665; /* Golden */
+  padding: 5px;
+  margin: 10px 10px 0 0;
+
+}
+
+.contact .location {
+    border-top: 1px solid #B1BAC7;
+    padding-top: 10px;
+    margin: 10px 5px 0 0;
+    color: #46505E;
+    font-weight:300;
+}
+
+.contact .map {
+    margin: 10px 5px 0 0;
+    border: 1px solid #B1BAC7;
+    border-radius: 10px;
+}
+
+footer {
+  grid-area: footer;
+  padding-top: var(--main-padding);
+}
+
+.container a {
+  display: block;
+  font-family: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
+.container a:hover {
+    color:#004F35;
+    text-decoration: underline;
+}
+
+/**
+ * Tooltip Styles
+ */
+
+/* Add this attribute to the element that needs a tooltip */
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-tooltip]:before {
+  position: absolute;
+  top: 150%;
+  left: 30%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 160px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #fff;
+  border:1px solid #8290A6;
+  color: #8290A6;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 12px;
+  font-weight:300;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-tooltip]:after {
+  position: absolute;
+  top: 130%;
+  left: 30%;
+  margin-left: -5px;
+  width: 0;
+  border-bottom: 5px solid #8290A6;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+@media only screen and (max-width: 550px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.4fr 2.2fr 1.2fr 1.2fr 1.2fr 1fr;
+    grid-template-areas:
+      "main"
+      "content1"
+      "item_detail"
+      "contact"
+      "footer";
+  }
+}

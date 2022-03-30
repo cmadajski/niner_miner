@@ -16,9 +16,11 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'index'
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
+
 
 # database models
 class User(db.Model, UserMixin):
@@ -31,15 +33,16 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'{self.name}({self.id})>> {self.email}'
-    
+
     def is_active(self):
         return self.active
 
-#have not added user logic yet to this
+
+# have not added user logic yet to this
 class Items(db.Model):
     item_id = db.Column("item_id", db.Integer, primary_key=True)
     title = db.Column("title", db.String(200))
-#    image = db.Column("image", db.Blob)
+    #    image = db.Column("image", db.Blob)
     price = db.Column("price", db.Numeric, nullable=False)
     fixed = db.Column("fixed", db.Text)
     category = db.Column("category", db.Text)
@@ -57,6 +60,7 @@ class Items(db.Model):
         self.extradetails = extradetails
         self.description = description
         self.location = location
+
 
 class sellItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -78,7 +82,7 @@ def index():
         login_attempt = dict()
         login_attempt['email'] = request.form['email']
         login_attempt['password'] = request.form['password']
-        
+
         # does email exist in the database?
         requested_user = User.query.filter_by(email=login_attempt['email']).first()
         if requested_user != None:
@@ -101,6 +105,7 @@ def index():
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     # data for input validation
@@ -113,7 +118,7 @@ def signup():
     if request.method == 'GET':
         return render_template('signup.html', errors=errors, info=None)
     elif request.method == 'POST':
-        
+
         # save form data into a dict for convenience
         user_info = dict()
         user_info['name'] = request.form['name']
@@ -121,7 +126,7 @@ def signup():
         user_info['email'] = request.form['email']
         user_info['password'] = request.form['password']
         user_info['password_repeat'] = request.form['passwordRepeat']
-        
+
         # check if email is valid
         # does email include a UNCC address?
         if 'uncc.edu' not in user_info['email']:
@@ -152,12 +157,13 @@ def signup():
             for i in range(6):
                 num = randint(0, 9)
                 validation_code += str(num)
-            
+
             # add new user data to database
-            new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'], password=user_info['password'], validation_code=validation_code)
+            new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'],
+                            password=user_info['password'], validation_code=validation_code)
             db.session.add(new_user)
             db.session.commit()
-            
+
             # send email with validation code
             port = 465
             smtp_server = 'smtp.gmail.com'
@@ -176,7 +182,7 @@ def signup():
             Have fun buying an selling!
             The Niner Miner Team
             """
-            
+
             gmail_password = 'Ninerminer1234!'
             # create secure SSL context
             context = ssl.create_default_context()
@@ -207,13 +213,13 @@ def validate():
         if requested_user == None:
             errors['email'] = True
             errors['email_str'] = 'No account associated with given email address'
-        
+
         # is account already validated?
         else:
             if requested_user.is_active() == True:
                 errors['email'] = True
                 errors['email_str'] = f'Account with email {given_email} is already validated!'
-            
+
             # is the code valid for the requested user?
             if given_code != requested_user.validation_code:
                 errors['code'] = True
@@ -226,6 +232,7 @@ def validate():
             requested_user.active = True
             db.session.commit()
             return redirect(url_for('index'))
+
 
 @app.route('/resend_validation', methods=['GET', 'POST'])
 def resend_validation():
@@ -289,9 +296,11 @@ def resend_validation():
                 server.sendmail(sender_email, receiver_email, email_content)
             return redirect(url_for('validate'))
 
+
 @app.route('/about')
 def about():
     return "ABOUT GOES HERE"
+
 
 @app.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
@@ -321,7 +330,7 @@ def forgot_password():
             if requested_user.id != user_info['id']:
                 errors['id'] = True
                 errors['id_str'] = 'ID# not valid for given email!'
-        
+
         # check if password is valid
         # is password at least 8 characters long?
         if len(user_info['password']) < 8:
@@ -342,27 +351,33 @@ def forgot_password():
     else:
         return "HTTP REQUEST ERROR, CHECK BACKEND LOGIC"
 
+
 @app.route('/product_feed')
 @login_required
 def product_feed():
     all_items = db.session.query(Items).all()
 
     return render_template('product_feed.html', items=all_items)
-  
-@app.route('/product_detail')
+
+
+@app.route('/product_detail/<product_id>')
 @login_required
-def product_detail():
-    return 'SHOW DETAILED INFO FOR A SINGLE ITEM'
+def product_detail(product_id):
+    item_details = Items.query.filter_by(item_id=product_id).first()
+    return render_template('product_detail.html', item=item_details)
+
 
 @app.route('/product_search')
 @login_required
 def product_search():
     return 'SHOW ITEM FEED BASED ON USER SEARCH CRITERIA'
 
+
 @app.route('/messages')
 @login_required
 def messages():
     return render_template('messages.html')
+
 
 @app.route('/post', methods=['GET', 'POST'])
 @login_required
@@ -385,42 +400,52 @@ def post():
         if 'submit_button' in request.form:
             item_info['location'] = request.form['location']
 
-        new_item = Items(title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'], category=item_info['category'], condition=item_info['condition'], extradetails=item_info['extradetails'], description=item_info['description'] , location=item_info['location'])
+        new_item = Items(title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
+                         category=item_info['category'], condition=item_info['condition'],
+                         extradetails=item_info['extradetails'], description=item_info['description'],
+                         location=item_info['location'])
         db.session.add(new_item)
         db.session.commit()
 
         return redirect(url_for('product_feed'))
+
 
 @app.route('/my_items')
 @login_required
 def my_items():
     return render_template('my_items.html')
 
+
 @app.route('/account')
 @login_required
 def account():
     return render_template('account.html')
+
 
 @app.route('/account_edit')
 @login_required
 def account_edit():
     return 'EDIT ACCOUNT'
 
+
 @app.route('/account_delete')
 @login_required
 def account_delete():
     return 'DELETE ACCOUNT'
+
 
 @app.route('/change_password')
 @login_required
 def change_password():
     return 'CHANGE PASSWORD HERE'
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

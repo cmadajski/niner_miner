@@ -4,8 +4,7 @@
 {% block content %}
     <h1>Product Feed</h1>
     <h2>Welcome to Niner Miner, {{ current_user.name }}!</h2>
-    <!--
-    <table>
+    <!--<table>
         <tr>
             <th>Title</th>
             <th>Price</th>
@@ -24,11 +23,11 @@
     <td>{{ item.description }}</td>
     <td>{{ item.location }}</td>
     </tr>
-    {% endfor %}
+    {% endfor %}-->
     </table>
-    -->
     <div class="feed">
         {% for item in items %}
+        <a href="/product_detail/{{item.item_id}}">
         <div class="each-item">
             <img src="../static/empty.jpg" alt="img">
             <div class="title-price">
@@ -36,6 +35,7 @@
                 <p>${{'%0.2f'|format(item.price|float)}}</p>
             </div>
         </div>
+        </a>
         {% endfor %}
     </div>
 {% endblock %}

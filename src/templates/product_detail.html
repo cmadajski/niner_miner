@@ -1,0 +1,54 @@
+{% extends "navbar.html" %}
+{% block links %}../static/css/product_detail.css{% endblock %}
+{% block title %}Product Feed{% endblock %}
+{% block content %}
+
+<div class="container">
+    <!--<main><h1>{{item.title}}</h1></main>-->
+    <!-- Display Images -->
+    <div id="content1">
+        <img src="../static/empty.jpg" alt="img" width="100%" height="350px;">
+    </div>
+    <div class="item_detail">
+        <h1 class="title">{{item.title}}</h1>
+        <a href="#"><p class="subtitle">{{item.category}}</p></a>
+        <p class="subtitle">
+            Condition: <b>{{item.condition}}</b></p>
+        <p class="description">
+            {{item.description}}
+            {% if item.extradetails != '' %}
+                <br/><br/><b>Other Details:</b><br/>{{item.extradetails}}
+           {% endif %}
+
+        </p>
+        </p>
+        <p class="price" data-tooltip="Price is set to {{item.fixed}}">Price: ${{'%0.2f'|format(item.price|float)}}</p>
+        <button class="button btnbuy">Buy</button>
+    </div>
+    <div class="contact">
+        <img src="../static/avatar.png" alt="img">
+        <p class="details">
+            John Doe <br/>
+            johndoe@uncc.edu
+        </p>
+        <a class="button btncontact" href="/messages">Contact Seller</a>
+        <p class="location">
+            <b>Preferred Location</b><br/>
+            {{item.location}}
+        </p>
+        <div class="map">
+            <iframe
+              width="100%"
+              height="180"
+              style="border:0"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6M-Kj_ihTLu14Z2HGKgcxXQ9qqxJWUeU
+                &q={{item.location}}">
+        </iframe>
+        </div>
+    </div>
+    <!--<footer>Footer</footer>-->
+</div>
+{% endblock %}
