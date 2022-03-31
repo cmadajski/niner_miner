@@ -425,13 +425,14 @@ def account():
 @app.route('/account_edit')
 @login_required
 def account_edit():
-    return 'EDIT ACCOUNT'
+    return render_template('account_edit.html')
 
 
 @app.route('/account_delete')
 @login_required
 def account_delete():
-    return 'DELETE ACCOUNT'
+    return render_template('account_delete.html')
+
 
 @app.route('/account_reset_password', methods=['GET', 'POST'])
 @login_required
@@ -471,10 +472,11 @@ def account_reset_password():
     else:
         return "REQUEST ERROR, CHECK BACKEND CODE"
 
-@app.route('/change_password')
+
+@app.route('/billing')
 @login_required
-def change_password():
-    return 'CHANGE PASSWORD HERE'
+def billing():
+    return "BILLING AND PAYMENTS INFO GOES HERE"
 
 
 @app.route('/logout')
