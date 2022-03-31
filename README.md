@@ -61,6 +61,19 @@ rebuild the database to remove existing data and start from scratch. To simplify
 To reset the command the command ```python reset_db.py```
 
 ## Basic Application Flow
+
+```mermaid
+flowchart TD
+  A[Login] --> B[Product Feed];
+  A[Login] --> C[Sign Up];
+  A[Login] --> D[Forgot Password];
+  A[Login] --> E[About];
+  B[Product Feed] --> F[Account];
+  B[Product Feed] --> G[Post New Item];
+  B[Product Feed] --> H[Logout];
+  D[Forgot Password] --> A[Login];
+```
+
 The landing page for the appliation is the login page. Ideally, a person should not be able to access any of the app features without first logging in. This way, we can limit app usage to only valid UNCC students.
 
 If you do not have an account on Niner Miner, then you can click the "Become a Member" link to navigate to the sign up page.
