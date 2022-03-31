@@ -350,6 +350,7 @@ def forgot_password():
             # update password for desired user
             requested_user.password = user_info['password']
             db.session.commit()
+            flash('Password for ' + user_info['email'].email + ' has been reset')
             return redirect(url_for('index'))
     else:
         return "HTTP REQUEST ERROR, CHECK BACKEND LOGIC"
