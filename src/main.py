@@ -190,7 +190,7 @@ def signup():
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
                 server.login(sender_email, gmail_password)
                 server.sendmail(sender_email, receiver_email, email_content)
-
+            flash('A validation code has been sent to ' + user_info['email'])
             return redirect(url_for('validate'))
 
 
@@ -232,6 +232,7 @@ def validate():
             # change account validation status to true
             requested_user.active = True
             db.session.commit()
+            flash('Account for email ' + requested_user.email + ' has been successfully activated!')
             return redirect(url_for('index'))
 
 
