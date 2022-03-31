@@ -55,7 +55,7 @@ body {
 }
 .login {
    background-color: #005035;
-   width: 400px;
+   max-width: 400px;
    height: auto;
    border-radius: 10px;
    text-align: center;
@@ -70,7 +70,7 @@ body {
 .textbox {
    margin: 10px 0;
    font-size: 32px;
-   font-family: Norwester;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
    transition: 400ms;
    width: 80%;
 }
@@ -150,18 +150,27 @@ body {
 @media only screen and (max-width: 1180px) {
    .left-column {
       display: block;
-      width: 98vw;
+      width: 100vw;
       height: auto;
       padding: 20px 0;
    }
    .title {
       margin-top: 0;
-      font-size: 70px;
+      font-size: 60px;
+   }
+   .tagline {
+      font-size: 28px;
    }
    .right-column {
       display: block;
-      width: 98vw;
+      width: 100vw;
       height: auto;
       margin: 20px 0;
+   }
+   .login {
+      width: 80%;
+   }
+   .login-title {
+      font-size: 32px;
    }
 }
