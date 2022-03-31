@@ -25,6 +25,15 @@
                 </div>
                 <div class="login-form">
                     <form action ="/" method="post">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                <div class="flash">
+                                    <span>{{ message }}</span>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
                         {% if errors['email'] %}
                         <div class="error">
                             <span>{{ errors['email_str'] }}</span>
