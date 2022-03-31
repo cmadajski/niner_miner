@@ -1,5 +1,5 @@
 from unicodedata import category
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
@@ -433,6 +433,43 @@ def account_edit():
 def account_delete():
     return 'DELETE ACCOUNT'
 
+@app.route('/account_reset_password', methods=['GET', 'POST'])
+@login_required
+def account_reset_password():
+    errors = dict()
+    errors['current_password'] = False
+    errors['current_password_str'] = ''
+    errors['new_password'] = False
+    errors['new_password_str'] = list()
+    if request.method == 'GET':
+        return render_template('account_reset_password.html', errors=errors)
+    elif request.method == 'POST':
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        new_password_repeat = request.form['new_password_repeat']
+        # check if password is valid
+        # is current password valid for the current user?
+        if current_password != current_user.password:
+            errors['current_password'] = True
+            errors['current_password_str'] = 'Password is not valid for current user!'
+        # is password at least 8 characters long?
+        if len(new_password) < 8:
+            errors['new_password'] = True
+            errors['new_password_str'].append('Password not 8+ characters long!')
+        # do both passwords equal each other?
+        if new_password != new_password_repeat:
+            errors['new_password'] = True
+            errors['new_password_str'].append('Passwords do not match!')
+        # if errors exist, show them to user
+        if errors['current_password'] or errors['new_password']:
+            return render_template('account_reset_password.html', errors=errors)
+        else:
+            flash('Password successfully changed!')
+            current_user.password = new_password
+            db.session.commit()
+            return redirect(url_for('account'))
+    else:
+        return "REQUEST ERROR, CHECK BACKEND CODE"
 
 @app.route('/change_password')
 @login_required
