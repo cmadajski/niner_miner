@@ -101,6 +101,7 @@ def index():
             return render_template('index.html', errors=errors, info=login_attempt)
         else:
             login_user(requested_user)
+            flash('Successfully logged in as ' + current_user.name)
             return redirect('/product_feed')
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
