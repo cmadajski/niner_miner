@@ -1,5 +1,5 @@
 from unicodedata import category
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
@@ -101,6 +101,7 @@ def index():
             return render_template('index.html', errors=errors, info=login_attempt)
         else:
             login_user(requested_user)
+            flash('Successfully logged in as ' + current_user.name)
             return redirect('/product_feed')
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
@@ -189,7 +190,7 @@ def signup():
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
                 server.login(sender_email, gmail_password)
                 server.sendmail(sender_email, receiver_email, email_content)
-
+            flash('A validation code has been sent to ' + user_info['email'])
             return redirect(url_for('validate'))
 
 
@@ -231,6 +232,7 @@ def validate():
             # change account validation status to true
             requested_user.active = True
             db.session.commit()
+            flash('Account for ' + requested_user.email + ' has been successfully activated!')
             return redirect(url_for('index'))
 
 
@@ -294,6 +296,7 @@ def resend_validation():
                 server.login(sender_email, gmail_password)
                 # send email to user
                 server.sendmail(sender_email, receiver_email, email_content)
+            flash('A new activation code has been sent to email ' + given_email)
             return redirect(url_for('validate'))
 
 
@@ -425,25 +428,65 @@ def account():
 @app.route('/account_edit')
 @login_required
 def account_edit():
-    return 'EDIT ACCOUNT'
+    return render_template('account_edit.html')
 
 
 @app.route('/account_delete')
 @login_required
 def account_delete():
-    return 'DELETE ACCOUNT'
+    return render_template('account_delete.html')
 
 
-@app.route('/change_password')
+@app.route('/account_reset_password', methods=['GET', 'POST'])
 @login_required
-def change_password():
-    return 'CHANGE PASSWORD HERE'
+def account_reset_password():
+    errors = dict()
+    errors['current_password'] = False
+    errors['current_password_str'] = ''
+    errors['new_password'] = False
+    errors['new_password_str'] = list()
+    if request.method == 'GET':
+        return render_template('account_reset_password.html', errors=errors)
+    elif request.method == 'POST':
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        new_password_repeat = request.form['new_password_repeat']
+        # check if password is valid
+        # is current password valid for the current user?
+        if current_password != current_user.password:
+            errors['current_password'] = True
+            errors['current_password_str'] = 'Password is not valid for current user!'
+        # is password at least 8 characters long?
+        if len(new_password) < 8:
+            errors['new_password'] = True
+            errors['new_password_str'].append('Password not 8+ characters long!')
+        # do both passwords equal each other?
+        if new_password != new_password_repeat:
+            errors['new_password'] = True
+            errors['new_password_str'].append('Passwords do not match!')
+        # if errors exist, show them to user
+        if errors['current_password'] or errors['new_password']:
+            return render_template('account_reset_password.html', errors=errors)
+        else:
+            flash('Password successfully changed!')
+            current_user.password = new_password
+            db.session.commit()
+            return redirect(url_for('account'))
+    else:
+        return "REQUEST ERROR, CHECK BACKEND CODE"
+
+
+@app.route('/billing')
+@login_required
+def billing():
+    return "BILLING AND PAYMENTS INFO GOES HERE"
 
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
+    flash('Successfully logged out.')
     return redirect('/')
 
 

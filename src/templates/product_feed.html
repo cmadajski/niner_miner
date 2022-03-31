@@ -3,7 +3,13 @@
 {% block title %}Product Feed{% endblock %}
 {% block content %}
     <h1>Product Feed</h1>
-    <h2>Welcome to Niner Miner, {{ current_user.name }}!</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">
+                <span>{{ messages[0] }}</span>
+            </div>
+        {% endif %}
+    {% endwith %}
     <!--<table>
         <tr>
             <th>Title</th>

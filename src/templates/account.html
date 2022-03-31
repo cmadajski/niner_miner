@@ -5,14 +5,23 @@
 <div class="columns-container">
     <div class="left-column">
         <div class="account-options">
-            <a href="/account">Account Overview</a>
+            <a class="active" href="/account">Account Overview</a>
             <a href="/account_edit">Edit Account</a>
-            <a href="/reset_password">Change Password</a>
+            <a href="/account_reset_password">Change Password</a>
             <a href="/billing">Billing and Payments</a>
             <a href="/account_delete">Delete Account</a>
         </div>
     </div>
     <div class="right-column">
-</div>
+        {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="success">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
     </div>
+</div>
 {% endblock %}

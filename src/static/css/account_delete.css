@@ -1,0 +1,52 @@
+body {
+    font-family: Norwester;
+}
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+.columns-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 90vh;
+}
+
+/*  left column styling */
+
+.left-column {
+    width: 18vw;
+    height: 92vh;
+    background-color: #005035;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.account-options {
+    width: 100%;
+    margin-top: 100px;
+    text-align: center;
+    font-size: 28px;
+    text-decoration: none;
+}
+.account-options a {
+    height: 80px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.account-options a:hover, a:focus {
+    color: black;
+    background-color: #A49665;
+    font-weight: 600;
+}
+.active {
+    background-color: #A49665;
+}
+
+/* right column styling */
+
+.right-column {
+    width: 80vw;
+}

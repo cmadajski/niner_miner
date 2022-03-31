@@ -1,5 +1,5 @@
 body {
-    
+    font-family: Norwester;
 }
 @font-face {
     font-family: Norwester;
@@ -41,9 +41,23 @@ body {
     background-color: #A49665;
     font-weight: 600;
 }
+.active {
+    background-color: #A49665;
+}
 
 /* right column styling */
 
 .right-column {
     width: 80vw;
+}
+.success {
+    background-color: rgb(3, 218, 14);
+    color: black;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+.success span {
+    display: block;
 }
