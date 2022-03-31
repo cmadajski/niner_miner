@@ -72,6 +72,11 @@ flowchart TD
   B[Product Feed] --> G[Post New Item];
   B[Product Feed] --> H[Logout];
   D[Forgot Password] --> A[Login];
+  E[About] --> A[Login];
+  C[Sign Up] --> I[Activate Account];
+  I[Activate Account] --> A[Login];
+  I[Activate Account] --> J[Resend Activation Code];
+  J[Resend Activation Code] --> I[Activate Account];
 ```
 
 The landing page for the appliation is the login page. Ideally, a person should not be able to access any of the app features without first logging in. This way, we can limit app usage to only valid UNCC students.
