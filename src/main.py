@@ -1,3 +1,4 @@
+from distutils.log import debug
 from unicodedata import category
 from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
@@ -492,4 +493,7 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.0.6')
+    # run app normally
+    app.run(debug=True)
+    # allow phone access by running over a local network
+    # app.run(debug=True, host='192.168.0.6')
