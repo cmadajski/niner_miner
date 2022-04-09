@@ -81,7 +81,7 @@ body {
     padding: 0;
 }
 .signup {
-    width: 500px;
+    max-width: 500px;
     margin: 0 auto;
     margin-top: 200px;
     padding: 20px;
@@ -131,20 +131,35 @@ body {
  /* styling for small/mobile displays */
 @media only screen and (max-width: 1200px) {
     .left-column {
-        width: 98vw;
+        width: 100vw;
         height: auto;
     }
     .title {
         margin-top: 20px;
+        font-size: 50px;
+    }
+    .reminder {
+        font-size: 30px;
+        margin-top: 20px;
+    }
+    .reminder-text ul li {
+        font-size: 18px;
+    }
+    .nav {
+        margin-bottom: 20px;
+    }
+    .nav a {
+        font-size: 22px;
     }
     .login {
         margin-bottom: 20px;
     }
     .right-column {
-        width: 98vw;
+        width: 100vw;
         height: auto;
     }
     .signup {
         margin-top: 20px;
+        width: 80%;
     }
 }

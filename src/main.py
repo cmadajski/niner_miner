@@ -1,3 +1,4 @@
+from distutils.log import debug
 from unicodedata import category
 from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
@@ -350,6 +351,7 @@ def forgot_password():
             # update password for desired user
             requested_user.password = user_info['password']
             db.session.commit()
+            flash('Password for ' + user_info['email'].email + ' has been reset')
             return redirect(url_for('index'))
     else:
         return "HTTP REQUEST ERROR, CHECK BACKEND LOGIC"
@@ -491,4 +493,7 @@ def logout():
 
 
 if __name__ == '__main__':
+    # run app normally
     app.run(debug=True)
+    # allow phone access by running over a local network
+    # app.run(debug=True, host='192.168.0.6')
