@@ -360,9 +360,13 @@ def forgot_password():
 @app.route('/product_feed')
 @login_required
 def product_feed():
-    all_items = db.session.query(Items).all()
-
-    return render_template('product_feed.html', items=all_items)
+    q = request.args.get('q')
+    if q:
+        posts = Items.query.filter(Items.title.contains(q) | Items.description.contains(q) | Items.category.contains(q) | Items.price.contains(q))
+    # all_items = db.session.query(Items).all()
+    else:
+        posts = Items.query.all()
+    return render_template('product_feed.html', items=posts, searched=q)
 
 
 @app.route('/product_detail/<product_id>')
@@ -370,12 +374,6 @@ def product_feed():
 def product_detail(product_id):
     item_details = Items.query.filter_by(item_id=product_id).first()
     return render_template('product_detail.html', item=item_details)
-
-
-@app.route('/product_search')
-@login_required
-def product_search():
-    return 'SHOW ITEM FEED BASED ON USER SEARCH CRITERIA'
 
 
 @app.route('/messages')
