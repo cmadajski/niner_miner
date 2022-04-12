@@ -9,6 +9,39 @@ body {
     src: url(../fonts/norwester.otf);
 }
 
+.header {
+    
+}
+
+h1 {
+    display: inline-block;
+    
+    vertical-align: middle;
+}
+
+.search {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+.search input[type=search] {
+    width: 500px;
+    height: 35px;
+    padding-left: 10px;
+    font-size: 15px;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+}
+
+.search input[type=submit] {
+    height: 35px;
+    width: 75px;
+    font-size: 15px;
+    margin-left: -5px;
+    border-radius: 0 10px 10px 0;
+}
+
 img {
     width: 250px;
     height: 250px;

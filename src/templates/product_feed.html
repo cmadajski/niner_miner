@@ -2,7 +2,13 @@
 {% block links %}../static/css/product_feed.css{% endblock %}
 {% block title %}Product Feed{% endblock %}
 {% block content %}
-    <h1>Product Feed</h1>
+    <div class="header">
+        <h1>Product Feed</h1>
+        <form class="search">
+            <input type="search">
+            <input type="submit">
+        </form>
+    </div>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="flash">
@@ -10,26 +16,6 @@
             </div>
         {% endif %}
     {% endwith %}
-    <!--<table>
-        <tr>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Fixed price?</th>
-            <th>Condition</th>
-            <th>Description</th>
-            <th>Location</th>
-        </tr>
-
-    {% for item in items %}
-    <tr>
-    <td>{{ item.title }}</td>
-    <td>{{ item.price }}</td>
-    <td>{{ item.fixed }}</td>
-    <td>{{ item.condition }}</td>
-    <td>{{ item.description }}</td>
-    <td>{{ item.location }}</td>
-    </tr>
-    {% endfor %}-->
     </table>
     <div class="feed">
         {% for item in items %}
