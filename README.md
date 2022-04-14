@@ -1,6 +1,6 @@
 # Niner Miner - E-commerce for UNCC Students
 
-This web application is a project created for ITSC 4155 Software Engineering Capstone.
+This web application is a project created for ITSC 4155 Software Engineering Capstone (Spring 2022).
 The goal is to create an e-commerce platform similar to OfferUp and Craigslist that allows for UNCC
 students to buy and sell personal goods. The unique feature we seek to offer is using
 UNCC email verification to ensure that only legitimate UNCC students are involved in
@@ -10,10 +10,10 @@ security and trust to students and incentivize them to use our platform instead 
 competitors.
 
 The contributing members for this project are:
-- Oviya Manoharan
-- Hinal Makadiya
+- [Oviya Manoharan](https://github.com/oviya23)
+- [Hinal Makadiya](https://www.linkedin.com/in/hinal-makadiya-60838b207/)
 - Dane Medlin
-- Drew Moore
+- [Drew Moore](https://github.com/drew18moore)
 - [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![wakatime](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc)
 
 The technologies being used are:
@@ -22,6 +22,7 @@ The technologies being used are:
 - HTML/CSS/JS (Frontend)
 - Google Maps (Mapping)
 - PayPal (Purchases)
+- Linode/Nginx/Gunicorn (Server)
 
 ## App Installation
 
