@@ -20,8 +20,9 @@ h1 {
     font-size: 15px;
     width: 75px;
     height: 35px;
-    margin: -4px;
+    margin: -5px;
     border-radius: 10px 0 0 10px;
+    border: 1px solid black;
 }
 
 #selectTagWidth {
@@ -41,6 +42,7 @@ h1 {
     font-size: 15px;
     border-right: none;
     border-left: none;
+    border: 1px solid black;
 }
 
 .search input[type=submit] {
@@ -49,6 +51,7 @@ h1 {
     font-size: 15px;
     margin-left: -5px;
     border-radius: 0 10px 10px 0;
+    border: 1px solid black;
 }
 
 img {
