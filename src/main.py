@@ -43,7 +43,6 @@ class User(db.Model, UserMixin):
 class Items(db.Model):
     item_id = db.Column("item_id", db.Integer, primary_key=True)
     title = db.Column("title", db.String(200))
-    #    image = db.Column("image", db.Blob)
     price = db.Column("price", db.Numeric, nullable=False)
     fixed = db.Column("fixed", db.Text)
     category = db.Column("category", db.Text)
