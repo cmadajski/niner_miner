@@ -12,9 +12,10 @@ document.querySelectorAll(".nav-links li a").forEach(n => n.addEventListener("cl
 }))
 
 $(document).ready(function() {
-    console.log("HI");
     $(".select-category").change(function(){
         $("#widthTempOption").html($('.select-category option:selected').text());
-        $(this).width($("#selectTagWidth").width()+31);  
+        $(this).width($("#selectTagWidth").width()+31);
+        $("#search").width("600px");
+        $("#search").width($("#search").width()-$(this).width()+56)
     });
 });
