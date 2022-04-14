@@ -15,6 +15,19 @@ h1 {
     vertical-align: middle;
 }
 
+.select-category {
+    padding-left: 5px;
+    font-size: 15px;
+    width: 75px;
+    height: 35px;
+    margin: -4px;
+    border-radius: 10px 0 0 10px;
+}
+
+#selectTagWidth {
+    display: none;
+}
+
 .search {
     display: inline-block;
     vertical-align: middle;
@@ -27,7 +40,7 @@ h1 {
     padding-left: 10px;
     font-size: 15px;
     border-right: none;
-    border-radius: 10px 0 0 10px;
+    border-left: none;
 }
 
 .search input[type=submit] {

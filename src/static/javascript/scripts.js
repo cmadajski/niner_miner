@@ -10,3 +10,11 @@ document.querySelectorAll(".nav-links li a").forEach(n => n.addEventListener("cl
     hamburger.classList.remove("active");
     navLinks.classList.remove("active");
 }))
+
+$(document).ready(function() {
+    console.log("HI");
+    $(".select-category").change(function(){
+        $("#widthTempOption").html($('.select-category option:selected').text());
+        $(this).width($("#selectTagWidth").width()+31);  
+    });
+});

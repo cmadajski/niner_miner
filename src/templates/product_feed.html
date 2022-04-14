@@ -5,8 +5,18 @@
     <div class="header">
         <h1>Product Feed</h1>
         <form class="search" method="GET">
+            <select class="select-category">
+                <option>All</option>
+                <option>Electronics</option>
+                <option>Furniture & Storage</option>
+                <option>Clothes & Accessories</option>
+                <option>Other</option>
+            </select>
+            <select id="selectTagWidth">
+                <option id="widthTempOption"></option>
+            </select>
             <input type="search" name="q">
-            <input type="submit">
+            <input type="submit" value="Search">
         </form>
     </div>
     {% if searched %}
@@ -33,4 +43,5 @@
         </a>
         {% endfor %}
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% endblock %}
