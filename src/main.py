@@ -1,4 +1,3 @@
-from distutils.log import debug
 from unicodedata import category
 from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
@@ -185,7 +184,7 @@ def signup():
             The Niner Miner Team
             """
 
-            gmail_password = 'Ninerminer1234!'
+            gmail_password = 'Flaskapp4155!'
             # create secure SSL context
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
