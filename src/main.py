@@ -1,4 +1,3 @@
-from distutils.log import debug
 from unicodedata import category
 from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
@@ -43,7 +42,6 @@ class User(db.Model, UserMixin):
 class Items(db.Model):
     item_id = db.Column("item_id", db.Integer, primary_key=True)
     title = db.Column("title", db.String(200))
-    #    image = db.Column("image", db.Blob)
     price = db.Column("price", db.Numeric, nullable=False)
     fixed = db.Column("fixed", db.Text)
     category = db.Column("category", db.Text)
@@ -185,7 +183,7 @@ def signup():
             The Niner Miner Team
             """
 
-            gmail_password = 'Ninerminer1234!'
+            gmail_password = 'Flaskapp4155!'
             # create secure SSL context
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -351,7 +349,7 @@ def forgot_password():
             # update password for desired user
             requested_user.password = user_info['password']
             db.session.commit()
-            flash('Password for ' + user_info['email'].email + ' has been reset')
+            flash('Password for ' + user_info['email'] + ' has been reset')
             return redirect(url_for('index'))
     else:
         return "HTTP REQUEST ERROR, CHECK BACKEND LOGIC"
