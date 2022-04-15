@@ -19,9 +19,12 @@
             <input type="submit" value="Search">
         </form>
     </div>
-    {{ filtered }}
     {% if searched %}
-        <h2 class="searched">Results for {{ searched }}</h2>
+        <h2 class="searched">Results for {{ searched }} in category  {{ filtered }}</h2>
+    {% else %}
+        {% if filtered != None %}
+        <h2 class="searched">{{ filtered }}</h2>
+        {% endif %}
     {% endif %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -44,5 +47,4 @@
         </a>
         {% endfor %}
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% endblock %}
