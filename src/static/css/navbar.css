@@ -82,7 +82,7 @@ nav {
     background-color: white;
 }
 
-@media(max-width: 860px) {
+@media(max-width: 865px) {
     .hamburger {
         display: block;
     }
