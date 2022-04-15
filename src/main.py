@@ -301,7 +301,7 @@ def resend_validation():
 
 @app.route('/about')
 def about():
-    return "ABOUT GOES HERE"
+    return render_template('about.html')
 
 
 @app.route('/forgot_password', methods=['GET', 'POST'])

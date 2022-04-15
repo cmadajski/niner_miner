@@ -24,17 +24,21 @@ body {
     font-size: 40px;
     color: #A49665;
 }
-.post-form form input {
-    display: block;
-    margin: 10px auto;
+
+.post-form form input:focus {
+    background-color: hsl(160, 100%, 78%);
+}
+.text {
+    display: inline;
+    margin: 10px 10px;
     font-size: 32px;
     width: 80%;
     border-radius: 10px;
     padding: 4px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.post-form form input:focus {
-    background-color: hsl(160, 100%, 78%);
+.radio {
+    width: auto;
 }
 .submit-post {
     color: black;
