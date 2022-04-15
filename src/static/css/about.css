@@ -1,0 +1,70 @@
+/* whole document styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Norwester;
+    color: white;
+}
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+
+header {
+    min-height: 80px;
+    background-color: #005035;
+    padding: 20px;
+}
+header span {
+    font-size: 70px;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+.introduction {
+    background-color: #005035;
+    padding: 10px 20px;
+    border-top: 2px solid #A49665;
+    border-bottom: 2px solid #A49665;
+}
+h2 {
+    color: #A49665;
+    font-size: 36px;
+}
+p {
+    font-size: 28px;
+}
+ul li {
+    font-size: 28px;
+}
+.requirements {
+    padding: 10px 20px;
+    background-color: #005035;
+    border-bottom: 2px solid #A49665;
+}
+.dev-team {
+    padding: 10px 20px;
+}
+.dev-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.dev-card {
+    max-width: 400px;
+    margin: 10px 20px;
+    background-color: #005035;
+    border-radius: 10px;
+}
+.dev-card-content {
+    margin: 20px;
+}
+.dev-card-content img {
+    display: block;
+    width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin: 20px auto;
+}
+.dev-card-content p {
+    margin: 0 auto;
+}

@@ -10,9 +10,9 @@
             <form action="/post" method="post" enctype="multipart/form-data">
                 <h2>1. Add Title</h2>
                 {% if info['title'] != None %}
-                <input type="text" name="title" placeholder="Listing Title" value="{{ info['title'] }}" autofocus>
+                <input class="text" type="text" name="title" placeholder="Listing Title" value="{{ info['title'] }}" autofocus>
                 {% else %}
-                <input type="text" name="title" placeholder="Listing Title" autofocus>
+                <input class="text" type="text" name="title" placeholder="Listing Title" autofocus>
                 {% endif %}
                 <h2>2. Upload Item Images</h2>
                 <!---<h3>This functionality will be added in later</h3> --->
@@ -29,9 +29,9 @@
                 <!---I stopped right here-->
                 <h2>3. Price</h2>
                 {% if info['price'] != None %}
-                <input type="number" min="0.01" step="0.01" name="price" placeholder="Enter Price in USD" value="{{ info['price'] }}">
+                <input class="text" type="number" min="0.01" step="0.01" name="price" placeholder="Enter Price in USD" value="{{ info['price'] }}">
                 {% else %}
-                <input type="number" name="price" placeholder="Enter Price in USD">
+                <input class="text" type="number" name="price" placeholder="Enter Price in USD">
                 {% endif %}
                 <br>
                 <h3>Fixed Price</h3>
@@ -42,11 +42,11 @@
                 <br>
                 <h2>4. Select Details</h2>
                 <h3>Category</h3>
-                <input type="radio" id="electronics" name="category" value="Electronics">
+                <input type="radio" id="electronics" class="radio" name="category" value="Electronics">
                 <label for="electronics">Electronics</label><br>
-                <input type="radio" id="FandS" name="category" value="Furniture & Storage">
+                <input type="radio" id="FandS" class="radio" name="category" value="Furniture & Storage">
                 <label for="FandS">Furniture & Storage</label><br>
-                <input type="radio" id="clothes" name="category" value="Clothes & Accessories">
+                <input type="radio" id="clothes" class="radio" name="category" value="Clothes & Accessories">
                 <label for="clothes">Clothes & Accessories</label><br>
                 <input type="radio" id="other" name="category" value="Other">
                 <label for="other">Other</label><br>
@@ -63,15 +63,15 @@
                 <br>
                 <h3>Product/Model No. (optional)</h3>
                 {% if info['extradetails'] != None %}
-                <input type="text" name="extradetails" placeholder="Type here" value="{{ info['extradetails'] }}">
+                <input class="text" type="text" name="extradetails" placeholder="Type here" value="{{ info['extradetails'] }}">
                 {% else %}
-                <input type="text" name="extradetails" placeholder="Type here">
+                <input class="text" type="text" name="extradetails" placeholder="Type here">
                 {% endif %}
                 <h3>Description</h3>
                 {% if info['description'] != None %}
-                <input type="text" name="description" placeholder="Type here" value="{{ info['description'] }}">
+                <input class="text" type="text" name="description" placeholder="Type here" value="{{ info['description'] }}">
                 {% else %}
-                <input type="text" name="description" placeholder="Type here">
+                <input class="text" type="text" name="description" placeholder="Type here">
                 {% endif %}
                 <br>
                 <h2>5. Delivery Location</h2>
@@ -85,13 +85,13 @@
                 <h3>Campus Map</h3><br>
                 <div class="map">
                     <iframe
-                      width="100%"
-                      height="180"
-                      style="border:0"
-                      loading="lazy"
-                      allowfullscreen
-                      referrerpolicy="no-referrer-when-downgrade"
-                      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6M-Kj_ihTLu14Z2HGKgcxXQ9qqxJWUeU
+                    width="100%"
+                    height="180"
+                    style="border:0"
+                    loading="lazy"
+                    allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6M-Kj_ihTLu14Z2HGKgcxXQ9qqxJWUeU
                         &q=UNC Charlotte">
                 </iframe>
                 </div> <br>
