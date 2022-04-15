@@ -360,7 +360,10 @@ def forgot_password():
 def product_feed():
     q = request.args.get('q')
     f = request.args.get('f')
-    if f == "All" or f == "None":
+    print(f)
+    print(type(f))
+    if f == "All" or f == None:
+        print("at all")
         if q:
             posts = Items.query.filter(Items.title.contains(q) | Items.description.contains(q) | Items.category.contains(q) | Items.price.contains(q))
         # all_items = db.session.query(Items).all()
@@ -368,6 +371,7 @@ def product_feed():
             posts = Items.query.all()
         return render_template('product_feed.html', items=posts, searched=q, filtered=f)
     else:
+        print("at else")
         if q:
             posts = Items.query.filter(Items.category.contains(f) & (Items.title.contains(q) | Items.description.contains(q) | Items.category.contains(q) | Items.price.contains(q)))
         # all_items = db.session.query(Items).all()
