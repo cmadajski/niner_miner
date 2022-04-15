@@ -11,7 +11,6 @@ body {
 
 h1 {
     display: inline-block;
-    
     vertical-align: middle;
 }
 
@@ -22,20 +21,33 @@ h1 {
 }
 
 .search input[type=search] {
-    width: 500px;
-    height: 35px;
+    max-width: 500px;
     padding-left: 10px;
-    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 20px;
     border-right: none;
     border-radius: 10px 0 0 10px;
 }
 
 .search input[type=submit] {
-    height: 35px;
-    width: 75px;
+    padding: 5px;
     font-size: 15px;
     margin-left: -5px;
     border-radius: 0 10px 10px 0;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #A49665;
+    color: black;
+    transition: 250ms;
+}
+.search input[type=search]:focus {
+    background-color: hsl(160, 100%, 78%);
+}
+.search input[type=submit]:focus {
+    cursor: pointer;
+    background-color: black;
+    color: #A49665;
 }
 
 img {

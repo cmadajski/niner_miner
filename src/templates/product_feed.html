@@ -5,12 +5,12 @@
     <div class="header">
         <h1>Product Feed</h1>
         <form class="search" method="GET">
-            <input type="search" name="q">
-            <input type="submit">
+            <input type="search" name="q" placeholder="Type here to search">
+            <input type="submit" value="Search">
         </form>
     </div>
     {% if searched %}
-        <h2 class="searched">Results for {{ searched }}</h2>
+        <h2 class="searched">Results for "{{ searched }}"</h2>
     {% endif %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -24,7 +24,7 @@
         {% for item in items %}
         <a href="/product_detail/{{item.item_id}}">
         <div class="each-item">
-            <img src="../static/empty.jpg" alt="img">
+            <img src="../static/img/empty.jpg" alt="img">
             <div class="title-price">
                 <p>{{ item.title }}</p>
                 <p>${{'%0.2f'|format(item.price|float)}}</p>
