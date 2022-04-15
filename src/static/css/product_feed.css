@@ -36,7 +36,7 @@ h1 {
 }
 
 .search input[type=search] {
-    width: 600px;
+    width: 50vw;
     height: 35px;
     padding-left: 10px;
     font-size: 15px;
