@@ -9,10 +9,8 @@ body {
     src: url(../fonts/norwester.otf);
 }
 
-h1 {
-    display: inline-block;
-    
-    vertical-align: middle;
+.header {
+    display: grid;
 }
 
 .select-category {
@@ -27,12 +25,6 @@ h1 {
 
 #selectTagWidth {
     display: none;
-}
-
-.search {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 20px;
 }
 
 .search input[type=search] {

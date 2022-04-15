@@ -15,7 +15,7 @@ $(document).ready(function() {
     $(".select-category").change(function(){
         $("#widthTempOption").html($('.select-category option:selected').text());
         $(this).width($("#selectTagWidth").width()+31);
-        $("#search").width("600px");
+        $("#search").width("50vw");
         $("#search").width($("#search").width()-$(this).width()+56)
     });
 });
