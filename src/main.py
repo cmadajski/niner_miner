@@ -359,12 +359,21 @@ def forgot_password():
 @login_required
 def product_feed():
     q = request.args.get('q')
-    if q:
-        posts = Items.query.filter(Items.title.contains(q) | Items.description.contains(q) | Items.category.contains(q) | Items.price.contains(q))
-    # all_items = db.session.query(Items).all()
+    f = request.args.get('f')
+    if f == "All" or f == "None":
+        if q:
+            posts = Items.query.filter(Items.title.contains(q) | Items.description.contains(q) | Items.category.contains(q) | Items.price.contains(q))
+        # all_items = db.session.query(Items).all()
+        else:
+            posts = Items.query.all()
+        return render_template('product_feed.html', items=posts, searched=q, filtered=f)
     else:
-        posts = Items.query.all()
-    return render_template('product_feed.html', items=posts, searched=q)
+        if q:
+            posts = Items.query.filter(Items.category.contains(f) & (Items.title.contains(q) | Items.description.contains(q) | Items.category.contains(q) | Items.price.contains(q)))
+        # all_items = db.session.query(Items).all()
+        else:
+            posts = Items.query.filter(Items.category.is_(f))
+        return render_template('product_feed.html', items=posts, searched=q, filtered=f)
 
 
 @app.route('/product_detail/<product_id>')

@@ -5,7 +5,7 @@
     <div class="header">
         <h1>Product Feed</h1>
         <form class="search" method="GET">
-            <select class="select-category">
+            <select class="select-category" name="f">
                 <option>All</option>
                 <option>Electronics</option>
                 <option>Furniture & Storage</option>
@@ -19,6 +19,7 @@
             <input type="submit" value="Search">
         </form>
     </div>
+    {{ filtered }}
     {% if searched %}
         <h2 class="searched">Results for {{ searched }}</h2>
     {% endif %}
