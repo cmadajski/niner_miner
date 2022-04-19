@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
 import smtplib, ssl, copy
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -165,6 +166,13 @@ def signup():
                             phone=user_info['phone'], password=user_info['password'], validation_code=validation_code)
             db.session.add(new_user)
             db.session.commit()
+
+            # add new directory for saving user account img
+            try:
+                path = './static/img/accounts/' + (str)(user_info['id'])
+                os.makedirs(path)
+            except FileExistsError:
+                print("OS_ERROR - Directory already exists!")
 
             # send email with validation code
             port = 465
@@ -423,6 +431,28 @@ def my_items():
 @login_required
 def account():
     return render_template('account.html', user=current_user)
+
+@app.route('/account_change_img')
+@login_required
+def account_change_img():
+    return render_template('account_change_img.html')
+
+@app.route('/upload_img', methods=['POST'])
+@login_required
+def upload_img():
+    new_img = request.files['new_img']
+    if new_img.filename == '':
+        flash('No file selected for upload!')
+    else:
+        # define the path used for account images
+        filename = 'account_img'
+        path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+        # remove the old account img
+        os.remove(path)
+        # save the new img
+        new_img.save(path)
+        # return to account page
+        return redirect('/account')
 
 
 @app.route('/account_edit')
