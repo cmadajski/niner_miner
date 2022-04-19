@@ -1,55 +1,75 @@
 body {
     font-family: Norwester;
+    font-size: 24px;
 }
 @font-face {
     font-family: Norwester;
     src: url(../fonts/norwester.otf);
 }
-.columns-container {
+
+/*  account styling */
+
+.main-container {
+    width: 100vw;
+}
+.account-content {
     display: flex;
     flex-wrap: wrap;
-    height: 90vh;
 }
-
-/*  left column styling */
-
-.left-column {
-    width: 18vw;
-    height: 92vh;
-    background-color: #005035;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-}
-.account-options {
-    width: 100%;
-    margin-top: 100px;
-    text-align: center;
-    font-size: 28px;
-    text-decoration: none;
-}
-.account-options a {
-    height: 80px;
-    color: white;
-    text-decoration: none;
+.account-content span {
     display: block;
-    padding-top: 20px;
-    padding-bottom: 10px;
 }
-.account-options a:hover, a:focus {
+.account-img img {
+    width: 300px;
+    height: auto;
+    border-radius: 50%;
+    margin: 20px;
+    display: block;
+}
+.account-img a {
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+    padding: 20px;
+    background-color: #A49665;
     color: black;
-    background-color: #A49665;
-    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 250ms;
 }
-.active {
+.account-img a:hover, a:focus {
+    background-color: black;
+    color: #A49665;
+    cursor: pointer;
+}
+.account-txt {
+    display: block;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+.account-txt span {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.account-links a {
+    display: inline-block;
+    padding: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
     background-color: #A49665;
+    color: black;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 250ms;
+}
+.account-links a:hover, a:focus {
+    background-color: black;
+    color: #A49665;
+    cursor: pointer;
 }
 
-/* right column styling */
+/* flash message styling */
 
-.right-column {
-    width: 80vw;
-}
 .success {
     background-color: rgb(3, 218, 14);
     color: black;

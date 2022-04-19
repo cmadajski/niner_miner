@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
     email = db.Column(db.String(40), unique=True, nullable=False)
+    phone = db.Column(db.String(15), default=None)
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
     active = db.Column(db.Boolean(), default=False)
@@ -124,6 +125,7 @@ def signup():
         user_info['name'] = request.form['name']
         user_info['id'] = request.form['id']
         user_info['email'] = request.form['email']
+        user_info['phone'] = request.form['phone']
         user_info['password'] = request.form['password']
         user_info['password_repeat'] = request.form['passwordRepeat']
 
@@ -160,7 +162,7 @@ def signup():
 
             # add new user data to database
             new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'],
-                            password=user_info['password'], validation_code=validation_code)
+                            phone=user_info['phone'], password=user_info['password'], validation_code=validation_code)
             db.session.add(new_user)
             db.session.commit()
 
@@ -420,7 +422,7 @@ def my_items():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html')
+    return render_template('account.html', user=current_user)
 
 
 @app.route('/account_edit')

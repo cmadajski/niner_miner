@@ -2,18 +2,14 @@
 {% block links %}/static/css/account.css{% endblock %}
 {% block title %}Niner Miner | My Account{% endblock %}
 {% block content %}
-<div class="columns-container">
-    <div class="left-column">
-        <div class="account-options">
-            <a class="active" href="/account">Account Overview</a>
-            <a href="/account_edit">Edit Account</a>
-            <a href="/account_reset_password">Change Password</a>
-            <a href="/billing">Billing and Payments</a>
-            <a href="/account_delete">Delete Account</a>
+<div class="main-container">
+    <div class="account-content">
+        <div class="account-img">
+            <img src="../static/img/placeholder_account_img.jpg">
+            <a href="/account_change_img">Change Photo</a>
         </div>
-    </div>
-    <div class="right-column">
-        {% with messages = get_flashed_messages() %}
+        <div class="account-txt">
+            {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
                     <div class="success">
@@ -22,8 +18,16 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-        <h2>The account overview page has been moved to sprint 4.</h2>
-        <h2>Also, the account UI is currently terrible and will be reworked in sprint 4.</h2>
+            <span>Name: <em>{{ user.name }}</em></span>
+            <span>Email: <em>{{ user.email }}</em></span>
+            <span>Student ID: <em>{{ user.id }}</em></span>
+            <span>Phone #: {{ user.phone }}</span>
+            <div class="account-links">
+                <a href="/account_edit">Edit Account</a>
+                <a href="/account_delete">Delete Account</a>
+                <a href="/account_reset_password">Reset Password</a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
