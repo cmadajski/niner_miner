@@ -21,7 +21,7 @@ The technologies being used are:
 - SQLAlchemy (Database)
 - HTML/CSS/JS (Frontend)
 - Google Maps (Mapping)
-- PayPal (Purchases)
+- Stripe (Financial Services)
 - Linode/Nginx/Gunicorn (Server)
 
 ## App Installation
