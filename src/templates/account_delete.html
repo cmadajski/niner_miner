@@ -1,21 +1,53 @@
 {% extends "navbar.html" %}
-{% block links %}/static/css/account_delete.css{% endblock %}
-{% block title %}Niner Miner | Delete Account{% endblock %}
+{% block links %}/static/css/account_edit.css{% endblock %}
+{% block title %}My Account{% endblock %}
 {% block content %}
 <div class="columns-container">
     <div class="left-column">
         <div class="account-options">
             <a href="/account">Account Overview</a>
             <a href="/account_edit">Edit Account</a>
-            <a href="/account_reset_password">Change Password</a>
+            <a href="/account_reset_password">Reset Password</a>
             <a href="/billing">Billing and Payments</a>
             <a class="active" href="/account_delete">Delete Account</a>
         </div>
     </div>
     <div class="right-column">
-        <p>
-            Delete account has been moved to sprint 4.
-        </p>
+        {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="success">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        <div class="main-account">
+            <div class="header-title">
+                Delete Account
+            </div>
+            <div class="details">
+                <p>Are you sure you want to delete your account? This will erase all of your account data from the site. To delete your account enter your password below.</p>
+                <form action="/account_delete", method="POST">
+                <table width="100%">
+                    <tr>
+                        <td width="20%"><label><b>Current Password</b></label></td>
+                        <td width="80%">
+                            <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required>
+                            {% if errors['current_password'] %}
+                            <div class="error">
+                                <span>{{ errors['current_password_str'] }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                     <tr>
+                        <td colspan="2" style="text-align: center;"><input type="submit" value="DELETE ACCOUNT"></td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
