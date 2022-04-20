@@ -1,0 +1,10 @@
+{% extends "navbar.html" %}
+{% block links %}/static/css/account_change_img.css{% endblock %}
+{% block title %}Niner Miner | Change Account Photo{% endblock %}
+{% block content %}
+<h1>Change Account Photo</h1>
+<form method="post" action="/upload_img" enctype="multipart/form-data">
+    <input type="file" name="new_img" accept=".jpg,.jpeg,.png,.gif,.webp"><br>
+    <input type="submit" value="Upload Photo">
+</form>
+{% endblock %}

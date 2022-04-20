@@ -1,6 +1,6 @@
 {% extends "navbar.html" %}
 {% block links %}../static/css/product_feed.css{% endblock %}
-{% block title %}Product Feed{% endblock %}
+{% block title %}Niner Miner | Buy Stuff{% endblock %}
 {% block content %}
     <div class="header">
         <h1>Product Feed</h1>
@@ -15,7 +15,7 @@
             <select id="selectTagWidth">
                 <option id="widthTempOption"></option>
             </select>
-            <input id="search" type="search" name="q">
+            <input id="search" type="search" name="q" placeholder="Type here to search">
             <input type="submit" value="Search">
         </form>
     </div>
@@ -38,7 +38,7 @@
         {% for item in items %}
         <a href="/product_detail/{{item.item_id}}">
         <div class="each-item">
-            <img src="../static/empty.jpg" alt="img">
+            <img src="../static/img/empty.jpg" alt="img">
             <div class="title-price">
                 <p>{{ item.title }}</p>
                 <p>${{'%0.2f'|format(item.price|float)}}</p>

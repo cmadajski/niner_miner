@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
 import smtplib, ssl, copy
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -27,6 +28,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
     email = db.Column(db.String(40), unique=True, nullable=False)
+    phone = db.Column(db.String(15), default=None)
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
     active = db.Column(db.Boolean(), default=False)
@@ -124,6 +126,7 @@ def signup():
         user_info['name'] = request.form['name']
         user_info['id'] = request.form['id']
         user_info['email'] = request.form['email']
+        user_info['phone'] = request.form['phone']
         user_info['password'] = request.form['password']
         user_info['password_repeat'] = request.form['passwordRepeat']
 
@@ -160,9 +163,16 @@ def signup():
 
             # add new user data to database
             new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'],
-                            password=user_info['password'], validation_code=validation_code)
+                            phone=user_info['phone'], password=user_info['password'], validation_code=validation_code)
             db.session.add(new_user)
             db.session.commit()
+
+            # add new directory for saving user account img
+            try:
+                path = './static/img/accounts/' + (str)(user_info['id'])
+                os.makedirs(path)
+            except FileExistsError:
+                print("OS_ERROR - Directory already exists!")
 
             # send email with validation code
             port = 465
@@ -433,7 +443,29 @@ def my_items():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html')
+    return render_template('account.html', user=current_user)
+
+@app.route('/account_change_img')
+@login_required
+def account_change_img():
+    return render_template('account_change_img.html')
+
+@app.route('/upload_img', methods=['POST'])
+@login_required
+def upload_img():
+    new_img = request.files['new_img']
+    if new_img.filename == '':
+        flash('No file selected for upload!')
+    else:
+        # define the path used for account images
+        filename = 'account_img'
+        path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+        # remove the old account img
+        os.remove(path)
+        # save the new img
+        new_img.save(path)
+        # return to account page
+        return redirect('/account')
 
 
 @app.route('/account_edit')
