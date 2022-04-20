@@ -1,13 +1,13 @@
 body {
-    font-family: Norwester;
+    font-family: Lato;
 }
+
 @font-face {
-    font-family: Norwester;
-    src: url(../fonts/norwester.otf);
+    font-family: Lato;
+    src: url(../fonts/Lato-Regular.ttf);
 }
 .columns-container {
     display: flex;
-    flex-wrap: wrap;
     height: 90vh;
 }
 
@@ -25,16 +25,16 @@ body {
     width: 100%;
     margin-top: 100px;
     text-align: center;
-    font-size: 28px;
+    font-size: 20px;
     text-decoration: none;
 }
 .account-options a {
-    height: 80px;
+    height: auto;
     color: white;
     text-decoration: none;
     display: block;
     padding-top: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 .account-options a:hover, a:focus {
     color: black;
@@ -49,4 +49,40 @@ body {
 
 .right-column {
     width: 80vw;
+}
+.success {
+    background-color: #449742;
+    color: white;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+.success span {
+    display: block;
+}
+
+/* account main block */
+.main-account{
+    display: block;
+    margin: 30px auto 30px auto;
+    border: 2px solid #004F34;
+    width: 80%;
+}
+
+.main-account .header-title{
+    background: #004F34;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+}
+
+.main-account .details{
+    background: white;
+    padding: 30px;
+    font-size: 16px;
+    text-align: center;
+    color: #2B313C;
+    overflow-x:auto;
 }

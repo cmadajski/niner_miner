@@ -471,13 +471,60 @@ def upload_img():
 @app.route('/account_edit')
 @login_required
 def account_edit():
-    return render_template('account_edit.html')
+    return render_template('account_edit.html', user=current_user)
 
+@app.route('/account_update', methods=['POST'])
+@login_required
+def account_update():
+
+    current_user.name = request.form['name']
+    current_user.phone = request.form['phone']
+    db.session.commit()
+
+    new_img = request.files['image']
+    if new_img.filename != '':
+        #flash('No file selected for upload!')
+
+        # define the path used for account images
+        filename = 'account_img'
+        path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+        # remove the old account img
+        os.remove(path)
+        # save the new img
+        new_img.save(path)
+        # return to account page
+
+    flash('Your profile has been successfully updated')
+    return redirect('/account')
 
 @app.route('/account_delete')
+
+@app.route('/account_delete', methods=['GET', 'POST'])
 @login_required
 def account_delete():
-    return render_template('account_delete.html')
+    errors = dict()
+    errors['current_password'] = False
+    errors['current_password_str'] = ''
+    if request.method == 'GET':
+        return render_template('account_delete.html', errors=errors)
+    elif request.method == 'POST':
+        current_password = request.form['current_password']
+        # check if password is valid
+        # is current password valid for the current user?
+        if current_password != current_user.password:
+            errors['current_password'] = True
+            errors['current_password_str'] = 'Password is not valid for current user!'
+        # if errors exist, show them to user
+        if errors['current_password']:
+            return render_template('account_delete.html', errors=errors)
+        else:
+            flash('Your account has been successfully deleted!')
+            #delete user account code goes here
+
+            #logout after account deleted
+            return redirect(url_for('logout'))
+    else:
+        return "REQUEST ERROR, CHECK BACKEND CODE"
 
 
 @app.route('/account_reset_password', methods=['GET', 'POST'])

@@ -1,21 +1,52 @@
 {% extends "navbar.html" %}
 {% block links %}/static/css/account_edit.css{% endblock %}
-{% block title %}Niner Miner | Edit Account{% endblock %}
+{% block title %}Edit Account{% endblock %}
 {% block content %}
 <div class="columns-container">
     <div class="left-column">
         <div class="account-options">
             <a href="/account">Account Overview</a>
             <a class="active" href="/account_edit">Edit Account</a>
-            <a href="/account_reset_password">Change Password</a>
+            <a href="/account_reset_password">Reset Password</a>
             <a href="/billing">Billing and Payments</a>
             <a href="/account_delete">Delete Account</a>
         </div>
     </div>
     <div class="right-column">
-        <p>
-            Edit account has been moved to sprint 4.
-        </p>
+        <div class="main-account">
+            <div class="header-title">
+                Edit Profile
+            </div>
+            <div class="details">
+                <form action="/account_update", method="POST", enctype="multipart/form-data">
+                <table width="100%">
+                    <tr>
+                        <td width="20%"><img src="../static/img/accounts/{{ user.id }}/account_img" alt="img"></td>
+                        <td width="80%"><input type="file" id="image" name="image"></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><label><b>Your Name</b></label></td>
+                        <td width="80%"><input type="text" id="name" name="name" value="{{user.name}}" placeholder="Enter your name" required></td>
+                    </tr>
+                     <tr>
+                        <td width="20%"><label><b>UNCC Email</b></label></td>
+                        <td width="80%"><input type="email" id="email" name="email" placeholder="Enter your UNCC email" disabled value="{{user.email}}" required readonly></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><label><b>UNCC ID#</b></label></td>
+                        <td width="80%"><input type="number" id="uncc_id" name="uncc_id" placeholder="Enter your UNCC ID" disabled value="{{user.id}}" required readonly></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><label><b>Phone Number</b></label></td>
+                        <td width="80%"><input type="text" id="phone" name="phone" placeholder="Enter your phone number" value="{{user.phone}}" required></td>
+                    </tr>
+                     <tr>
+                        <td colspan="2" style="text-align: center;"><input type="submit" value="SAVE CHANGES"></td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
