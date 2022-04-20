@@ -9,15 +9,21 @@ body {
 
 /*  account styling */
 
-.main-container {
-    width: 100vw;
-}
 .account-content {
+    width: 100vw;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
 }
 .account-content span {
     display: block;
+}
+.account-img {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #005035;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 .account-img img {
     width: 300px;
@@ -44,8 +50,12 @@ body {
 }
 .account-txt {
     display: block;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left: 20px;
+    padding: 10px;
+    background-color: #005035;
+    color: white;
+    border-radius: 10px;
 }
 .account-txt span {
     margin-left: 10px;
