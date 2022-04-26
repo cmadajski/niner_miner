@@ -379,7 +379,7 @@ def product_feed():
         # all_items = db.session.query(Items).all()
         else:
             posts = Items.query.all()
-        return render_template('product_feed.html', items=posts, searched=q, filtered=f)
+        return render_template('product_feed.html', items=posts, searched=q, filtered=f, user=current_user)
     else:
         print("at else")
         if q:
@@ -387,14 +387,14 @@ def product_feed():
         # all_items = db.session.query(Items).all()
         else:
             posts = Items.query.filter(Items.category.is_(f))
-        return render_template('product_feed.html', items=posts, searched=q, filtered=f)
+        return render_template('product_feed.html', items=posts, searched=q, filtered=f, user=current_user)
 
 
 @app.route('/product_detail/<product_id>')
 @login_required
 def product_detail(product_id):
     item_details = Items.query.filter_by(item_id=product_id).first()
-    return render_template('product_detail.html', item=item_details)
+    return render_template('product_detail.html', item=item_details, user=current_user)
 
 
 @app.route('/messages')
@@ -431,6 +431,64 @@ def post():
         db.session.add(new_item)
         db.session.commit()
 
+        
+        new_img1 = request.files['image1']
+        if new_img1.filename == '':
+            flash('No images selected for upload!')
+        else:
+            # define the path used for item images
+            filename = (str)(new_item.item_id) + 'image1'
+            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+            #old_path = '../static/img/empty.jpg'
+            # remove the old item img
+            #os.remove(old_path)
+            # save the new img
+            new_img1.save(path)
+
+        new_img2 = request.files['image2']
+        if new_img2.filename != '':
+            # define the path used for item images
+            filename = (str)(new_item.item_id) + 'image2'
+            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+            #old_path = '../static/img/empty.jpg'
+            # remove the old item img
+            #os.remove(old_path)
+            # save the new img
+            new_img2.save(path)
+        
+        new_img3 = request.files['image3']
+        if new_img3.filename != '':
+            # define the path used for item images
+            filename = (str)(new_item.item_id) + 'image3'
+            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+            #old_path = '../static/img/empty.jpg'
+            # remove the old item img
+            #os.remove(old_path)
+            # save the new img
+            new_img3.save(path)
+
+        new_img4 = request.files['image4']
+        if new_img4.filename != '':
+            # define the path used for item images
+            filename = (str)(new_item.item_id) + 'image4'
+            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+            #old_path = '../static/img/empty.jpg'
+            # remove the old item img
+            #os.remove(old_path)
+            # save the new img
+            new_img4.save(path)
+
+        new_img5 = request.files['image5']
+        if new_img5.filename != '':
+            # define the path used for item images
+            filename = (str)(new_item.item_id) + 'image5'
+            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+            #old_path = '../static/img/empty.jpg'
+            # remove the old item img
+            #os.remove(old_path)
+            # save the new img
+            new_img5.save(path)
+        # return to product feed page
         return redirect(url_for('product_feed'))
 
 
