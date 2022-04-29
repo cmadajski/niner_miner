@@ -42,7 +42,8 @@ class User(db.Model, UserMixin):
 
 # have not added user logic yet to this
 class Items(db.Model):
-    item_id = db.Column("item_id", db.Integer, primary_key=True)
+    item_id = db.Column("item_id", db.Integer, primary_key=True, unique=True)
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column("title", db.String(200))
     price = db.Column("price", db.Numeric, nullable=False)
     fixed = db.Column("fixed", db.Text)
@@ -52,7 +53,8 @@ class Items(db.Model):
     description = db.Column("description", db.String(1000))
     location = db.Column("location", db.Text)
 
-    def __init__(self, title, price, fixed, category, condition, extradetails, description, location):
+    def __init__(self, seller_id, title, price, fixed, category, condition, extradetails, description, location):
+        self.seller_id = seller_id
         self.title = title
         self.price = price
         self.fixed = fixed
@@ -65,9 +67,18 @@ class Items(db.Model):
 
 class sellItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    seller_name = db.Column(db.String(50), db.ForeignKey('user.name'))
+    seller_email = db.Column(db.String(40), db.ForeignKey('user.email'))
     item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
+    buyer_id = db.Column(db.Integer, default=None)
 
+    def __init__(self, seller_id, seller_name, seller_email, item_id, buyer_id):
+        self.seller_id = seller_id
+        self.seller_name = seller_name
+        self.seller_email = seller_email
+        self.item_id = item_id
+        self.buyer_id = buyer_id
 
 # index route is used for log in related functions
 @app.route('/', methods=['GET', 'POST'])
@@ -394,7 +405,8 @@ def product_feed():
 @login_required
 def product_detail(product_id):
     item_details = Items.query.filter_by(item_id=product_id).first()
-    return render_template('product_detail.html', item=item_details, user=current_user)
+    selling_info = sellItem.query.filter_by(item_id=product_id).first()
+    return render_template('product_detail.html', item=item_details, user=current_user, seller=selling_info)
 
 
 @app.route('/messages')
@@ -424,14 +436,17 @@ def post():
         if 'submit_button' in request.form:
             item_info['location'] = request.form['location']
 
-        new_item = Items(title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
+        new_item = Items(seller_id=current_user.id, title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
                          category=item_info['category'], condition=item_info['condition'],
                          extradetails=item_info['extradetails'], description=item_info['description'],
                          location=item_info['location'])
         db.session.add(new_item)
         db.session.commit()
 
-        
+        selling_item = sellItem(seller_id=current_user.id, seller_name=current_user.name, seller_email=current_user.email, item_id=new_item.item_id, buyer_id=None)
+        db.session.add(selling_item)
+        db.session.commit()
+
         new_img1 = request.files['image1']
         if new_img1.filename == '':
             flash('No images selected for upload!')
