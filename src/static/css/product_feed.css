@@ -52,6 +52,7 @@ body {
     color: black;
     transition: 250ms;
     cursor: pointer;
+    height: 35px;
 }
 .search input[type=search]:focus {
     background-color: hsl(160, 100%, 78%);
