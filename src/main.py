@@ -418,93 +418,176 @@ def messages():
 @app.route('/post', methods=['GET', 'POST'])
 @login_required
 def post():
+     # data for input validation
+    errors = dict()
+    errors['title'] = False
+    errors['price'] = False
+    errors['image'] = False
+    errors['fixed'] = False
+    errors['category'] = False
+    errors['condition'] = False
+    errors['description'] = False
+    errors['location'] = False
+    errors['title_str'] = ''
+    errors['price_str'] = ''
+    errors['image_str'] = ''
+    errors['fixed_str'] = ''
+    errors['category_str'] = ''
+    errors['condition_str'] = ''
+    errors['description_str'] = ''
+    errors['location_str'] = ''
+
+
     if request.method == 'GET':
-        return render_template('post.html', info=None)
+        return render_template('post.html', errors=errors, info=None)
     elif request.method == 'POST':
         # save form data into a dict for convenience
         item_info = dict()
         item_info['title'] = request.form['title']
         item_info['price'] = request.form['price']
-        if 'submit_button' in request.form:
-            item_info['fixed'] = request.form['fixed']
-        if 'submit_button' in request.form:
-            item_info['category'] = request.form['category']
-        if 'submit_button' in request.form:
-            item_info['condition'] = request.form['condition']
+        # if 'submit_button' in request.form:
+        item_info['fixed'] = request.form['fixed']
+        # if 'submit_button' in request.form:
+        item_info['category'] = request.form['category']
+        # if 'submit_button' in request.form:
+        item_info['condition'] = request.form['condition']
         item_info['extradetails'] = request.form['extradetails']
         item_info['description'] = request.form['description']
-        if 'submit_button' in request.form:
-            item_info['location'] = request.form['location']
+        # if 'submit_button' in request.form:
+        item_info['location'] = request.form['location']
 
-        new_item = Items(seller_id=current_user.id, title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
-                         category=item_info['category'], condition=item_info['condition'],
-                         extradetails=item_info['extradetails'], description=item_info['description'],
-                         location=item_info['location'])
-        db.session.add(new_item)
-        db.session.commit()
-
-        selling_item = sellItem(seller_id=current_user.id, seller_name=current_user.name, seller_email=current_user.email, item_id=new_item.item_id, buyer_id=None)
-        db.session.add(selling_item)
-        db.session.commit()
-
-        new_img1 = request.files['image1']
-        if new_img1.filename == '':
-            flash('No images selected for upload!')
-        else:
-            # define the path used for item images
-            filename = (str)(new_item.item_id) + 'image1'
-            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-            #old_path = '../static/img/empty.jpg'
-            # remove the old item img
-            #os.remove(old_path)
-            # save the new img
-            new_img1.save(path)
-
-        new_img2 = request.files['image2']
-        if new_img2.filename != '':
-            # define the path used for item images
-            filename = (str)(new_item.item_id) + 'image2'
-            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-            #old_path = '../static/img/empty.jpg'
-            # remove the old item img
-            #os.remove(old_path)
-            # save the new img
-            new_img2.save(path)
+        # this section of if statements cover input validation for the post form
+        if len(item_info['title']) <= 1:
+            errors['title'] = True
+            errors['title_str'] = 'Please enter a proper title to post.'
         
-        new_img3 = request.files['image3']
-        if new_img3.filename != '':
-            # define the path used for item images
-            filename = (str)(new_item.item_id) + 'image3'
-            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-            #old_path = '../static/img/empty.jpg'
-            # remove the old item img
-            #os.remove(old_path)
-            # save the new img
-            new_img3.save(path)
+        if item_info['price'] == '':
+            errors['price'] = True
+            errors['price_str'] = 'Please enter a price.'
+        
+        if item_info['fixed'] == None:
+            errors['fixed'] = True
+            errors['fixed_str'] = 'Please select an option for this category.'
+        
+        if item_info['category'] == None:
+            errors['category'] = True
+            errors['category_str'] = 'Please select an option for this category.'
 
-        new_img4 = request.files['image4']
-        if new_img4.filename != '':
-            # define the path used for item images
-            filename = (str)(new_item.item_id) + 'image4'
-            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-            #old_path = '../static/img/empty.jpg'
-            # remove the old item img
-            #os.remove(old_path)
-            # save the new img
-            new_img4.save(path)
+        if item_info['condition'] == None:
+            errors['condition'] = True
+            errors['condition_str'] = 'Please select an option for this category.'
+        
+        if item_info['description'] == '':
+            errors['description'] = True
+            errors['description_str'] = 'Please include a description.'
+        
+        if item_info['location'] == None:
+            errors['location'] = True
+            errors['location_str'] = 'Please select a location below.'
+        
+        # if there are errors in the form, print these errors in post.html
+        if errors['title'] or errors['price'] or errors['fixed'] or errors['category'] or errors['condition'] or errors['description'] or errors['location']:
+            return render_template('post.html', errors=errors, info=item_info)
+        else:
+        # else add the item to the database
+            new_item = Items(seller_id=current_user.id, title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
+                            category=item_info['category'], condition=item_info['condition'],
+                            extradetails=item_info['extradetails'], description=item_info['description'],
+                            location=item_info['location'])
+            db.session.add(new_item)
+            db.session.commit()
 
-        new_img5 = request.files['image5']
-        if new_img5.filename != '':
-            # define the path used for item images
-            filename = (str)(new_item.item_id) + 'image5'
-            path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-            #old_path = '../static/img/empty.jpg'
-            # remove the old item img
-            #os.remove(old_path)
-            # save the new img
-            new_img5.save(path)
-        # return to product feed page
-        return redirect(url_for('product_feed'))
+            selling_item = sellItem(seller_id=current_user.id, seller_name=current_user.name, seller_email=current_user.email, item_id=new_item.item_id, buyer_id=None)
+            db.session.add(selling_item)
+            db.session.commit()
+
+            new_img1 = request.files['image1']
+            if new_img1.filename == '':
+                # if no image is uploaded, you will receive an error message
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(new_item.item_id) + 'image1'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(old_path)
+                # save the new img
+                new_img1.save(path)
+
+            new_img2 = request.files['image2']
+            if new_img2.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(new_item.item_id) + 'image2'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(old_path)
+                # save the new img
+                new_img2.save(path)
+            
+            new_img3 = request.files['image3']
+            if new_img3.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(new_item.item_id) + 'image3'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(old_path)
+                # save the new img
+                new_img3.save(path)
+
+            new_img4 = request.files['image4']
+            if new_img4.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(new_item.item_id) + 'image4'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(old_path)
+                # save the new img
+                new_img4.save(path)
+
+            new_img5 = request.files['image5']
+            if new_img5.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(new_item.item_id) + 'image5'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(old_path)
+                # save the new img
+                new_img5.save(path)
+            # return to product feed page
+            return redirect(url_for('product_feed'))
 
 
 @app.route('/my_items')
