@@ -1,17 +1,9 @@
 {% extends "navbar.html" %}
-{% block links %}/static/css/account_edit.css{% endblock %}
+{% block links %}/static/css/account.css{% endblock %}
 {% block title %}My Account{% endblock %}
 {% block content %}
 <div class="columns-container">
-    <div class="left-column">
-        <div class="account-options">
-            <a href="/account">Account Overview</a>
-            <a href="/account_edit">Edit Account</a>
-            <a href="/account_reset_password">Reset Password</a>
-            <a href="/billing">Billing and Payments</a>
-            <a class="active" href="/account_delete">Delete Account</a>
-        </div>
-    </div>
+
     <div class="right-column">
         {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -42,7 +34,10 @@
                         </td>
                     </tr>
                      <tr>
-                        <td colspan="2" style="text-align: center;"><input type="submit" value="DELETE ACCOUNT"></td>
+                        <td colspan="2" style="text-align: center;">
+                            <input type="submit" value="DELETE ACCOUNT">
+                            <a class="btn-cancel" href="/account"> Cancel </a>
+                        </td>
                     </tr>
                 </table>
                 </form>
