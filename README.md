@@ -23,8 +23,16 @@ The technologies being used are:
 - Google Maps (Mapping)
 - Stripe (Financial Services)
 - Linode/Nginx/Gunicorn (Server)
+- Socket.IO (Messaging)
 
-## App Installation
+## Accessing the App
+
+The app is now up and running on a Linode server. Use [this link](https://194.195.214.161/) to access the live demo. To log in, use the following credentials:
+
+email: demo@uncc.edu
+password: demo1234
+
+## App Installation (for running locally)
 
 Before running any scripts, make sure to check if you have Python installed on your machine. If you aren't sure, 
 {download the latest version of Python](https://www.python.org/downloads/) and install it on your system.
