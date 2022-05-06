@@ -30,6 +30,7 @@ The technologies being used are:
 The app is now up and running on a Linode server. Use [this link](https://194.195.214.161/) to access the live demo. To log in, use the following credentials:
 
 email: demo@uncc.edu
+
 password: demo1234
 
 ## App Installation (for running locally)
