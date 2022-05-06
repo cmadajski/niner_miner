@@ -100,7 +100,16 @@
         </p>
         </p>
         <p class="price" data-tooltip="Price is set to {{item.fixed}}">Price: ${{'%0.2f'|format(item.price|float)}}</p>
-        <button class="button btnbuy">Buy</button>
+        {% if item.seller_id == current_user.id %}
+        <br>
+        <a href="{{ url_for('edit_item', product_id=item.item_id) }}">Edit Item</a>
+        <br>
+        <form action="{{ url_for('delete_item', product_id=item.item_id) }}" method="post">
+            <input type="submit" value="Delete Item">
+        </form>
+        {% else %} 
+            <button class="button btnbuy">Buy</button>
+        {% endif %}
     </div>
     <div class="contact">
         <img src="../static/img/accounts/{{ seller.seller_id }}/account_img" alt="img">

@@ -1,7 +1,23 @@
 {% extends "navbar.html" %}
+{% block links %}../static/css/my_items.css{% endblock %}
 {% block title %}Niner Miner | My Items{% endblock %}
 {% block content %}
-<!-- Put html here -->
-<h1>You are Selling</h1>
-<h2>The my items page has been moved to sprint 4.</h2>
+<div class="header">
+    <h1>Your Items For Sale</h1>
+</div>
+<div class="feed">
+    {% for item in items %}
+    {% if item.seller_id == current_user.id %}
+    <a href="/product_detail/{{item.item_id}}">
+    <div class="each-item">
+        <img src="../static/img/accounts/{{ item.seller_id }}/{{ item.item_id }}image1" alt="img">
+        <div class="title-price">
+            <p>{{ item.title }}</p>
+            <p>${{'%0.2f'|format(item.price|float)}}</p>
+        </div>
+    </div>
+    </a>
+    {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

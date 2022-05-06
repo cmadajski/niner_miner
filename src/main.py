@@ -40,9 +40,9 @@ class User(db.Model, UserMixin):
         return self.active
 
 
-# have not added user logic yet to this
+
 class Items(db.Model):
-    item_id = db.Column("item_id", db.Integer, primary_key=True, unique=True)
+    item_id = db.Column("item_id", db.Integer, primary_key=True)
     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column("title", db.String(200))
     price = db.Column("price", db.Numeric, nullable=False)
@@ -408,6 +408,195 @@ def product_detail(product_id):
     selling_info = sellItem.query.filter_by(item_id=product_id).first()
     return render_template('product_detail.html', item=item_details, user=current_user, seller=selling_info)
 
+# CURRENTLY WORKING ON THIS BRANCH!
+@app.route('/edit/<product_id>', methods=['GET', 'POST'])
+@login_required
+def edit_item(product_id):
+    # data for input validation
+    errors = dict()
+    errors['title'] = False
+    errors['price'] = False
+    errors['image'] = False
+    errors['fixed'] = False
+    errors['category'] = False
+    errors['condition'] = False
+    errors['description'] = False
+    errors['location'] = False
+    errors['title_str'] = ''
+    errors['price_str'] = ''
+    errors['image_str'] = ''
+    errors['fixed_str'] = ''
+    errors['category_str'] = ''
+    errors['condition_str'] = ''
+    errors['description_str'] = ''
+    errors['location_str'] = ''
+
+    if request.method == 'POST':
+        item_info = dict()
+        item_info['title'] = request.form['title']
+        item_info['price'] = request.form['price']
+        item_info['fixed'] = request.form['fixed']
+        item_info['category'] = request.form['category']
+        item_info['condition'] = request.form['condition']
+        item_info['extradetails'] = request.form['extradetails']
+        item_info['description'] = request.form['description']
+        item_info['location'] = request.form['location']
+
+         # this section of if statements cover input validation for the post form
+        if len(item_info['title']) <= 1:
+            errors['title'] = True
+            errors['title_str'] = 'Please enter a proper title to post.'
+        
+        if item_info['price'] == '':
+            errors['price'] = True
+            errors['price_str'] = 'Please enter a price.'
+        
+        if item_info['fixed'] == None:
+            errors['fixed'] = True
+            errors['fixed_str'] = 'Please select an option for this category.'
+        
+        if item_info['category'] == None:
+            errors['category'] = True
+            errors['category_str'] = 'Please select an option for this category.'
+
+        if item_info['condition'] == None:
+            errors['condition'] = True
+            errors['condition_str'] = 'Please select an option for this category.'
+        
+        if item_info['description'] == '':
+            errors['description'] = True
+            errors['description_str'] = 'Please include a description.'
+        
+        if item_info['location'] == None:
+            errors['location'] = True
+            errors['location_str'] = 'Please select a location below.'
+        
+        # if there are errors in the form, print these errors in post.html
+        if errors['title'] or errors['price'] or errors['fixed'] or errors['category'] or errors['condition'] or errors['description'] or errors['location']:
+            return render_template('post.html', errors=errors, info=item_info)
+        else:
+            item = Items.query.filter_by(item_id=product_id).first()
+
+            # update the fields in post
+            item.title = item_info['title']
+            item.price = item_info['price']
+            item.fixed = item_info['fixed']
+            item.category = item_info['category']
+            item.condition = item_info['condition']
+            item.extradetails = item_info['extradetails']
+            item.description = item_info['description']
+            item.location = item_info['location']
+
+            # update item in database
+            db.session.add(item)
+            db.session.commit()
+
+            img1 = request.files['image1']
+            if img1.filename == '':
+                # if no image is uploaded, you will receive an error message
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(item.item_id) + 'image1'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(path)
+                # save the new img
+                img1.save(path)
+
+            img2 = request.files['image2']
+            if img2.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(item.item_id) + 'image2'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(path)
+                # save the new img
+                img2.save(path)
+            
+            img3 = request.files['image3']
+            if img3.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(item.item_id) + 'image3'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(path)
+                # save the new img
+                img3.save(path)
+
+            img4 = request.files['image4']
+            if img4.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(item.item_id) + 'image4'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(path)
+                # save the new img
+                img4.save(path)
+
+            img5 = request.files['image5']
+            if img5.filename == '':
+                errors['image'] = True
+                errors['image_str'] = 'You are required to upload 5 images.'
+
+                if errors['image']:
+                    return render_template('post.html', errors=errors, info=item_info)
+            else:
+                # define the path used for item images
+                filename = (str)(item.item_id) + 'image5'
+                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                #old_path = '../static/img/empty.jpg'
+                # remove the old item img
+                #os.remove(path)
+                # save the new img
+                img5.save(path)
+
+            # return to product feed page            
+            return redirect(url_for('product_feed'))
+    else:
+        # GET request - show new post form to edit the item details
+        # retrieve item from database
+        my_item = Items.query.filter_by(item_id=product_id).first()
+
+        return render_template('post.html', errors=errors, item=my_item, user=current_user, info=my_item)
+
+@app.route('/delete/<product_id>', methods=['POST'])
+@login_required
+def delete_item(product_id):
+    # retrieve item from database
+    my_item = Items.query.filter_by(item_id=product_id).first()
+
+    db.session.delete(my_item)
+    db.session.commit()
+
+    # return to product feed page            
+    return redirect(url_for('product_feed'))
 
 @app.route('/messages')
 @login_required
@@ -593,7 +782,8 @@ def post():
 @app.route('/my_items')
 @login_required
 def my_items():
-    return render_template('my_items.html')
+    posts = Items.query.all()
+    return render_template('my_items.html', items=posts, user=current_user)
 
 
 @app.route('/account')
