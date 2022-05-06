@@ -1,17 +1,9 @@
 {% extends "navbar.html" %}
-{% block links %}/static/css/account_edit.css{% endblock %}
+{% block links %}/static/css/account.css{% endblock %}
 {% block title %}Edit Account{% endblock %}
 {% block content %}
 <div class="columns-container">
-    <div class="left-column">
-        <div class="account-options">
-            <a href="/account">Account Overview</a>
-            <a class="active" href="/account_edit">Edit Account</a>
-            <a href="/account_reset_password">Reset Password</a>
-            <a href="/billing">Billing and Payments</a>
-            <a href="/account_delete">Delete Account</a>
-        </div>
-    </div>
+
     <div class="right-column">
         <div class="main-account">
             <div class="header-title">
@@ -41,11 +33,15 @@
                         <td width="80%"><input type="text" id="phone" name="phone" placeholder="Enter your phone number" value="{{user.phone}}" required></td>
                     </tr>
                      <tr>
-                        <td colspan="2" style="text-align: center;"><input type="submit" value="SAVE CHANGES"></td>
+                        <td colspan="2" style="text-align: center;">
+                            <input type="submit" value="SAVE CHANGES">
+                            <a class="btn-cancel" href="/account"> Cancel </a>
+                        </td>
                     </tr>
                 </table>
                 </form>
             </div>
+
         </div>
     </div>
 </div>

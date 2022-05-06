@@ -17,14 +17,23 @@ The contributing members for this project are:
 - [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![wakatime](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc)
 
 The technologies being used are:
-- Python/Flask (Backend + Logic)
-- SQLAlchemy (Database)
+- [Python/Flask](https://flask.palletsprojects.com/en/2.1.x/) (Backend + Logic)
+- [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) (Database)
 - HTML/CSS/JS (Frontend)
-- Google Maps (Mapping)
+- [Google Maps](https://www.google.com/maps) (Mapping)
 - Stripe (Financial Services)
-- Linode/Nginx/Gunicorn (Server)
+- [Linode](https://www.linode.com/)/[Nginx](https://www.nginx.com/)/[Gunicorn](https://gunicorn.org/)/[Supervisord](http://supervisord.org/) (Server)
+- [Socket.IO](https://socket.io/) (Messaging)
 
-## App Installation
+## Accessing the App
+
+The app is now up and running on a Linode server. Use [this link](http://194.195.214.161/) to access the live demo. To log in, use the following credentials:
+
+email: demo@uncc.edu
+
+password: demo1234
+
+## App Installation (for running locally)
 
 Before running any scripts, make sure to check if you have Python installed on your machine. If you aren't sure, 
 {download the latest version of Python](https://www.python.org/downloads/) and install it on your system.

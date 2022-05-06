@@ -1,9 +1,9 @@
 {% extends "navbar.html" %}
-{% block links %}/static/css/account_edit.css{% endblock %}
+{% block links %}/static/css/account.css{% endblock %}
 {% block title %}My Account{% endblock %}
 {% block content %}
 <div class="columns-container">
-    <div class="left-column">
+    <!--<div class="left-column">
         <div class="account-options">
             <a class="active" href="/account">Account Overview</a>
             <a href="/account_edit">Edit Account</a>
@@ -11,7 +11,7 @@
             <a href="/billing">Billing and Payments</a>
             <a href="/account_delete">Delete Account</a>
         </div>
-    </div>
+    </div>-->
     <div class="right-column">
         {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -34,6 +34,11 @@
                     UNCC ID #{{user.id}}<br/>
                     {{user.phone}} <br/>
                 </p>
+            </div>
+            <div class="footer-buttons">
+                <a class="btn-footer" href="/account_edit"><img src="../static/img/edit.png"/>Edit Account</a>
+                <a class="btn-footer" href="/account_reset_password"><img src="../static/img/password.png"/>Reset Password</a>
+                <a class="btn-footer" href="/account_delete"><img src="../static/img/delete.png"/>Delete Account</a>
             </div>
         </div>
     </div>
