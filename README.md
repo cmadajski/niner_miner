@@ -27,7 +27,7 @@ The technologies being used are:
 
 ## Accessing the App
 
-The app is now up and running on a Linode server. Use [this link](https://194.195.214.161/) to access the live demo. To log in, use the following credentials:
+The app is now up and running on a Linode server. Use [this link](http://194.195.214.161/) to access the live demo. To log in, use the following credentials:
 
 email: demo@uncc.edu
 
