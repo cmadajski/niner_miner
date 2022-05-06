@@ -23,7 +23,7 @@
         </p>
         </p>
         <p class="price" data-tooltip="Price is set to {{item.fixed}}">Price: ${{'%0.2f'|format(item.price|float)}}</p>
-        <button class="button btnbuy">Buy</button>
+        <a class="button btnbuy" href="/process_transaction/{{ item.item_id }}">Buy</a>
     </div>
     <div class="contact">
         <img src="../static/img/placeholder_account_img.jpg" alt="img">
