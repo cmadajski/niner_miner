@@ -51,6 +51,13 @@ h1 {
     background-color: #A49665;
     font-size: 24px;
     transition: 250ms;
+    border-radius: 10px;
+    padding: 10px;
+    margin: auto;
+    font-family: Norwester;
+    font-size: 32px;
+    transition: 250ms;
+    width: 480px;
 }
 .error {
     background-color: rgb(218, 3, 3);
@@ -63,4 +70,12 @@ h1 {
 .error span {
     display: block;
 
+}
+
+.form-action-submit {
+    text-align: center;
+    width: 600px;
+    margin: auto;
+    margin-bottom: 50px;
+    color: #A49665;
 }
