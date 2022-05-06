@@ -17,13 +17,13 @@ The contributing members for this project are:
 - [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![wakatime](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc)
 
 The technologies being used are:
-- Python/Flask (Backend + Logic)
-- SQLAlchemy (Database)
+- [Python/Flask](https://flask.palletsprojects.com/en/2.1.x/) (Backend + Logic)
+- [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) (Database)
 - HTML/CSS/JS (Frontend)
-- Google Maps (Mapping)
+- [Google Maps](https://www.google.com/maps) (Mapping)
 - Stripe (Financial Services)
-- Linode/Nginx/Gunicorn (Server)
-- Socket.IO (Messaging)
+- [Linode](https://www.linode.com/)/[Nginx](https://www.nginx.com/)/[Gunicorn](https://gunicorn.org/)/[Supervisord](http://supervisord.org/) (Server)
+- [Socket.IO](https://socket.io/) (Messaging)
 
 ## Accessing the App
 
