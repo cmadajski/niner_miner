@@ -475,6 +475,7 @@ def edit_item(product_id):
         if errors['title'] or errors['price'] or errors['fixed'] or errors['category'] or errors['condition'] or errors['description'] or errors['location']:
             return render_template('post.html', errors=errors, info=item_info)
         else:
+            #find the item you want to edit
             item = Items.query.filter_by(item_id=product_id).first()
 
             # update the fields in post
@@ -782,6 +783,7 @@ def post():
 @app.route('/my_items')
 @login_required
 def my_items():
+    #pass in all the items in the Items table
     posts = Items.query.all()
     return render_template('my_items.html', items=posts, user=current_user)
 

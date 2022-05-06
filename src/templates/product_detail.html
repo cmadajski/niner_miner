@@ -34,10 +34,7 @@
 </script>
 <div class="container">
     <!--<main><h1>{{item.title}}</h1></main>-->
-    <!-- Display Images
-    <div id="content1">
-            <img src="../static/img/accounts/{{ user.id }}/{{item.item_id}}image1" alt="img" width="100%" height="350px;">
-    </div> -->
+    <!-- Display Images -->
     <!-- Slideshow container -->
     <div class="slideshow-container">
 
@@ -102,10 +99,10 @@
         <p class="price" data-tooltip="Price is set to {{item.fixed}}">Price: ${{'%0.2f'|format(item.price|float)}}</p>
         {% if item.seller_id == current_user.id %}
         <br>
-        <a href="{{ url_for('edit_item', product_id=item.item_id) }}">Edit Item</a>
+        <a href="{{ url_for('edit_item', product_id=item.item_id) }}" class="submit-button">Edit Item</a>
         <br>
         <form action="{{ url_for('delete_item', product_id=item.item_id) }}" method="post">
-            <input type="submit" value="Delete Item">
+            <input type="submit" class="submit-button" value="Delete Item">
         </form>
         {% else %} 
             <button class="button btnbuy">Buy</button>
