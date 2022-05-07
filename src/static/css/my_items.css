@@ -1,0 +1,41 @@
+body {
+    font-family: Norwester;
+    color: black;
+    text-align: center;
+}
+
+@font-face {
+    font-family: Norwester;
+    src: url(../fonts/norwester.otf);
+}
+
+img {
+    width: 100%;
+    overflow: hidden;
+}
+
+.header {
+    display: grid;
+}
+
+.feed {
+    margin: 20px 110px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 35px;
+}
+
+.feed > a {
+    text-decoration: none;
+}
+
+.each-item {
+    border-radius: 8px;
+    box-shadow: 10px 10px 10px gray;
+    overflow: hidden;
+    background-color: #005035;
+}
+
+.title-price > p {
+    color: #A49665;
+}

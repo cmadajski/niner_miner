@@ -4,9 +4,19 @@
 {% block content %}
     <h1>Post An Item</h1>
     <div class="post-form">
-        <form action="/post" method="post" enctype="multipart/form-data">
+        {% if item %}
+            <form action="{{ url_for('edit_item', product_id=item.item_id) }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="/post" method="post" enctype="multipart/form-data">
+        {% endif %}
             <div class="form-action">
                 <h2>1. Add Title</h2>
+                <!--- prints the error statements if errors['field'] is true--->
+                {% if errors['title'] %}
+                <div class="error">
+                    <span>{{ errors['title_str'] }}</span>
+                </div>
+                {% endif %}
                 {% if info['title'] != None %}
                 <input class="text" type="text" name="title" placeholder="Listing Title" value="{{ info['title'] }}" autofocus>
                 {% else %}
@@ -15,21 +25,30 @@
             </div>
             <div class="form-action">
                 <h2>2. Upload Item Images</h2>
-                <!---<h3>This functionality will be added in later</h3> --->
-                <label for="selectimage1">Select an image (required):</label>
+                <h2>You are required to upload 5 images.</h2>
+                {% if errors['image'] %}
+                <div class="error">
+                    <span>{{ errors['image_str'] }}</span>
+                </div>
+                {% endif %}
+                <label for="selectimage1">Select an image:</label>
                 <input type="file" id="selectimage1" name="image1"><br>
-                <label for="selectimage2">Image 2 (optional):</label>
+                <label for="selectimage2">Image 2:</label>
                 <input type="file" id="selectimage2" name="image2"><br>
-                <label for="selectimage3">Image 3 (optional):</label>
+                <label for="selectimage3">Image 3:</label>
                 <input type="file" id="selectimage3" name="image3"><br>
-                <label for="selectimage4">Image 4 (optional):</label>
+                <label for="selectimage4">Image 4:</label>
                 <input type="file" id="selectimage4" name="image4"><br>
-                <label for="selectimage5">Image 5 (optional):</label>
+                <label for="selectimage5">Image 5:</label>
                 <input type="file" id="selectimage5" name="image5"><br>
             </div>
-            <!---I stopped right here-->
             <div class="form-action">
                 <h2>3. Price</h2>
+                {% if errors['price'] %}
+                <div class="error">
+                    <span>{{ errors['price_str'] }}</span>
+                </div>
+                {% endif %}
                 {% if info['price'] != None %}
                 <input class="text" type="number" min="0.01" step="0.01" name="price" placeholder="Enter Price in USD" value="{{ info['price'] }}">
                 {% else %}
@@ -37,10 +56,14 @@
                 {% endif %}
                 <br>
                 <h3>Fixed Price</h3>
+                {% if errors['fixed'] %}
+                <div class="error">
+                    <span>{{ errors['fixed_str'] }}</span>
+                </div>
+                {% endif %}
                 <div class="radio-group">
-                    <input type="radio" id="fixedp" name="fixed" value="Fixed Price">
+                    <input type="radio" id="fixedp" name="fixed" value="Fixed Price" required>
                     <label for="fixedp">Fixed Price</label><br>
-                
                     <input type="radio" id="negotiate" name="fixed" value="Willing to Negotiate">
                     <label for="negotiate">Willing to Negotiate</label><br>
                 </div>
@@ -49,8 +72,13 @@
             <div class="form-action">
                 <h2>4. Select Details</h2>
                 <h3>Category</h3>
-                <div class="radio-group" id="test-test">
-                    <input type="radio" id="electronics" class="radio" name="category" value="Electronics">
+                {% if errors['category'] %}
+                <div class="error">
+                    <span>{{ errors['category_str'] }}</span>
+                </div>
+                {% endif %}
+                <div class="radio-group">
+                    <input type="radio" id="electronics" class="radio" name="category" value="Electronics" required>
                     <label for="electronics">Electronics</label><br>
                     <input type="radio" id="FandS" class="radio" name="category" value="Furniture & Storage">
                     <label for="FandS">Furniture & Storage</label><br>
@@ -58,11 +86,16 @@
                     <label for="clothes">Clothes & Accessories</label><br>
                     <input type="radio" id="other" name="category" value="Other">
                     <label for="other">Other</label><br>
-                    <br>
                 </div>
+                <br>
                 <h3>Condition</h3>
+                {% if errors['condition'] %}
+                <div class="error">
+                    <span>{{ errors['condition_str'] }}</span>
+                </div>
+                {% endif %}
                 <div class="radio-group">
-                    <input type="radio" id="new" name="condition" value="New">
+                    <input type="radio" id="new" name="condition" value="New" required>
                     <label for="new">New</label><br>
                     <input type="radio" id="used" name="condition" value="Lightly Used">
                     <label for="used">Lightly Used</label><br>
@@ -70,8 +103,8 @@
                     <label for="hused">Heavily Used</label><br>
                     <input type="radio" id="other" name="condition" value="Other">
                     <label for="other">Other</label><br>
-                    <br>
                 </div>
+                <br>
                 <h3>Product/Model No. (optional)</h3>
                 {% if info['extradetails'] != None %}
                 <input class="text" type="text" name="extradetails" placeholder="Type here" value="{{ info['extradetails'] }}">
@@ -79,6 +112,11 @@
                 <input class="text" type="text" name="extradetails" placeholder="Type here">
                 {% endif %}
                 <h3>Description</h3>
+                {% if errors['description'] %}
+                <div class="error">
+                    <span>{{ errors['description_str'] }}</span>
+                </div>
+                {% endif %}
                 {% if info['description'] != None %}
                 <input class="text" type="text" name="description" placeholder="Type here" value="{{ info['description'] }}">
                 {% else %}
@@ -89,8 +127,13 @@
             <div class="form-action">
                 <h2>5. Delivery Location</h2>
                 <h3>I prefer meeting at: </h3>
+                {% if errors['location'] %}
+                <div class="error">
+                    <span>{{ errors['location_str'] }}</span>
+                </div>
+                {% endif %}
                 <div class="radio-group">
-                    <input type="radio" id="studentunion" name="location" value="Popp Martin Student Union">
+                    <input type="radio" id="studentunion" name="location" value="Popp Martin Student Union" required>
                     <label for="studentunion">Student Union</label><br>
                     <input type="radio" id="SoVi" name="location" value="SoVi at South Village Crossing">
                     <label for="SoVi">SoVi Lounge</label><br>
@@ -109,11 +152,15 @@
                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6M-Kj_ihTLu14Z2HGKgcxXQ9qqxJWUeU
                         &q=UNC Charlotte">
                 </iframe>
-                </div><br>
+                </div> <br>
             </div>
             <div class="form-action-submit">
-                <input type="submit" name="submit_button" class="submit-post">
+                {% if item %}
+                <input type="submit" value="Edit Item" name="edit_button" class="submit-post">
+                {% else %}
+                <input type="submit" value="Submit" name="submit_button" class="submit-post">
+                {% endif %}
             </div>
-        </form>
+            </form>
     </div>
 {% endblock %}

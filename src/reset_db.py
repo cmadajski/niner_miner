@@ -10,7 +10,7 @@ def reset_db():
     # create User object with developer info
     christian = User(name='Christian Madajski', id=1234, email=
     'cmadajsk@uncc.edu', phone='980-290-0679', password='password2', validation_code='123456', active=True)
-    oviya = User(name='Oviya Monoharan', id=704, email=
+    oviya = User(name='Oviya Manoharan', id=704, email=
     'omanohar@uncc.edu', phone='111-222-3333', password='oviya123', validation_code='123456', active=True)
     hinal = User(name='Hinal Makadiya', id=111, email=
     'hmakadi1@uncc.edu', phone='1234567890', password='Niner@123', validation_code='123456', active=True)
