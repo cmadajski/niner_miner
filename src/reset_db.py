@@ -20,6 +20,8 @@ def reset_db():
     'jrudd@uncc.edu', password='bestprofessor1234', validation_code='123456', active=True)
     praveen = User(name='Praveen Kumar Gavara', id=2468, email=
     'pgavara@uncc.edu', password='awesometa1234', validation_code='123456', active=True)
+    demo = User(name='Demo Person', id=9876, email=
+    'demo@uncc.edu', password='demo1234', validation_code='123456', active=True)
     # add new Users to staging
     db.session.add(christian)
     print('User "Christian" added to database.')
@@ -33,6 +35,8 @@ def reset_db():
     print('User "Professor" added to database.')
     db.session.add(praveen)
     print('User "Praveen" added to database.')
+    db.session.add(demo)
+    print('User "demo" added to database.')
     # commit new Users to the DB
     db.session.commit()
 

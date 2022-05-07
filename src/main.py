@@ -408,7 +408,19 @@ def product_detail(product_id):
     selling_info = sellItem.query.filter_by(item_id=product_id).first()
     return render_template('product_detail.html', item=item_details, user=current_user, seller=selling_info)
 
-# CURRENTLY WORKING ON THIS BRANCH!
+@app.route('/process_transaction/<product_id>')
+@login_required
+def process_transaction(product_id):
+    # get item details based on id
+    item_details = Items.query.filter_by(item_id=product_id).first()
+    # flash user to verify transaction is successful
+    flash(f"You have successfully purchased {item_details.title}.")
+    # remove item from the database
+    db.session.delete(item_details)
+    db.session.commit()
+    # redirect back to the product feed
+    return redirect(url_for('product_feed'))
+    
 @app.route('/edit/<product_id>', methods=['GET', 'POST'])
 @login_required
 def edit_item(product_id):
@@ -845,8 +857,6 @@ def account_update():
     flash('Your profile has been successfully updated')
     return redirect('/account')
 
-@app.route('/account_delete')
-
 @app.route('/account_delete', methods=['GET', 'POST'])
 @login_required
 def account_delete():
@@ -912,13 +922,6 @@ def account_reset_password():
             return redirect(url_for('account'))
     else:
         return "REQUEST ERROR, CHECK BACKEND CODE"
-
-
-@app.route('/billing')
-@login_required
-def billing():
-    return "BILLING AND PAYMENTS INFO GOES HERE"
-
 
 @app.route('/logout')
 @login_required
