@@ -21,9 +21,7 @@ The technologies being used are:
 - [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) (Database)
 - HTML/CSS/JS (Frontend)
 - [Google Maps](https://www.google.com/maps) (Mapping)
-- Stripe (Financial Services)
 - [Linode](https://www.linode.com/)/[Nginx](https://www.nginx.com/)/[Gunicorn](https://gunicorn.org/)/[Supervisord](http://supervisord.org/) (Server)
-- [Socket.IO](https://socket.io/) (Messaging)
 
 ## Accessing the App
 
