@@ -18,6 +18,24 @@ img {
     display: grid;
 }
 
+.new-post {
+    display: block;
+    background-color: #A49665;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 24px;
+    width: 300px;
+    margin: 0 auto;
+    text-decoration: none;
+    transition: 250ms;
+}
+
+.new-post:hover, .new-post:focus {
+    background-color: black;
+    color: #A49665;
+}
+
 .feed {
     margin: 20px 110px;
     display: grid;

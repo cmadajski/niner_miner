@@ -15,10 +15,11 @@
                 <a href="#">Niner Miner</a>
             </div>
             <ul class="nav-links">
-                <li><a href="{{ url_for('product_feed') }}">Home</a></li>
-                <li><a href="{{ url_for('post') }}">Post</a></li>
-                <li><a href="{{ url_for('messages') }}">Messages</a></li>
-                <li><a href="{{ url_for('my_items') }}">My Items</a></li>
+                <li><a href="{{ url_for('product_feed') }}">Buy</a></li>
+                <!--Merged the "My Items" and "Post" pages into a single page called "Sell"-->
+                <!--<li><a href="{{ url_for('post') }}">Post</a></li>-->
+                <!--<li><a href="{{ url_for('messages') }}">Messages</a></li>-->
+                <li><a href="{{ url_for('my_items') }}">Sell</a></li>
                 <li><a href="{{ url_for('account') }}">Account</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             </ul>
