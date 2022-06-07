@@ -14,7 +14,7 @@ body {
     border-radius: 8px;
     background-color: #005035;
     text-align: center;
-    width: 600px;
+    width: 550px;
     margin: 10px auto;
     padding: 20px 0;
     color: #A49665;
@@ -23,6 +23,12 @@ body {
 h1 {
     color: #A49665;
     text-align: center;
+}
+
+.form-groups-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .post-form form input:focus {
