@@ -1,5 +1,6 @@
 import os, sys
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 # By is used for finding web elements of specific types (id, class_name, name, etc)
 from selenium.webdriver.common.by import By
 # Keys are used to simulate individual key presses on the keyboard instead of whole values
@@ -25,7 +26,8 @@ num_tests = len(logins)
 num_passed: int = 0
 
 # create a new webdriver instance
-driver = webdriver.Chrome("C:/Users/Default.LAPTOP-TIFN37GP/Code/niner_miner/test/selenium_webdrivers/chromedriver.exe")
+service = Service("C:/Users/Default.LAPTOP-TIFN37GP/Code/niner_miner/test/selenium_webdrivers/chromedriver.exe")
+driver = webdriver.Chrome(service=service)
 # access the deployed niner miner login page
 # driver.get('http://194.195.214.161')
 # access the development niner miiner login page
