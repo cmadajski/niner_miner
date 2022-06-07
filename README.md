@@ -17,7 +17,8 @@ The contributing members for this project are:
 - [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![wakatime](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc)
 
 The technologies being used are:
-- [Python/Flask](https://flask.palletsprojects.com/en/2.1.x/) (Backend + Logic)
+- [Python](https://www.python.org/) (Language)
+- [Flask](https://flask.palletsprojects.com/en/2.1.x/) (Framework)
 - [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) (Database)
 - HTML/CSS/JS (Frontend)
 - [Google Maps](https://www.google.com/maps) (Mapping)
