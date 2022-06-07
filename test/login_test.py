@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 # Keys are used to simulate individual key presses on the keyboard instead of whole values
 from selenium.webdriver.common.keys import Keys
-# 
+# Termcolor adds colored text to terminal output
 from termcolor import colored, cprint
 
 # set up color printing for easier visual identification
@@ -30,8 +30,15 @@ service = Service("C:/Users/Default.LAPTOP-TIFN37GP/Code/niner_miner/test/seleni
 driver = webdriver.Chrome(service=service)
 # access the deployed niner miner login page
 # driver.get('http://194.195.214.161')
-# access the development niner miiner login page
-driver.get('http://127.0.0.1:5000/')
+
+try:
+    # access the development niner miner login page
+    url = 'http://127.0.0.1:5000/'
+    driver.get(url)
+except:
+    print_red(f'ERROR: Cannot connect to URL ({url})')
+    driver.quit()
+    quit()
 
 # use loop to test multiple login attempts with different values in each case
 for login in logins:
