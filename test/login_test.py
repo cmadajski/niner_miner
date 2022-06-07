@@ -78,7 +78,7 @@ for login in logins:
 # calculate test performance
 percentage = num_passed / num_tests
 # format the performance test string
-performance = '\nPERFORMANCE: {passed} out of {tests} tests passed ({perc:.2f}%\n).'.format(passed=num_passed, tests=num_tests, perc=percentage)
+performance = '\nPERFORMANCE: {passed} out of {tests} tests passed ({perc:.2f}%).\n'.format(passed=num_passed, tests=num_tests, perc=percentage)
 print_cyan(performance)
 # close the browser instance
 driver.quit()
