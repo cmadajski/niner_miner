@@ -40,6 +40,7 @@ sortedcontainers==2.4.0
 SQLAlchemy==1.4.32
 stack-data==0.1.4
 stripe==2.76.0
+termcolor==1.1.0
 tomli==2.0.0
 traitlets==5.1.1
 trio==0.20.0
