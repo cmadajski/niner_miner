@@ -11,7 +11,7 @@
     {% if item.seller_id == current_user.id %}
     <a href="/product_detail/{{item.item_id}}">
     <div class="each-item">
-        <img src="../static/img/accounts/{{ item.seller_id }}/{{ item.item_id }}image1" alt="img">
+        <img src="../static/img/accounts/{{ item.seller_id }}/{{ item.item_id }}/item_img_1" alt="img">
         <div class="title-price">
             <p>{{ item.title }}</p>
             <p>${{'%0.2f'|format(item.price|float)}}</p>

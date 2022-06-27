@@ -406,7 +406,9 @@ def product_feed():
 def product_detail(product_id):
     item_details = Items.query.filter_by(item_id=product_id).first()
     selling_info = sellItem.query.filter_by(item_id=product_id).first()
-    return render_template('product_detail.html', item=item_details, user=current_user, seller=selling_info)
+    # create path for accessing imgs associated with item
+    imgPath = (str)(os.path.abspath(os.getcwd())) + "\\src\\static\\img\\accounts\\" + (str)(current_user.id) + "\\" + "item_img_1"
+    return render_template('product_detail.html', item=item_details, user=current_user, seller=selling_info, imgPath=imgPath)
 
 @app.route('/process_transaction/<product_id>')
 @login_required
@@ -703,91 +705,29 @@ def post():
             db.session.add(selling_item)
             db.session.commit()
 
+            # make new directory to hold images associated with the item
+            
+            dirPath = (str)(os.path.abspath(os.getcwd())) + "\\src\\static\\img\\accounts\\" + (str)(current_user.id) + "\\" + (str)(new_item.item_id)
+            print(dirPath)
+            os.mkdir(dirPath)
             new_img1 = request.files['image1']
             if new_img1.filename == '':
                 # if no image is uploaded, you will receive an error message
                 errors['image'] = True
-                errors['image_str'] = 'You are required to upload 5 images.'
+                errors['image_str'] = 'At least one image is required when posting a new item!'
 
                 if errors['image']:
                     return render_template('post.html', errors=errors, info=item_info)
             else:
                 # define the path used for item images
-                filename = (str)(new_item.item_id) + 'image1'
-                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
+                filename = "item_img_1"
+                newImgPath = dirPath + '\\' + filename
                 #old_path = '../static/img/empty.jpg'
                 # remove the old item img
                 #os.remove(old_path)
                 # save the new img
-                new_img1.save(path)
+                new_img1.save(newImgPath)
 
-            new_img2 = request.files['image2']
-            if new_img2.filename == '':
-                errors['image'] = True
-                errors['image_str'] = 'You are required to upload 5 images.'
-
-                if errors['image']:
-                    return render_template('post.html', errors=errors, info=item_info)
-            else:
-                # define the path used for item images
-                filename = (str)(new_item.item_id) + 'image2'
-                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-                #old_path = '../static/img/empty.jpg'
-                # remove the old item img
-                #os.remove(old_path)
-                # save the new img
-                new_img2.save(path)
-            
-            new_img3 = request.files['image3']
-            if new_img3.filename == '':
-                errors['image'] = True
-                errors['image_str'] = 'You are required to upload 5 images.'
-
-                if errors['image']:
-                    return render_template('post.html', errors=errors, info=item_info)
-            else:
-                # define the path used for item images
-                filename = (str)(new_item.item_id) + 'image3'
-                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-                #old_path = '../static/img/empty.jpg'
-                # remove the old item img
-                #os.remove(old_path)
-                # save the new img
-                new_img3.save(path)
-
-            new_img4 = request.files['image4']
-            if new_img4.filename == '':
-                errors['image'] = True
-                errors['image_str'] = 'You are required to upload 5 images.'
-
-                if errors['image']:
-                    return render_template('post.html', errors=errors, info=item_info)
-            else:
-                # define the path used for item images
-                filename = (str)(new_item.item_id) + 'image4'
-                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-                #old_path = '../static/img/empty.jpg'
-                # remove the old item img
-                #os.remove(old_path)
-                # save the new img
-                new_img4.save(path)
-
-            new_img5 = request.files['image5']
-            if new_img5.filename == '':
-                errors['image'] = True
-                errors['image_str'] = 'You are required to upload 5 images.'
-
-                if errors['image']:
-                    return render_template('post.html', errors=errors, info=item_info)
-            else:
-                # define the path used for item images
-                filename = (str)(new_item.item_id) + 'image5'
-                path = './static/img/accounts/' + (str)(current_user.id) + '/' + filename
-                #old_path = '../static/img/empty.jpg'
-                # remove the old item img
-                #os.remove(old_path)
-                # save the new img
-                new_img5.save(path)
             # return to product feed page
             return redirect(url_for('product_feed'))
 
