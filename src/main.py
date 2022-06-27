@@ -606,10 +606,16 @@ def edit_item(product_id):
 def delete_item(product_id):
     # retrieve item from database
     my_item = Items.query.filter_by(item_id=product_id).first()
-
+    # remove item from the database
     db.session.delete(my_item)
     db.session.commit()
 
+    # remove image files from local system
+    dirPath = (str)(os.path.abspath(os.getcwd())) + "\\src\\static\\img\\accounts\\" + (str)(current_user.id) + "\\" + (str)(my_item.item_id)
+    filePath = dirPath + "\\item_img_1"
+    if os.path.exists(dirPath):
+        os.remove(filePath)
+        os.rmdir(dirPath)
     # return to product feed page            
     return redirect(url_for('product_feed'))
 
@@ -622,7 +628,7 @@ def messages():
 @app.route('/post', methods=['GET', 'POST'])
 @login_required
 def post():
-     # data for input validation
+    # data for input validation
     errors = dict()
     errors['title'] = False
     errors['price'] = False
@@ -708,7 +714,6 @@ def post():
             # make new directory to hold images associated with the item
             
             dirPath = (str)(os.path.abspath(os.getcwd())) + "\\src\\static\\img\\accounts\\" + (str)(current_user.id) + "\\" + (str)(new_item.item_id)
-            print(dirPath)
             os.mkdir(dirPath)
             new_img1 = request.files['image1']
             if new_img1.filename == '':

@@ -1,5 +1,6 @@
 {% extends "navbar.html" %}
 {% block links %}../static/css/product_detail.css{% endblock %}
+{% block js %} <script type="text/javascript" src="../static/javascript/slideshow.js"></script> {% endblock %}
 {% block title %}Niner Miner | {{item.title}}{% endblock %}
 {% block content %}
 <div class="container">
@@ -7,7 +8,11 @@
     <!-- Display Images -->
     <!-- Slideshow container -->
     <div class="slideshow-container">
-        <img src="../static/img/accounts/{{user.id}}/{{item.item_id}}/item_img_1" width="400px" height="auto">
+        <img id="currImg" src="../static/img/accounts/{{user.id}}/{{item.item_id}}/item_img_1" width="600px" height="auto">
+        <div class="arrows">
+            <div class="arrow" id="prev-arrow" onclick="prevImg()">Prev</div>
+            <div class="arrow" id="next-arrow" onclick="nextImg()">Next</div>
+        </div>
     </div>
     <br>
     
