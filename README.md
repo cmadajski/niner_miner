@@ -1,5 +1,15 @@
 # Niner Miner - E-commerce for UNCC Students
 
+## Accessing the App
+
+The app is now up and running on a Linode server. Use [this link](http://194.195.214.161/) to access the live demo. To log in, use the following credentials:
+
+email: demo@uncc.edu
+
+password: demo1234
+
+## Summary
+
 This web application is a project created for ITSC 4155 Software Engineering Capstone (Spring 2022).
 The goal was to create an e-commerce platform similar to OfferUp and Craigslist that allows for UNCC
 students to buy and sell personal goods. The unique feature we seek to offer is using
@@ -23,14 +33,6 @@ The technologies being used are:
 - HTML/CSS/JS (Frontend)
 - [Google Maps](https://www.google.com/maps) (Mapping)
 - [Linode](https://www.linode.com/)/[Nginx](https://www.nginx.com/)/[Gunicorn](https://gunicorn.org/)/[Supervisord](http://supervisord.org/) (Server)
-
-## Accessing the App
-
-The app is now up and running on a Linode server. Use [this link](http://194.195.214.161/) to access the live demo. To log in, use the following credentials:
-
-email: demo@uncc.edu
-
-password: demo1234
 
 ## Local App Installation (for local development)
 
