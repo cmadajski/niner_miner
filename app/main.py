@@ -1,3 +1,4 @@
+from distutils.log import error
 from unicodedata import category
 from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
@@ -5,6 +6,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from random import randint
 import smtplib, ssl, copy
 import os
+from app.form_validator import check_login_password, check_new_email, check_new_password, check_login_email
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -94,30 +96,25 @@ def index():
         login_attempt = dict()
         login_attempt['email'] = request.form['email']
         login_attempt['password'] = request.form['password']
+        print('PASSWORD: ' + login_attempt['password'])
+        print('PASSWORD LENGTH: ' + str(len(login_attempt['password'])))
 
-        # does email exist in the database?
         requested_user = User.query.filter_by(email=login_attempt['email']).first()
-        if requested_user != None:
-            # is the requested user activated?
-            if requested_user.is_active() == False:
-                errors['email'] = True
-                errors['email_str'] = 'Account has not been validated yet!'
-            # is password valid for the requested user?
-            if requested_user.password != login_attempt['password']:
-                errors['password'] = True
-                errors['password_str'] = 'Password not valid for given email!'
-        else:
-            errors['email'] = True
-            errors['email_str'] = 'Account does not exist for the given email!'
+        # check if login email is valid
+        errors = check_login_email(errors, login_attempt, requested_user)
+        # only check password if email is valid
+        if not errors['email']:
+            errors = check_login_password(errors, login_attempt, requested_user)
+        # if errors exist in the lgoin form, show errors to user
         if errors['email'] or errors['password']:
             return render_template('index.html', errors=errors, info=login_attempt)
+        # if no errors, login user and redirect to Buy page
         else:
             login_user(requested_user)
             flash('Successfully logged in as ' + current_user.name)
             return redirect('/product_feed')
     else:
         return 'METHOD ERROR, CHECK BACKEND LOGIC'
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -137,81 +134,23 @@ def signup():
         user_info['name'] = request.form['name']
         user_info['id'] = request.form['id']
         user_info['email'] = request.form['email']
-        user_info['phone'] = request.form['phone']
         user_info['password'] = request.form['password']
         user_info['password_repeat'] = request.form['passwordRepeat']
 
-        # check if email is valid
-        # does email include a UNCC address?
-        if 'uncc.edu' not in user_info['email']:
-            errors['email'] = True
-            errors['email_str'] = 'Not a UNCC email address!'
-        # does the email already exist in the database?
         requested_user = User.query.filter_by(email=user_info['email']).first()
-        if requested_user != None:
-            errors['email'] = True
-            errors['email_str'] = 'Email address is already associated with an account!'
+        # check if email is valid
+        errors = check_new_email(errors, user_info, requested_user)
 
         # check if password is valid
-        # is password at least 8 characters long?
-        if len(user_info['password']) < 8:
-            errors['password'] = True
-            errors['password_str'].append('Password not 8+ characters long!')
-        # do both passwords equal each other?
-        if user_info['password'] != user_info['password_repeat']:
-            errors['password'] = True
-            errors['password_str'].append('Passwords do not match!')
+        errors = check_new_password(errors, user_info)
+        
         # if errors exist, show them to user
         if errors['email'] or errors['password']:
             return render_template('signup.html', errors=errors, info=user_info)
         # if no errors exist, then add user to database and email verification code
+
         else:
-            # generate random 6 digit code
-            validation_code = ''
-            for i in range(6):
-                num = randint(0, 9)
-                validation_code += str(num)
-
-            # add new user data to database
-            new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'],
-                            phone=user_info['phone'], password=user_info['password'], validation_code=validation_code)
-            db.session.add(new_user)
-            db.session.commit()
-
-            # add new directory for saving user account img
-            try:
-                path = './static/img/accounts/' + (str)(user_info['id'])
-                os.makedirs(path)
-            except FileExistsError:
-                print("OS_ERROR - Directory already exists!")
-
-            # send email with validation code
-            port = 465
-            smtp_server = 'smtp.gmail.com'
-            sender_email = 'ninerminer.alerts@gmail.com'
-            receiver_email = user_info['email']
-            email_content = f"""\
-            SUBJECT: Your Validation Code for Niner Miner
-
-            Hi there {user_info['name']},\n
-            Here's the six-digit validation code for validating your new Niner Miner account.
-
-            CODE: {validation_code}
-
-            Visit 127.0.0.1:5000/validate to enter in your code.
-
-            Have fun buying an selling!
-            The Niner Miner Team
-            """
-
-            gmail_password = 'Flaskapp4155!'
-            # create secure SSL context
-            context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-                server.login(sender_email, gmail_password)
-                server.sendmail(sender_email, receiver_email, email_content)
-            flash('A validation code has been sent to ' + user_info['email'])
-            return redirect(url_for('validate'))
+            return redirect(url_for("validate"))
 
 
 @app.route('/validate', methods=['GET', 'POST'])

@@ -1,0 +1,37 @@
+
+
+/* global styling for flashes and errors */
+
+.flash {
+    background-color: rgb(3, 218, 14);
+    color: black;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+    transition: 250ms;
+    font-size: 24px;
+}
+.flash span {
+    display: block;
+}
+.flash:hover {
+    cursor: pointer;
+    background-color: rgb(0, 230, 11);
+}
+
+.error {
+    background-color: rgb(218, 3, 3);
+    color: black;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+    font-size: 18px;
+}
+.error span {
+    display: block;
+}
+.error:hover {
+    background-color: rgb(246, 1, 1);
+}

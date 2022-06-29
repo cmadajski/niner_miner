@@ -1,6 +1,8 @@
 {% extends "navbar.html" %}
-{% block links %}../static/css/product_feed.css{% endblock %}
+{% block links %}<link rel="stylesheet" href="../static/css/product_feed.css">
+<link rel="stylesheet" href="../static/css/global.css">{% endblock %}
 {% block title %}Niner Miner | Buy Stuff{% endblock %}
+{% block js %}<script type="text/javascript" src="../static/javascript/hideFlash.js"></script>{% endblock %}
 {% block content %}
     <div class="header">
         <h1>Product Feed</h1>
@@ -28,7 +30,7 @@
     {% endif %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="flash">
+            <div class="flash" onclick="hideFlash()">
                 <span>{{ messages[0] }}</span>
             </div>
         {% endif %}

@@ -89,15 +89,3 @@ img {
 .title-price > p {
     color: #A49665;
 }
-
-.flash {
-    background-color: rgb(3, 218, 14);
-    color: black;
-    padding: 10px;
-    margin: 10px auto;
-    width: 80%;
-    border-radius: 10px;
- }
- .flash span {
-    display: block;
- }

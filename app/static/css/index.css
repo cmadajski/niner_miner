@@ -5,6 +5,7 @@ body {
    font-family: Norwester;
    color: white;
 }
+
 @font-face {
    font-family: Norwester;
    src: url(../fonts/norwester.otf);
@@ -105,17 +106,6 @@ body {
 .forgot-password a:hover, a:focus {
    color: black;
 }
-.flash {
-   background-color: rgb(3, 218, 14);
-   color: black;
-   padding: 10px;
-   margin: 10px auto;
-   width: 80%;
-   border-radius: 10px;
-}
-.flash span {
-   display: block;
-}
 
 .signup a {
    display: block;
@@ -132,17 +122,6 @@ body {
 .signup a:hover, a:focus {
    background-color: black;
    color: #A49665;
-}
-.error {
-   background-color: rgb(218, 3, 3);
-   color: black;
-   padding: 10px;
-   margin: 10px auto;
-   width: 80%;
-   border-radius: 10px;
-}
-.error span {
-   display: block;
 }
 
 /* styling for small/mobile screens */
