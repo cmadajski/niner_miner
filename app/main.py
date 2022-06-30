@@ -8,6 +8,8 @@ from app.form_validator import *
 from werkzeug.utils import secure_filename
 from uuid import uuid4
 
+from app.process_images import process_image
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'most secret key'
@@ -61,9 +63,10 @@ class Items(db.Model):
     extradetails = db.Column("extradetails", db.Text)
     description = db.Column("description", db.String(1000))
     location = db.Column("location", db.Text)
-    item_img = db.Column(db.String())
+    img_path_relative = db.Column(db.String())
+    img_path_absolute = db.Column(db.String())
 
-    def __init__(self, item_id, seller_id, title, price, fixed, category, condition, extradetails, description, location, item_img):
+    def __init__(self, item_id, seller_id, title, price, fixed, category, condition, extradetails, description, location, img_path_relative, img_path_absolute):
         self.item_id = item_id
         self.seller_id = seller_id
         self.title = title
@@ -74,7 +77,8 @@ class Items(db.Model):
         self.extradetails = extradetails
         self.description = description
         self.location = location
-        self.item_img = item_img
+        self.img_path_relative = img_path_relative
+        self.img_path_absolute = img_path_absolute
 
 
 class sellItem(db.Model):
@@ -553,7 +557,7 @@ def edit_item(product_id):
 
         return render_template('post.html', errors=errors, item=my_item, user=current_user, info=my_item)
 
-@app.route('/delete/<product_id>', methods=['POST'])
+@app.route('/delete/<product_id>', methods=['GET'])
 @login_required
 def delete_item(product_id):
     # retrieve item from database
@@ -562,23 +566,23 @@ def delete_item(product_id):
     dirPath, filePath = "", ""
     if os.name == 'nt':
         dirPath = os.getcwd() + "\\app\\static\\img\\items\\" + my_item.item_id
-        filePath =  dirPath + "\\item_img.jpg"
+        filePath =  my_item.img_path_absolute
     elif os.name == 'posix':
         dirPath = os.getcwd() + "/app/static/img/items/" + my_item.item_id
-        filePath = dirPath + "/item_img.jpg"
+        filePath = my_item.img_path_absolute
         
     # attempt to remove image file
     try:
         os.remove(filePath)
         print(f'IMAGE DELETED: {filePath}')
-    except OSError as e:
-        print(e)
+    except OSError:
+        print(f"PATH ERROR: Could not find path {filePath}")
     # attempt to remove directory for item's images
     try:
         os.rmdir(dirPath)
         print(f'DIRECTORY DELETED: {dirPath}')
-    except OSError as e:
-        print(e)
+    except OSError:
+        print(f'PATH ERROR: Could not find path {dirPath}')
 
     # remove item from the database
     db.session.delete(my_item)
@@ -675,34 +679,39 @@ def post():
             return render_template('post.html', errors=errors, info=item_info)
         else:
             # determine which operating system is being used (paths differ between UNIX-style and Windows)
-            dirPath, filename, osFilePath, relativePath = '', '', '', ''
+            path_values = {"dirPath": '', "filename": '', "osFilePath": '', 'relativePath': ''}
+            # generate new unique 32-bit UUID for new item (used as item_id)
             newId = str(uuid4())
             if os.name == 'nt':
-                dirPath = os.getcwd() + "\\app\\static\\img\\items\\" + newId
-                filename = 'item_img.jpg'
-                osFilePath = dirPath + "\\" + filename
+                path_values['dirPath'] = os.getcwd() + "\\app\\static\\img\\items\\" + newId
+                path_values['filename'] = new_img.filename
+                path_values['osFilePath'] = path_values['dirPath'] + "\\" + path_values['filename']
                 # relative path is the value used in the html template (path is relative to templates/ directory)
-                relativePath = "../static/img/items/" + newId + "/"+ filename
+                path_values['relativePath'] = "\\static\\img\\items\\" + newId + "\\" + path_values['filename']
             elif os.name == 'posix':
                 dirPath = os.getcwd() + "/app/static/img/items/" + newId
-                filename = 'item_img.jpg'
-                osFilePath = dirPath + "/" + filename
-                relativePath = "../static/img/items/" + newId + "/"+ filename
+                filename = path_values['filename']
+                osFilePath = path_values['dirPath'] + "/" + path_values['filename']
+                relativePath = "../static/img/items/" + newId + "/"+ path_values['filename']
             
             # attempt to make directory in case it doesn't exist yet, otherwise except the error
             try:
-                os.mkdir(dirPath)
-            except OSError as e:
-                print('NOTE: Directory for item already exists. Continuing app...')
+                os.mkdir(path_values['dirPath'])
+                print("DIRECTORY CREATED: " + path_values['dirPath'])
+            except OSError:
+                print("MKDIR ERROR: Directory already exists.")
         
             # save image to the generated filepath (must use osFilePath)
-            print('IMG SAVED TO: ' + osFilePath)
-            new_img.save(osFilePath)
+            print('IMG SAVED TO: ' + path_values['osFilePath'])
+            new_img.save(path_values['osFilePath'])
+
+            # process image - cropping for non-square images and size reduction for huge images >1000px
+            process_image(path_values, 'item')
             
             new_item = Items(item_id=newId, seller_id=current_user.id, title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
                             category=item_info['category'], condition=item_info['condition'],
                             extradetails=item_info['extradetails'], description=item_info['description'],
-                            location=item_info['location'], item_img=relativePath)
+                            location=item_info['location'], img_path_relative=path_values['relativePath'], img_path_absolute=path_values['osFilePath'])
             db.session.add(new_item)
 
             selling_item = sellItem(seller_id=current_user.id, seller_name=current_user.name, seller_email=current_user.email, item_id=newId, buyer_id=None)

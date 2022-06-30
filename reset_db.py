@@ -1,5 +1,5 @@
 def reset_db():
-    from main import db, User
+    from app.main import db, User
     # remove db
     db.drop_all()
     print('Database deleted.')

@@ -9,7 +9,7 @@
     <!-- Display Images -->
     <!-- Slideshow container -->
     <div class="slideshow-container">
-        <img id="currImg" src="{{ item.item_img }}" width="600px" height="auto">
+        <img id="currImg" src="{{ item.img_path_relative }}" width="600px" height="auto">
         <div class="arrows">
             <div class="arrow" id="prev-arrow" onclick="prevImg()">Prev</div>
             <div class="arrow" id="next-arrow" onclick="nextImg()">Next</div>
@@ -29,20 +29,20 @@
             {% if item.extradetails != '' %}
                 <br/><br/><b>Other Details:</b><br/>{{item.extradetails}}
             {% endif %}
-            {{ item.item_img }}
         </p>
         </p>
         <p class="price" data-tooltip="Price is set to {{item.fixed}}">Price: ${{'%0.2f'|format(item.price|float)}}</p>
 
         {% if item.seller_id == current_user.id %}
-        <br>
-        <a href="{{ url_for('edit_item', product_id=item.item_id) }}" class="submit-button">Edit Item</a>
-        <br>
-        <form action="{{ url_for('delete_item', product_id=item.item_id) }}" method="post">
-            <input type="submit" class="submit-button" value="Delete Item">
-        </form>
+        <div class="nav-buttons">
+            <a class="nav-button" href="{{ url_for('edit_item', product_id=item.item_id) }}">Edit Item</a>
+            <a class="nav-button" href="{{ url_for('delete_item', product_id=item.item_id) }}">Delete Item</a>
+        </div>
+        
         {% else %} 
+        <div class="nav-buttons">
             <a class="button btnbuy" href="/process_transaction/{{ item.item_id }}">Buy</a>
+        </div>
         {% endif %}
     </div>
     <div class="contact">
@@ -58,13 +58,13 @@
         </p>
         <div class="map">
             <iframe
-              width="100%"
-              height="180"
-              style="border:0"
-              loading="lazy"
-              allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6M-Kj_ihTLu14Z2HGKgcxXQ9qqxJWUeU
+            width="100%"
+            height="180"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6M-Kj_ihTLu14Z2HGKgcxXQ9qqxJWUeU
                 &q={{item.location}}">
         </iframe>
         </div>
