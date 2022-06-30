@@ -1,13 +1,5 @@
 # Niner Miner - E-commerce for UNCC Students
 
-## Accessing the App
-
-The app is now up and running on a Linode server. Use [this link](http://194.195.214.161/) to access the live demo. To log in, use the following credentials:
-
-email: demo@uncc.edu
-
-password: demo1234
-
 ## Summary
 
 This web application is a project created for ITSC 4155 Software Engineering Capstone (Spring 2022).
@@ -20,11 +12,11 @@ of trust and security to our platform which will lead to greater community engag
 stress for users in the ecosystem.
 
 The contributing members for this project are:
-- [Oviya Manoharan](https://github.com/oviya23)
-- [Hinal Makadiya](https://www.linkedin.com/in/hinal-makadiya-60838b207/)
-- Dane Medlin
-- [Drew Moore](https://github.com/drew18moore)
-- [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![wakatime](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc)
+- [Oviya Manoharan](https://github.com/oviya23): *Scrum Master and Backend Dev*
+- [Hinal Makadiya](https://www.linkedin.com/in/hinal-makadiya-60838b207/): *Database Designer*
+- Dane Medlin: *Lead Designer*
+- [Drew Moore](https://github.com/drew18moore): *Lead Frontend Dev*
+- [Christian Madajski](https://www.linkedin.com/in/cmadajsk/) [![wakatime](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc.svg)](https://wakatime.com/badge/user/510092ca-a9b8-48f5-bf50-9b05005ef525/project/a5b9008a-d413-431f-92d4-80beef67c7cc): *Lead Architect*
 
 The technologies being used are:
 - [Python](https://www.python.org/) (Language)
@@ -32,7 +24,16 @@ The technologies being used are:
 - [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) (Database)
 - HTML/CSS/JS (Frontend)
 - [Google Maps](https://www.google.com/maps) (Mapping)
-- [Linode](https://www.linode.com/)/[Nginx](https://www.nginx.com/)/[Gunicorn](https://gunicorn.org/)/[Supervisord](http://supervisord.org/) (Server)
+- [Heroku](https://www.heroku.com/) (Server)
+
+## Accessing the Application
+
+The most recent version of the application has been deployed on Heroku and can be accessed [via this link](https://niner-miner.herokuapp.com/).
+
+To test the app, use the credentials for the "Demo" account found below:
+
+**Email:** demo@uncc.edu
+**Password:** demo1234
 
 ## Local App Installation (for local development)
 
@@ -58,8 +59,7 @@ and creates the database automatically. In the niner_miner directory, open the `
 Once you run the above script you must manually activate the virtual environment by navigating to the ```niner_miner``` directory and using the command ```source env/Scripts/activate``` on Windows machines or ```source env/bin/activate``` on Mac/Linux to start the virtual environment.
 
 ## Running the Code
-Navigate to the ```src``` directory. Then use the command ```python main.py``` to start
-the development server and allow access to the app.
+In the ```niner_miner``` directory, use the ```python run.py``` command to start a development server to serve the app.
 
 An IP Address should be visible in the console, and you can either ctl+click the address
 or copy and paste the address into a web browser to view the app. You can also manually
@@ -73,9 +73,6 @@ To reset the database use the command ```python reset_db.py```
 ## Currently Implemented Features
 
 - Login (with input validation)
-- Password Reset (while not logged in)
-- Password Reset (while logged in)
-- Post New Items for Sale
 - View All Items Posted by Current User
 - Account Page for Current User
 - Edit Account Info for Current User
