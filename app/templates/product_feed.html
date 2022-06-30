@@ -40,7 +40,7 @@
         {% for item in items %}
         <a href="/product_detail/{{item.item_id}}">
         <div class="each-item">
-            <img src="{{ item.item_img }}" alt="img">
+            <img src="{{ item.img_path_relative }}" alt="img">
             
             <div class="title-price">
                 <p>{{ item.title }}</p>
