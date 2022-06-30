@@ -33,6 +33,7 @@ The most recent version of the application has been deployed on Heroku and can b
 To test the app, use the credentials for the "Demo" account found below:
 
 **Email:** demo@uncc.edu
+
 **Password:** demo1234
 
 ## Local App Installation (for local development)
