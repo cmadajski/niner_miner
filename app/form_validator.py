@@ -1,6 +1,3 @@
-from requests import request
-
-
 def check_new_email(errors, user_info, requested_user):
     # is the email field empty?
     if user_info['email'] == "":

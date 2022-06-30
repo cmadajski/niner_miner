@@ -1,12 +1,12 @@
-from distutils.log import error
-from unicodedata import category
 from flask import Flask, flash, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from random import randint
 import smtplib, ssl, copy
 import os
-from app.form_validator import check_login_password, check_new_email, check_new_password, check_login_email
+from app.form_validator import *
+from werkzeug.utils import secure_filename
+from uuid import uuid4
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -34,6 +34,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(24), nullable=False)
     validation_code = db.Column(db.String(6), default=None)
     active = db.Column(db.Boolean(), default=False)
+    profile_img = db.Column(db.String(), nullable=True, default=None)
 
     def __repr__(self):
         return f'{self.name}({self.id})>> {self.email}'
@@ -41,21 +42,29 @@ class User(db.Model, UserMixin):
     def is_active(self):
         return self.active
 
+    def has_profile_img(self):
+        if self.profile_img == None:
+            return False
+        else:
+            return True
+
 
 
 class Items(db.Model):
-    item_id = db.Column("item_id", db.Integer, primary_key=True)
+    item_id = db.Column(db.String(), primary_key=True)
     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column("title", db.String(200))
-    price = db.Column("price", db.Numeric, nullable=False)
+    price = db.Column("price", db.Float, nullable=False)
     fixed = db.Column("fixed", db.Text)
     category = db.Column("category", db.Text)
     condition = db.Column("condition", db.Text)
     extradetails = db.Column("extradetails", db.Text)
     description = db.Column("description", db.String(1000))
     location = db.Column("location", db.Text)
+    item_img = db.Column(db.String())
 
-    def __init__(self, seller_id, title, price, fixed, category, condition, extradetails, description, location):
+    def __init__(self, item_id, seller_id, title, price, fixed, category, condition, extradetails, description, location, item_img):
+        self.item_id = item_id
         self.seller_id = seller_id
         self.title = title
         self.price = price
@@ -65,6 +74,7 @@ class Items(db.Model):
         self.extradetails = extradetails
         self.description = description
         self.location = location
+        self.item_img = item_img
 
 
 class sellItem(db.Model):
@@ -72,7 +82,7 @@ class sellItem(db.Model):
     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     seller_name = db.Column(db.String(50), db.ForeignKey('user.name'))
     seller_email = db.Column(db.String(40), db.ForeignKey('user.email'))
-    item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
+    item_id = db.Column(db.String, db.ForeignKey('items.item_id'))
     buyer_id = db.Column(db.Integer, default=None)
 
     def __init__(self, seller_id, seller_name, seller_email, item_id, buyer_id):
@@ -398,7 +408,7 @@ def edit_item(product_id):
         item_info['description'] = request.form['description']
         item_info['location'] = request.form['location']
 
-         # this section of if statements cover input validation for the post form
+        # this section of if statements cover input validation for the post form
         if len(item_info['title']) <= 1:
             errors['title'] = True
             errors['title_str'] = 'Please enter a proper title to post.'
@@ -548,16 +558,32 @@ def edit_item(product_id):
 def delete_item(product_id):
     # retrieve item from database
     my_item = Items.query.filter_by(item_id=product_id).first()
+    # determine OS type
+    dirPath, filePath = "", ""
+    if os.name == 'nt':
+        dirPath = os.getcwd() + "\\app\\static\\img\\items\\" + my_item.item_id
+        filePath =  dirPath + "\\item_img.jpg"
+    elif os.name == 'posix':
+        dirPath = os.getcwd() + "/app/static/img/items/" + my_item.item_id
+        filePath = dirPath + "/item_img.jpg"
+        
+    # attempt to remove image file
+    try:
+        os.remove(filePath)
+        print(f'IMAGE DELETED: {filePath}')
+    except OSError as e:
+        print(e)
+    # attempt to remove directory for item's images
+    try:
+        os.rmdir(dirPath)
+        print(f'DIRECTORY DELETED: {dirPath}')
+    except OSError as e:
+        print(e)
+
     # remove item from the database
     db.session.delete(my_item)
     db.session.commit()
 
-    # remove image files from local system
-    dirPath = (str)(os.path.abspath(os.getcwd())) + "\\src\\static\\img\\accounts\\" + (str)(current_user.id) + "\\" + (str)(my_item.item_id)
-    filePath = dirPath + "\\item_img_1"
-    if os.path.exists(dirPath):
-        os.remove(filePath)
-        os.rmdir(dirPath)
     # return to product feed page            
     return redirect(url_for('product_feed'))
 
@@ -637,43 +663,53 @@ def post():
             errors['location'] = True
             errors['location_str'] = 'Please select a location below.'
         
+        # if no image is uploaded, then "image1" will not be present in request.files dict
+        # if the user clicked on upload but didn't select an image, then "image1" will have an empty filename
+        new_img = request.files['image1']
+        if new_img.filename == "" or "image1" not in request.files:
+            errors['image'] = True
+            errors['image_str'] = 'At least one image is required when posting a new item!'
+
         # if there are errors in the form, print these errors in post.html
-        if errors['title'] or errors['price'] or errors['fixed'] or errors['category'] or errors['condition'] or errors['description'] or errors['location']:
+        if errors['title'] or errors['price'] or errors['fixed'] or errors['category'] or errors['condition'] or errors['description'] or errors['location'] or errors['image']:
             return render_template('post.html', errors=errors, info=item_info)
         else:
-        # else add the item to the database
-            new_item = Items(seller_id=current_user.id, title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
+            # determine which operating system is being used (paths differ between UNIX-style and Windows)
+            dirPath, filename, osFilePath, relativePath = '', '', '', ''
+            newId = str(uuid4())
+            if os.name == 'nt':
+                dirPath = os.getcwd() + "\\app\\static\\img\\items\\" + newId
+                filename = 'item_img.jpg'
+                osFilePath = dirPath + "\\" + filename
+                # relative path is the value used in the html template (path is relative to templates/ directory)
+                relativePath = "../static/img/items/" + newId + "/"+ filename
+            elif os.name == 'posix':
+                dirPath = os.getcwd() + "/app/static/img/items/" + newId
+                filename = 'item_img.jpg'
+                osFilePath = dirPath + "/" + filename
+                relativePath = "../static/img/items/" + newId + "/"+ filename
+            
+            # attempt to make directory in case it doesn't exist yet, otherwise except the error
+            try:
+                os.mkdir(dirPath)
+            except OSError as e:
+                print('NOTE: Directory for item already exists. Continuing app...')
+        
+            # save image to the generated filepath (must use osFilePath)
+            print('IMG SAVED TO: ' + osFilePath)
+            new_img.save(osFilePath)
+            
+            new_item = Items(item_id=newId, seller_id=current_user.id, title=item_info['title'], price=item_info['price'], fixed=item_info['fixed'],
                             category=item_info['category'], condition=item_info['condition'],
                             extradetails=item_info['extradetails'], description=item_info['description'],
-                            location=item_info['location'])
+                            location=item_info['location'], item_img=relativePath)
             db.session.add(new_item)
-            db.session.commit()
 
-            selling_item = sellItem(seller_id=current_user.id, seller_name=current_user.name, seller_email=current_user.email, item_id=new_item.item_id, buyer_id=None)
+            selling_item = sellItem(seller_id=current_user.id, seller_name=current_user.name, seller_email=current_user.email, item_id=newId, buyer_id=None)
             db.session.add(selling_item)
+
+            # commit all changes to db
             db.session.commit()
-
-            # make new directory to hold images associated with the item
-            
-            dirPath = (str)(os.path.abspath(os.getcwd())) + "\\src\\static\\img\\accounts\\" + (str)(current_user.id) + "\\" + (str)(new_item.item_id)
-            os.mkdir(dirPath)
-            new_img1 = request.files['image1']
-            if new_img1.filename == '':
-                # if no image is uploaded, you will receive an error message
-                errors['image'] = True
-                errors['image_str'] = 'At least one image is required when posting a new item!'
-
-                if errors['image']:
-                    return render_template('post.html', errors=errors, info=item_info)
-            else:
-                # define the path used for item images
-                filename = "item_img_1"
-                newImgPath = dirPath + '\\' + filename
-                #old_path = '../static/img/empty.jpg'
-                # remove the old item img
-                #os.remove(old_path)
-                # save the new img
-                new_img1.save(newImgPath)
 
             # return to product feed page
             return redirect(url_for('product_feed'))

@@ -1,0 +1,46 @@
+# generate random 6 digit code
+            validation_code = ''
+            for i in range(6):
+                num = randint(0, 9)
+                validation_code += str(num)
+
+            # add new user data to database
+            new_user = User(name=user_info['name'], id=user_info['id'], email=user_info['email'],
+                            phone=user_info['phone'], password=user_info['password'], validation_code=validation_code)
+            db.session.add(new_user)
+            db.session.commit()
+
+            # add new directory for saving user account img
+            try:
+                path = './static/img/accounts/' + (str)(user_info['id'])
+                os.makedirs(path)
+            except FileExistsError:
+                print("OS_ERROR - Directory already exists!")
+
+            # send email with validation code
+            port = 465
+            smtp_server = 'smtp.gmail.com'
+            sender_email = 'ninerminer.alerts@gmail.com'
+            receiver_email = user_info['email']
+            email_content = f"""\
+            SUBJECT: Your Validation Code for Niner Miner
+
+            Hi there {user_info['name']},\n
+            Here's the six-digit validation code for validating your new Niner Miner account.
+
+            CODE: {validation_code}
+
+            Visit 127.0.0.1:5000/validate to enter in your code.
+
+            Have fun buying an selling!
+            The Niner Miner Team
+            """
+
+            gmail_password = 'Flaskapp4155!'
+            # create secure SSL context
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                server.login(sender_email, gmail_password)
+                server.sendmail(sender_email, receiver_email, email_content)
+            flash('A validation code has been sent to ' + user_info['email'])
+            return redirect(url_for('validate'))

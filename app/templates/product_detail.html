@@ -9,7 +9,7 @@
     <!-- Display Images -->
     <!-- Slideshow container -->
     <div class="slideshow-container">
-        <img id="currImg" src="../static/img/empty.jpg" width="600px" height="auto">
+        <img id="currImg" src="{{ item.item_img }}" width="600px" height="auto">
         <div class="arrows">
             <div class="arrow" id="prev-arrow" onclick="prevImg()">Prev</div>
             <div class="arrow" id="next-arrow" onclick="nextImg()">Next</div>
@@ -28,7 +28,8 @@
             {{item.description}}
             {% if item.extradetails != '' %}
                 <br/><br/><b>Other Details:</b><br/>{{item.extradetails}}
-           {% endif %}
+            {% endif %}
+            {{ item.item_img }}
         </p>
         </p>
         <p class="price" data-tooltip="Price is set to {{item.fixed}}">Price: ${{'%0.2f'|format(item.price|float)}}</p>
