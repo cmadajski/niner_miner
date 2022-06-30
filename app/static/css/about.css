@@ -20,11 +20,17 @@ header span {
     font-style: italic;
     letter-spacing: 2px;
 }
+.info-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-family: sans-serif;
+}
 .introduction {
     background-color: #005035;
     padding: 10px 20px;
-    border-top: 2px solid #A49665;
-    border-bottom: 2px solid #A49665;
+    max-width: 800px;
+    margin: 10px;
 }
 h2 {
     color: #A49665;
@@ -39,15 +45,49 @@ ul li {
 .requirements {
     padding: 10px 20px;
     background-color: #005035;
-    border-bottom: 2px solid #A49665;
+    max-width: 800px;
+    margin: 10px;
 }
-.dev-team {
-    padding: 10px 20px;
+#disabled {
+    color: red;
 }
+#back-to-login {
+    display: block;
+    background-color: #A49665;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 24px;
+    width: fit-content;
+    margin: 0 auto;
+    text-decoration: none;
+    text-align: center;
+    transition: 250ms;
+}
+#back-to-login:hover {
+    background-color: black;
+    color: #A49665;
+}
+
+/* dev team cards */
+
+
+#dev-team-title {
+    font-size: 70px;
+    font-style: italic;
+    letter-spacing: 2px;
+    padding: 20px;
+    background-color: #005035;
+    display: block;
+    margin: 10px 0;
+    width: 100vw;
+}
+
 .dev-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    font-family: sans-serif;
 }
 .dev-card {
     max-width: 400px;

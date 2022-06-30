@@ -126,7 +126,9 @@ def signup():
     errors['password_str'] = list()
 
     if request.method == 'GET':
-        return render_template('signup.html', errors=errors, info=None)
+        flash("Sign up has been temporarily disabled becaues Google broke my email system :(")
+        return redirect(url_for("index"))
+        # return render_template('signup.html', errors=errors, info=None)
     elif request.method == 'POST':
 
         # save form data into a dict for convenience
@@ -150,7 +152,7 @@ def signup():
         # if no errors exist, then add user to database and email verification code
 
         else:
-            return redirect(url_for("validate"))
+            return redirect(url_for("index"))
 
 
 @app.route('/validate', methods=['GET', 'POST'])
@@ -197,66 +199,68 @@ def validate():
 
 @app.route('/resend_validation', methods=['GET', 'POST'])
 def resend_validation():
-    errors = dict()
-    errors['email'] = False
-    errors['email_str'] = ''
-    if request.method == 'GET':
-        return render_template('resend_validation.html', errors=errors)
-    elif request.method == 'POST':
-        given_email = request.form['email']
+    # temp solution
+    return redirect(url_for("index"))
+    # errors = dict()
+    # errors['email'] = False
+    # errors['email_str'] = ''
+    # if request.method == 'GET':
+    #     return render_template('resend_validation.html', errors=errors)
+    # elif request.method == 'POST':
+    #     given_email = request.form['email']
 
-        # is email already in the system?
-        requested_user = User.query.filter_by(email=given_email).first()
-        if requested_user == None:
-            errors['email'] = True
-            errors['email_str'] = 'No account associated with given email address'
+    #     # is email already in the system?
+    #     requested_user = User.query.filter_by(email=given_email).first()
+    #     if requested_user == None:
+            # errors['email'] = True
+            # errors['email_str'] = 'No account associated with given email address'
         # is account already validated?
-        else:
-            if requested_user.is_active == True:
-                errors['email'] = True
-                errors['email_str'] = f'Account with email {given_email} is already validated!'
-        # if errors are found, show errors to user
-        if errors['email']:
-            return render_template('resend_validation.html', errors=errors)
-        # if no errors are found, resend the verification code
-        else:
-            # generate new 6-digit verification code
-            validation_code = ''
-            for i in range(6):
-                num = randint(0, 9)
-                validation_code += str(num)
-            # assign user with new code
-            requested_user.validation_code = validation_code
-            db.session.commit()
-            # add code for sending new email here
-            port = 465
-            smtp_server = 'smtp.gmail.com'
-            sender_email = 'ninerminer.alerts@gmail.com'
-            receiver_email = requested_user.email
-            email_content = f"""\
-            SUBJECT: Your Validation Code for Niner Miner
+        # else:
+        #     if requested_user.is_active == True:
+        #         errors['email'] = True
+        #         errors['email_str'] = f'Account with email {given_email} is already validated!'
+        # # if errors are found, show errors to user
+        # if errors['email']:
+        #     return render_template('resend_validation.html', errors=errors)
+        # # if no errors are found, resend the verification code
+        # else:
+        #     # generate new 6-digit verification code
+        #     validation_code = ''
+        #     for i in range(6):
+        #         num = randint(0, 9)
+        #         validation_code += str(num)
+        #     # assign user with new code
+        #     requested_user.validation_code = validation_code
+        #     db.session.commit()
+        #     # add code for sending new email here
+        #     port = 465
+        #     smtp_server = 'smtp.gmail.com'
+        #     sender_email = 'ninerminer.alerts@gmail.com'
+        #     receiver_email = requested_user.email
+        #     email_content = f"""\
+        #     SUBJECT: Your Validation Code for Niner Miner
 
-            Hi there {requested_user.name},\n
-            Here's the six-digit validation code for validating your new Niner Miner account.
+        #     Hi there {requested_user.name},\n
+        #     Here's the six-digit validation code for validating your new Niner Miner account.
 
-            CODE:\t{validation_code}
+        #     CODE:\t{validation_code}
 
-            Visit 127.0.0.1:5000/validate to enter in your code.
+        #     Visit 127.0.0.1:5000/validate to enter in your code.
 
-            Have fun buying an selling!
-            The Niner Miner Team
-            """
-            # read password from text file (for security)
-            gmail_password = 'Ninerminer1234!'
-            # create secure SSL context
-            context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-                # login to server
-                server.login(sender_email, gmail_password)
-                # send email to user
-                server.sendmail(sender_email, receiver_email, email_content)
-            flash('A new activation code has been sent to email ' + given_email)
-            return redirect(url_for('validate'))
+        #     Have fun buying an selling!
+        #     The Niner Miner Team
+        #     """
+        #     # read password from text file (for security)
+        #     gmail_password = 'Ninerminer1234!'
+        #     # create secure SSL context
+        #     context = ssl.create_default_context()
+        #     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        #         # login to server
+        #         server.login(sender_email, gmail_password)
+        #         # send email to user
+        #         server.sendmail(sender_email, receiver_email, email_content)
+        #     flash('A new activation code has been sent to email ' + given_email)
+        #     return redirect(url_for('validate'))
 
 
 @app.route('/about')
@@ -275,7 +279,9 @@ def forgot_password():
     errors['password_str'] = list()
     user_info = dict()
     if request.method == "GET":
-        return render_template('forgot_password.html', errors=errors, user_info=None)
+        flash("Resetting passwords has been temporarily disabled because Google broke my email system :(")
+        return redirect(url_for("index"))
+        # return render_template('forgot_password.html', errors=errors, user_info=None)
     elif request.method == "POST":
         user_info['email'] = request.form['email']
         user_info['id'] = (int)(request.form['id'])

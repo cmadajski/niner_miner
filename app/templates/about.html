@@ -10,38 +10,46 @@
         <header>
             <span>What is Niner Miner?</span>
         </header>
-        <div class="introduction">
-            <h2>E-Commerce for the UNCC Community</h2>
-            <p>
-                Niner Miner is a web application similar to services like Facebook
-                Marketplace or OfferUp where people can buy or sell items to one another
-                in an open marketplace. <br><br>What separates Niner Miner is that all accounts
-                are linked to a UNCC email address, which decreases bad behavior and sketchy
-                deals. <br><br>Anyone who violates the Terms of Service can and will be banned based
-                on the severity of their infraction and that email will be blacklisted from 
-                the Niner Miner service indefinitely.<br><br> Likewise, items can only be sold
-                on campus, so there's no need to worry about shipping. You can select one of many
-                locations on campus to meet with a buyer or seller before committing to a purchase.
-            </p>
-        </div>
-        <div class="requirements">
-            <h2>Requirements</h2>
-            <p>
-                In order to use the Niner Miner application, you
-                will need:
-            </p>
-            <ul>
-                <li>an active UNCC email address</li>
-                <li>your UNCC ID number</li>
-            </ul>
-            <p>
-                After sign up, a verification code will be sent to the given email
-                to help verify that you are actually a UNCC student and not some
-                imposter!
-            </p>
+        <div class="info-container">
+            <div class="introduction">
+                <h2>E-Commerce for the UNCC Community</h2>
+                <p>
+                    Niner Miner is a web application similar to services like Facebook
+                    Marketplace or OfferUp where people can buy or sell items to one another
+                    in an open marketplace. <br><br>What separates Niner Miner is that all accounts
+                    are linked to a UNCC email address, which decreases bad behavior and sketchy
+                    deals. <br><br>Anyone who violates the Terms of Service can and will be banned based
+                    on the severity of their infraction and that email will be blacklisted from 
+                    the Niner Miner service indefinitely.<br><br> Likewise, items can only be sold
+                    on campus, so there's no need to worry about shipping. You can select one of many
+                    locations on campus to meet with a buyer or seller before committing to a purchase.
+                </p>
+            </div>
+            <div class="requirements">
+                <h2>Requirements</h2>
+                <p>
+                    In order to use the Niner Miner application, you
+                    will need:
+                </p>
+                <ul>
+                    <li>an active UNCC email address</li>
+                    <li>your UNCC ID number</li>
+                </ul>
+                <p>
+                    After sign up, a verification code will be sent to the given email
+                    to help verify that you are actually a UNCC student and not some
+                    imposter!
+                </p>
+                <p id="disabled">
+                    NOTE FROM 06/29/2022): SIGN UP, VERIFICATION, AND PASSWORD RESET HAVE
+                    ALL BEEN DISABLED TEMPORARILY BECAUSE GOOGLE UPDATED THEIR SMTP
+                    SECURITY AND BROKE MY EMAIL SYSTEM. <br>THANKS GOOGLE -__-
+                </p>
+                <a id="back-to-login" href={{ url_for("index") }}>Back to Login</a>
+            </div>
         </div>
         <div class="dev-team">
-            <h2>Meet the Dev Team</h2>
+            <span id="dev-team-title">Meet the Developers</span>
             <div class="dev-container">
                 <div class="dev-card">
                     <div class="dev-card-content">
