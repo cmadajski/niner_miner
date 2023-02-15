@@ -28,7 +28,7 @@ The technologies being used are:
 
 ## Accessing the Application
 
-The most recent version of the application has been deployed on Heroku and can be accessed [via this link](https://niner-miner.herokuapp.com/).
+The application is no longer deployed because the Heroku free-tier is no longer available :(
 
 To test the app, use the credentials for the "Demo" account found below:
 
